@@ -1527,6 +1527,7 @@ sh_program = find_program('sh')
 test('config_validate_cli',
   sh_program,
   args: ['tests/config_validate_cli_test.sh', motion_exe.full_path()],
+  depends: [motion_exe],
   workdir: meson.current_source_dir(),
   env: config_validate_env,
 )
