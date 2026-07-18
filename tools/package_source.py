@@ -93,7 +93,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path, help="output .tar.gz path")
     parser.add_argument("--source", type=Path, default=Path.cwd(), help="repository root")
-    parser.add_argument("--prefix", default="motion-5.0.0-motion.1", help="archive root directory")
+    parser.add_argument("--prefix", default="motion-0.1.0", help="archive root directory")
     args = parser.parse_args()
 
     if not args.source.is_dir():

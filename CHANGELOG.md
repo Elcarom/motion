@@ -2,7 +2,7 @@
 
 All notable Motion changes are documented here.
 
-## [5.0.0-motion.1] - 2026-07-18
+## [0.1.0] - 2026-07-18
 
 ### Fork and branding
 

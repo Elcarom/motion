@@ -2,7 +2,7 @@
 
 ## Scope
 
-This audit covers the supplied Noctalia 5.0.0-beta.3 archive and the transformation into Motion 5.0.0-motion.1. The
+This audit covers the supplied Noctalia 5.0.0-beta.3 archive and the transformation into Motion 0.1.0. The
 review included repository structure, product naming, build metadata, configuration and migration, UI/theme architecture,
 filesystem and IPC paths, privacy/network behavior, dependencies, tests, packaging, CI, documentation, and assets.
 

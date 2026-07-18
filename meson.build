@@ -1,5 +1,5 @@
 project('motion', ['c', 'cpp'],
-  version: '5.0.0-motion.1',
+  version: '0.1.0',
   default_options: [
     'cpp_std=c++23',
     'cpp_extensions=false',
