@@ -3,7 +3,7 @@
 ## Supported versions
 
 Security fixes are developed against the current `main` branch and the latest tagged Motion release. The initial fork
-release is `0.1.0`.
+release is `0.1.1`.
 
 ## Reporting a vulnerability
 

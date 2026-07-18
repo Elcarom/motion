@@ -1,0 +1,41 @@
+diff --git a/src/core/runtime_path.h b/src/core/runtime_path.h
+index f6b33e4..0052ea8 100644
+--- a/src/core/runtime_path.h
++++ b/src/core/runtime_path.h
+@@ -14,7 +14,7 @@ namespace motion::runtime_path {
+     const char* raw = std::getenv("WAYLAND_DISPLAY");
+     std::string display = raw != nullptr && raw[0] != '\0' ? raw : "wayland-0";
+     for (char& c : display) {
+-      const unsigned char u = static_cast<unsigned char>(c);
++      const auto u = static_cast<unsigned char>(c);
+       if (std::isalnum(u) == 0 && c != '-' && c != '_') {
+         c = '_';
+       }
+diff --git a/src/hooks/hook_manager.cpp b/src/hooks/hook_manager.cpp
+index 584bc0e..18060d4 100644
+--- a/src/hooks/hook_manager.cpp
++++ b/src/hooks/hook_manager.cpp
+@@ -4,6 +4,7 @@
+ 
+ #include <cstdlib>
+ #include <optional>
++#include <ranges>
+ #include <string>
+ #include <vector>
+ 
+@@ -78,11 +79,11 @@ void HookManager::fireWithEnv(HookKind kind, std::span<const EnvVar> env) const
+ 
+   fire(kind);
+ 
+-  for (auto it = saved.rbegin(); it != saved.rend(); ++it) {
+-    if (it->value.has_value()) {
+-      (void)::setenv(it->key.c_str(), it->value->c_str(), 1);
++  for (auto& entry : std::views::reverse(saved)) {
++    if (entry.value.has_value()) {
++      (void)::setenv(entry.key.c_str(), entry.value->c_str(), 1);
+     } else {
+-      (void)::unsetenv(it->key.c_str());
++      (void)::unsetenv(entry.key.c_str());
+     }
+   }
+ }

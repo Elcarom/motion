@@ -1,6 +1,6 @@
 # Motion validation report
 
-**Product:** Motion 0.1.0  
+**Product:** Motion 0.1.1  
 **Source:** supplied Noctalia 5.0.0-beta.3 archive  
 **Validation date:** 2026-07-18  
 **Status:** completed to the maximum extent supported by the available non-graphical build environment
@@ -79,7 +79,7 @@ replace an unsafe regular file; the emitted warning is expected and the file rem
 ## Packaging and clean-source checks
 
 - `tools/package_source.py` is included for deterministic source packaging.
-- The delivery process generates a normalized `motion-0.1.0` source archive outside the repository.
+- The delivery process generates a normalized `motion-0.1.1` source archive outside the repository.
 - The archive is extracted into a new directory and repository validation, branding audit, translation checks, shell
   syntax, and YAML parsing are rerun against that extracted tree.
 - SHA-256 checksums and a repository file manifest are generated as separate delivery artifacts.

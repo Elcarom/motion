@@ -35,7 +35,7 @@ for rel in required:
 
 meson = (ROOT / "meson.build").read_text(encoding="utf-8")
 check("project('motion'" in meson, "Meson project is not named motion")
-check("version: '0.1.0'" in meson, "unexpected Motion version")
+check("version: '0.1.1'" in meson, "unexpected Motion version")
 check("install_symlink('noctalia', pointing_to: 'motion'" in meson, "legacy command alias is missing")
 
 # Validate every JSON document.
