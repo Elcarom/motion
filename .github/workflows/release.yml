@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  source:
+    name: Source archive
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create reproducible source archive
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          [[ "$GITHUB_REF_TYPE" == "tag" ]] || version="snapshot-${GITHUB_SHA::12}"
+          git archive --format=tar --prefix="motion-${version}/" HEAD | gzip -n -9 > "motion-${version}.tar.gz"
+          sha256sum "motion-${version}.tar.gz" > "motion-${version}.tar.gz.sha256"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: motion-source
+          path: |
+            motion-*.tar.gz
+            motion-*.tar.gz.sha256
+
+  binary:
+    name: Linux binary bundle
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    steps:
+      - name: Install build dependencies
+        run: |
+          pacman -Syu --noconfirm --needed \
+            base-devel git meson ninja just pkgconf \
+            wayland wayland-protocols libglvnd freetype2 fontconfig cairo pango harfbuzz \
+            libxkbcommon glib2 sdbus-cpp libpipewire wireplumber polkit pam curl libwebp \
+            librsvg libqalculate libxml2 md4c tomlplusplus nlohmann-json stb jemalloc
+      - uses: actions/checkout@v4
+      - name: Build and stage
+        run: |
+          set -euo pipefail
+          just configure release /usr
+          just build release
+          DESTDIR="$PWD/stage" meson install --no-rebuild -C build-release
+          version="${GITHUB_REF_NAME#v}"
+          [[ "$GITHUB_REF_TYPE" == "tag" ]] || version="snapshot-${GITHUB_SHA::12}"
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner \
+            -C stage -czf "motion-${version}-linux-rootfs.tar.gz" .
+          sha256sum "motion-${version}-linux-rootfs.tar.gz" > "motion-${version}-linux-rootfs.tar.gz.sha256"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: motion-linux
+          path: |
+            motion-*-linux-rootfs.tar.gz
+            motion-*-linux-rootfs.tar.gz.sha256
+
+  publish:
+    name: Publish GitHub release
+    if: github.ref_type == 'tag'
+    needs: [source, binary]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: motion-*
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            motion-*.tar.gz
+            motion-*.sha256

@@ -1,0 +1,3 @@
+#pragma once
+
+#define MOTION_GIT_REVISION "@VCS_TAG@"

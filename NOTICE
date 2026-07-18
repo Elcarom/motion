@@ -1,0 +1,14 @@
+Motion
+======
+
+Motion is an independent fork derived from Noctalia 5.0.0-beta.3.
+Upstream project: https://github.com/noctalia-dev/noctalia
+Upstream copyright: Copyright (c) 2026 noctalia-dev
+License: MIT; see LICENSE.
+
+The Motion name, icon, and wallpaper in this repository identify the fork. They do not imply endorsement by Google,
+Android, the Material Design team, or the Noctalia maintainers. “Material 3 Expressive” is used descriptively to explain
+the design principles implemented by the fork.
+
+This distribution contains or links against third-party open-source software. Significant components and their license
+families are listed in CREDITS.md. Vendored source trees and generated protocol files retain their original notices.

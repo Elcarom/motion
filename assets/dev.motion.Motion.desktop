@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Motion
+Comment=Wayland desktop shell
+Exec=motion --daemon
+Icon=motion
+Terminal=false
+Categories=Settings;DesktopSettings;
+StartupNotify=false
+Actions=Settings;
+
+[Desktop Action Settings]
+Name=Open Settings
+Exec=sh -c "motion msg settings-open || { motion --daemon && motion msg settings-open; }"

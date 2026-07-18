@@ -1,0 +1,114 @@
+{
+  "product": "Motion",
+  "version": "5.0.0-motion.1",
+  "date": "2026-07-18",
+  "source": {
+    "upstream": "Noctalia 5.0.0-beta.3",
+    "archive_regular_files": 1421,
+    "git_metadata_present": false,
+    "commit_marker": "6b3632096231ecde16780937ef7ec26e8a1de388"
+  },
+  "tree": {
+    "cpp_files": 581,
+    "header_files": 667,
+    "cpp_header_lines": 266460
+  },
+  "environment": {
+    "gxx": "14.2.0",
+    "python": "3.13.5",
+    "ninja": "1.12.1",
+    "cmake": "3.31.6",
+    "git": "2.47.3",
+    "meson": null,
+    "just": null,
+    "nix": null,
+    "clang_format": null,
+    "clang_tidy": null
+  },
+  "checks": {
+    "repository_validation": {
+      "status": "pass",
+      "count": 614
+    },
+    "branding_audit": {
+      "status": "pass",
+      "intentional_files": 27
+    },
+    "i18n": {
+      "status": "pass",
+      "tr_keys": 784,
+      "trp_base_keys": 7,
+      "catalog_entries": 2217
+    },
+    "shell_syntax": {
+      "status": "pass",
+      "files": 5
+    },
+    "github_yaml": {
+      "status": "pass",
+      "files": 7
+    },
+    "fake_fork_endpoints": {
+      "status": "pass",
+      "matches": 0
+    },
+    "common_secret_patterns": {
+      "status": "pass",
+      "matches": 0
+    },
+    "build_cache_residue": {
+      "status": "pass",
+      "matches": 0
+    },
+    "standalone_cpp_tests": {
+      "status": "pass",
+      "passed": 21,
+      "failed": 0
+    },
+    "focused_cpp_rerun": {
+      "status": "pass",
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  "standalone_cpp_tests": [
+    "legacy_migration",
+    "file_utils_paths",
+    "runtime_path",
+    "animation_manager",
+    "ipc_service",
+    "notification_filter",
+    "workspace_alert_service",
+    "battery_hook_state",
+    "audio_glyphs",
+    "string_utils",
+    "cpu_temp_sensor",
+    "i18n_language_tag",
+    "i18n_supported_languages",
+    "plugin_source_locks",
+    "image_source_log",
+    "app_identity",
+    "ical_recurrence",
+    "hook_manager",
+    "desktop_entry_launch",
+    "process",
+    "plugin_git_export"
+  ],
+  "blocked": [
+    {
+      "check": "triad_workspace_backend standalone compile",
+      "reason": "nlohmann/json.hpp development header unavailable"
+    },
+    {
+      "check": "full native build/test/lint/sanitizers/Nix",
+      "reason": "required tools and native development dependencies unavailable",
+      "ci_coverage": true
+    },
+    {
+      "check": "graphical, performance, and formal accessibility validation",
+      "reason": "no representative Wayland/GPU/session/assistive-technology environment",
+      "ci_coverage": false
+    }
+  ],
+  "overall": "pass_with_environment_limitations"
+}

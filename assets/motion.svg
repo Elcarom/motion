@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Motion</title>
+  <desc id="desc">Three flowing ribbons forming an expressive letter M.</desc>
+  <defs>
+    <linearGradient id="bg" x1="32" y1="24" x2="224" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#241A35"/>
+      <stop offset="1" stop-color="#111018"/>
+    </linearGradient>
+    <linearGradient id="left" x1="42" y1="56" x2="126" y2="205" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EADDFF"/>
+      <stop offset="1" stop-color="#9A82DB"/>
+    </linearGradient>
+    <linearGradient id="center" x1="104" y1="54" x2="177" y2="206" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD8E4"/>
+      <stop offset="1" stop-color="#C47A9A"/>
+    </linearGradient>
+    <linearGradient id="right" x1="142" y1="50" x2="221" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D0E4FF"/>
+      <stop offset="1" stop-color="#6F91C7"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#000" flood-opacity=".34"/>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="64" fill="url(#bg)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow)">
+    <path d="M48 190V72c0-14 18-20 27-9l54 67" stroke="url(#left)" stroke-width="28"/>
+    <path d="M111 190V86c0-15 19-21 28-9l31 42" stroke="url(#center)" stroke-width="28"/>
+    <path d="M153 190l52-118" stroke="url(#right)" stroke-width="28"/>
+  </g>
+  <circle cx="204" cy="55" r="10" fill="#FFF" fill-opacity=".82"/>
+</svg>
