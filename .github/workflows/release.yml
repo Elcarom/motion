@@ -23,7 +23,7 @@ jobs:
           [[ "$GITHUB_REF_TYPE" == "tag" ]] || version="snapshot-${GITHUB_SHA::12}"
           git archive --format=tar --prefix="motion-${version}/" HEAD | gzip -n -9 > "motion-${version}.tar.gz"
           sha256sum "motion-${version}.tar.gz" > "motion-${version}.tar.gz.sha256"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: motion-source
           path: |
@@ -55,7 +55,7 @@ jobs:
           tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner \
             -C stage -czf "motion-${version}-linux-rootfs.tar.gz" .
           sha256sum "motion-${version}-linux-rootfs.tar.gz" > "motion-${version}-linux-rootfs.tar.gz.sha256"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: motion-linux
           path: |
