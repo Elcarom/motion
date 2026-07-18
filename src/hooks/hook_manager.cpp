@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include <optional>
+#include <ranges>
 #include <string>
 #include <vector>
 
@@ -78,11 +79,11 @@ void HookManager::fireWithEnv(HookKind kind, std::span<const EnvVar> env) const 
 
   fire(kind);
 
-  for (auto it = saved.rbegin(); it != saved.rend(); ++it) {
-    if (it->value.has_value()) {
-      (void)::setenv(it->key.c_str(), it->value->c_str(), 1);
+  for (auto& entry : std::views::reverse(saved)) {
+    if (entry.value.has_value()) {
+      (void)::setenv(entry.key.c_str(), entry.value->c_str(), 1);
     } else {
-      (void)::unsetenv(it->key.c_str());
+      (void)::unsetenv(entry.key.c_str());
     }
   }
 }

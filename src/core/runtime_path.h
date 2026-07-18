@@ -14,7 +14,7 @@ namespace motion::runtime_path {
     const char* raw = std::getenv("WAYLAND_DISPLAY");
     std::string display = raw != nullptr && raw[0] != '\0' ? raw : "wayland-0";
     for (char& c : display) {
-      const unsigned char u = static_cast<unsigned char>(c);
+      const auto u = static_cast<unsigned char>(c);
       if (std::isalnum(u) == 0 && c != '-' && c != '_') {
         c = '_';
       }
