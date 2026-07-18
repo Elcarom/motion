@@ -39,7 +39,6 @@ Motion intentionally accepts:
 - `NOCTALIA_ASSETS_DIR`;
 - legacy `NOCTALIA_*` hook variables emitted alongside `MOTION_*` variables;
 - `noctalia-glyph:` icon prefix alongside `motion-glyph:`;
-- Nix option `programs.noctalia` as an alias of `programs.motion`.
 
 New configuration and automation should use Motion names.
 

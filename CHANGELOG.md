@@ -7,7 +7,7 @@ All notable Motion changes are documented here.
 ### Fork and branding
 
 - Created the independent Motion fork from the supplied Noctalia 5.0.0-beta.3 archive.
-- Renamed the executable, package, desktop entry, application-facing identifiers, install paths, Nix/Guix outputs, UI
+- Renamed the executable, package, desktop entry, application-facing identifiers, install paths, Guix output, UI
   labels, and documentation.
 - Added original Motion vector icon and 3840×2160 wallpaper while preserving upstream attribution and license text.
 - Added an installed `noctalia` command alias and intentional compatibility references.
@@ -27,7 +27,6 @@ All notable Motion changes are documented here.
 - Added safe first-launch copying of legacy Noctalia config, state, and data into Motion XDG paths.
 - Added marker-based idempotency, sibling staging directories, atomic rename, source preservation, and symlink-safe copy.
 - Added legacy `NOCTALIA_*` path, asset, hook, and glyph-prefix fallbacks.
-- Added Nix aliases from `programs.noctalia` to `programs.motion`.
 
 ### Security and privacy
 

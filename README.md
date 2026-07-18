@@ -26,7 +26,7 @@ or endorsed by Google, the Material Design team, Android, or the Noctalia mainta
 - **Compatibility:** the installed `noctalia` command is an alias to `motion`; legacy `NOCTALIA_*` path and hook
   variables are accepted; Noctalia configuration, state, and data are copied safely on first launch when Motion has no
   profile of its own.
-- **Multiple deployment paths:** Meson/Ninja, Nix flakes and modules, Home Manager, hjem, NixOS, and Guix definitions.
+- **Deployment paths:** Meson/Ninja source builds and a Guix package definition.
 
 ## Supported environment
 
@@ -114,17 +114,6 @@ Copying only the executable is insufficient; Motion requires its `assets/` tree.
 resource resolver include `bundle/motion` beside `bundle/assets/`, and `bundle/bin/motion` beside
 `bundle/share/motion/assets/`.
 
-## Nix
-
-```sh
-nix build
-nix run
-nix develop
-```
-
-Available outputs include `packages.default`, `packages.cuda`, `homeModules.default`, `hjemModules.default`, and
-`nixosModules.default`. Configuration is under `programs.motion`; `programs.noctalia` is retained as a Nix option alias.
-
 ## Configuration
 
 Copy the annotated defaults:
@@ -183,7 +172,7 @@ the upstream Noctalia service and are labeled as such in code and documentation.
 ## Current validation status
 
 The repository includes dependency-complete GitHub Actions for formatting, debug and release builds, tests, linting,
-Nix evaluation/build, source packaging, and checksums. In the transformation environment, the full native shell could not
+source packaging, and checksums. In the transformation environment, the full native shell could not
 be built or launched because Meson and most graphical development dependencies were unavailable. Pure C++ regression
 tests, format-independent source checks, configuration parsing, asset validation, branding audits, and packaging checks
 were run locally. Exact evidence is recorded in [`artifacts/VALIDATION_REPORT.md`](artifacts/VALIDATION_REPORT.md) and
@@ -199,7 +188,7 @@ Suggested repository description:
 
 > Native Material 3 Expressive-inspired Wayland desktop shell derived from Noctalia.
 
-Suggested GitHub topics: `wayland`, `desktop-shell`, `linux-desktop`, `material-design`, `cpp23`, `meson`, `nix`,
+Suggested GitHub topics: `wayland`, `desktop-shell`, `linux-desktop`, `material-design`, `cpp23`, `meson`,
 `launcher`, `notification-daemon`, `wayland-shell`.
 
 ## License

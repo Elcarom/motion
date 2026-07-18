@@ -10,7 +10,7 @@ For dependencies and normal build commands, start with [README.md](README.md).
 
 - Direct Wayland + OpenGL ES only -- no toolkit overhead
 - Minimal scene graph, domain-specific to shell UI
-- Packaging should work across all major Linux distros: Arch, NixOS, Fedora, Gentoo, Debian, Void, OpenSuse
+- Packaging should work across all major Linux distros: Arch, Fedora, Gentoo, Debian, Void, and openSUSE
 
 ## Stack
 
@@ -208,7 +208,6 @@ assets/
 protocols/          Vendored Wayland protocol XML files
 tests/              Unit tests and config validation fixtures
 tools/              Developer and translation helper scripts
-nix/                Nix package, module, and dev shell definitions
 third_party/
   wuffs/          Raster image decoding (vendored)
   dr_wav/         WAV decoder (vendored)

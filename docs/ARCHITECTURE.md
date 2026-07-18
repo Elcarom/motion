@@ -129,6 +129,6 @@ Avoid hidden global mutable state. Existing global palette/style signals are nar
 
 ## Build and packaging
 
-Meson is authoritative. Nix and Guix definitions wrap the Meson build. Runtime assets are installed under
+Meson is authoritative. The Guix definition wraps the Meson build. Runtime assets are installed under
 `share/motion/assets`, with portable resolver fallbacks for development and bundles. Release archives must be created
 from a clean source tree and exclude build directories, caches, editor state, and secrets.

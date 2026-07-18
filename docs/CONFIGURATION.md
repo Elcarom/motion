@@ -132,7 +132,7 @@ commonly required.
 - `-Db_sanitize=address,undefined`
 - standard Meson build type, prefix, LTO, and warning options
 
-Release builds add native CPU tuning in Meson. Distribution and Nix packaging removes `-march=native`/`-mtune=native`
+Release builds add native CPU tuning in Meson. Distribution packaging removes `-march=native`/`-mtune=native`
 for reproducibility.
 
 ## Runtime optional tools/services

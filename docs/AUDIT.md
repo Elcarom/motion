@@ -11,10 +11,10 @@ commit marker was `6b3632096231ecde16780937ef7ec26e8a1de388`.
 
 ## Baseline condition
 
-The source is a native C++23 Wayland/OpenGL ES shell using Meson/Ninja, Nix, and Guix. It contains 577 C++ source files,
+The source is a native C++23 Wayland/OpenGL ES shell using Meson/Ninja and Guix. It contains 577 C++ source files,
 664 headers, a large unit/integration test suite, vendored protocol/dependency sources, and compositor-specific adapters.
 
-A native baseline configure/build could not be started in the transformation container because Meson, Just, Nix,
+A native baseline configure/build could not be started in the transformation container because Meson and Just,
 clang-format, clang-tidy, and most required Wayland/graphics/system development packages were absent. GCC/G++ 14.2,
 Ninja 1.12, CMake 3.31, Python 3.13, and Git 2.47 were available. See `artifacts/BASELINE.md`.
 
@@ -105,19 +105,18 @@ translucent surfaces, and complete keyboard traversal require graphical/manual v
   were preserved because full native compatibility could not be validated in this container.
 - No new runtime dependency was added for Motion's design system, migration, security hardening, or validation scripts.
 - GitHub Actions dependency updates are configured through Dependabot.
-- Nix/Guix packaging preserves source-build behavior and removes native CPU tuning where reproducibility requires it.
+- Guix packaging preserves source-build behavior and removes native CPU tuning where reproducibility requires it.
 
 A current vulnerability database scan was not available locally. Release maintainers should run distribution package,
-Nix, and GitHub dependency/security scanning in the publication environment.
+and GitHub dependency/security scanning in the publication environment.
 
 ## Build and release findings
 
 - Meson remains authoritative and installs `motion`, assets, desktop metadata, icon, and a `noctalia` compatibility
   symlink.
-- Nix outputs and modules use `motion`; `programs.noctalia` is an alias.
 - Guix module/package names use Motion and no longer advertise an unconfigured fork homepage.
 - CI covers repository checks, branding audit, shell syntax, clang-format, debug/release native builds, tests,
-  clang-tidy, staged installation, ASan/UBSan, and Nix.
+  clang-tidy, staged installation, and ASan/UBSan.
 - Release CI creates a reproducible source archive, a staged Linux rootfs bundle, and SHA-256 files.
 - `tools/package_source.py` creates a deterministic source archive with sorted entries, normalized ownership, modes, and
   timestamps, a fixed top-level directory, and exclusions for VCS/build/cache residue.

@@ -28,13 +28,6 @@ just configure asan
 just test asan --print-errorlogs
 ```
 
-Nix:
-
-```sh
-nix flake check --no-build
-nix build .#default
-```
-
 Repository validation:
 
 ```sh

@@ -11,7 +11,7 @@ Archive contained 1,421 regular files and no `.git` metadata.
 - CMake 3.31.6 available.
 - Python 3.13.5 available.
 - Git 2.47.3 available.
-- Meson, Just, Nix, clang-format, and clang-tidy unavailable.
+- Meson, Just, clang-format, and clang-tidy unavailable.
 - Most native development dependencies are unavailable to pkg-config (Wayland, Cairo, Pango, sdbus-c++, PipeWire, WirePlumber, GLib, polkit, libqalculate, md4c, nlohmann-json, toml++, jemalloc).
 
 ## Baseline result

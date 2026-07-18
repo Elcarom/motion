@@ -16,7 +16,6 @@
 | Git | 2.47.3 |
 | Meson | unavailable |
 | Just | unavailable |
-| Nix | unavailable |
 | clang-format | unavailable |
 | clang-tidy | unavailable |
 | Wayland/graphics/system development stack | incomplete/unavailable to `pkg-config` |
@@ -94,11 +93,10 @@ replace an unsafe regular file; the emitted warning is expected and the file rem
 | clang-format | `clang-format` absent | `clang-format --dry-run -Werror $(find src tests -type f \( -name '*.cpp' -o -name '*.h' \))` | Yes |
 | clang-tidy/static analysis | `clang-tidy` and compile database absent | `just lint debug` | Yes |
 | ASan/UBSan | Dependency-complete sanitizer build unavailable | `just configure asan && just test asan --print-errorlogs` | Yes |
-| Nix evaluation/build | Nix absent | `nix flake check --no-build && nix build .#default` | Yes |
 | Graphical shell smoke tests | No Wayland compositor, GPU/session, D-Bus/PipeWire/polkit environment | Follow `docs/VALIDATION.md` | Manual matrix required |
 | Runtime performance profiling | No graphical session or representative hardware | Follow long-run section in `docs/VALIDATION.md` | Manual |
 | Formal accessibility testing | No assistive-technology graphical session | Follow `docs/ACCESSIBILITY.md` | Logic/build only; manual required |
-| Live dependency vulnerability scan | No vulnerability database/scanner available | Run distribution, Nix, and GitHub security scans | Dependabot plus publication environment |
+| Live dependency vulnerability scan | No vulnerability database/scanner available | Run distribution and GitHub security scans | Dependabot plus publication environment |
 
 ## Conclusion
 

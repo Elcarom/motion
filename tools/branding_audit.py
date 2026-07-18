@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {
-    ".c", ".cc", ".cpp", ".h", ".hpp", ".md", ".txt", ".toml", ".json", ".nix", ".scm", ".yml", ".yaml",
+    ".c", ".cc", ".cpp", ".h", ".hpp", ".md", ".txt", ".toml", ".json", ".scm", ".yml", ".yaml",
     ".desktop", ".sh", ".xml", ".theme", ".colors", ".conf", ".ini",
 }
 SKIP_PARTS = {"third_party", ".git", "artifacts"}
@@ -28,9 +28,8 @@ ALLOWED_NOCTALIA_PATHS = {
     "src/shell/settings/plugin_store_content.cpp", "src/theme/community_templates.cpp",
     "src/theme/community_palettes.cpp", "src/config/config_types.cpp",
     "tests/legacy_migration_test.cpp", "tests/hook_manager_test.cpp", "tests/file_utils_paths_test.cpp",
-    "tests/config_schema_roundtrip_test.cpp", "tests/config_validate/generated-config", "default.nix", "meson.build",
+    "tests/config_schema_roundtrip_test.cpp", "tests/config_validate/generated-config", "meson.build",
     "tools/branding_audit.py", "tools/validate_repository.py", ".github/workflows/ci.yml",
-    "nix/home-module.nix", "nix/hjem-module.nix", "nix/nixos-module.nix",
 }
 
 errors: list[str] = []

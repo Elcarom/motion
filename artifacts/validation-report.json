@@ -21,14 +21,13 @@
     "git": "2.47.3",
     "meson": null,
     "just": null,
-    "nix": null,
     "clang_format": null,
     "clang_tidy": null
   },
   "checks": {
     "repository_validation": {
       "status": "pass",
-      "count": 614
+      "count": 612
     },
     "branding_audit": {
       "status": "pass",
@@ -100,7 +99,7 @@
       "reason": "nlohmann/json.hpp development header unavailable"
     },
     {
-      "check": "full native build/test/lint/sanitizers/Nix",
+      "check": "full native build/test/lint/sanitizers",
       "reason": "required tools and native development dependencies unavailable",
       "ci_coverage": true
     },

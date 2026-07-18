@@ -45,7 +45,6 @@ jobs:
               "Arch-based": "arch-based",
               "Fedora-based": "fedora-based",
               "Debian-based": "debian-based",
-              "NixOS": "nixos",
               "openSUSE-based": "opensuse",
               "Gentoo-based": "gentoo",
               "Void": "void",

@@ -27,7 +27,7 @@ required = [
     "README.md", "LICENSE", "NOTICE", "UPSTREAM.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md",
     "CHANGELOG.md", "docs/AUDIT.md", "docs/ARCHITECTURE.md", "docs/DESIGN_SYSTEM.md", "docs/MIGRATION.md",
     "docs/ACCESSIBILITY.md", "docs/CONFIGURATION.md", "docs/TROUBLESHOOTING.md", "docs/VALIDATION.md",
-    "meson.build", "flake.nix", "flake.lock", "motion.scm", "example.toml",
+    "meson.build", "motion.scm", "example.toml",
     "assets/motion.svg", "assets/motion-wallpaper.png", "assets/dev.motion.Motion.desktop",
 ]
 for rel in required:
