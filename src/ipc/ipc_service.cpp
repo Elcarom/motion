@@ -71,7 +71,7 @@ bool IpcService::start() {
 
   // Remove only a stale socket owned by this user. Refuse symlinks and
   // unrelated files so a hostile /tmp entry cannot be unlinked.
-  struct stat existing {};
+  struct stat existing{};
   if (::lstat(m_socketPath.c_str(), &existing) == 0) {
     if (!S_ISSOCK(existing.st_mode) || existing.st_uid != ::geteuid()) {
       kLog.warn("IPC disabled: refusing to replace unsafe path {}", m_socketPath);

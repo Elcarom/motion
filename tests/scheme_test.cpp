@@ -60,7 +60,8 @@ namespace {
     bool ok = true;
     const auto expressive = motion::theme::schemeFromString("m3-expressive");
     ok = expect(expressive.has_value() && *expressive == Scheme::Expressive, "parses expressive scheme") && ok;
-    ok = expect(motion::theme::schemeToString(Scheme::Expressive) == "m3-expressive", "serializes expressive scheme") && ok;
+    ok = expect(motion::theme::schemeToString(Scheme::Expressive) == "m3-expressive", "serializes expressive scheme")
+        && ok;
     const auto parsed = motion::theme::schemeFromString("soft");
     ok = expect(parsed.has_value() && *parsed == Scheme::Soft, "parses canonical soft scheme") && ok;
     ok = expect(motion::theme::schemeToString(Scheme::Soft) == "soft", "serializes canonical soft scheme") && ok;

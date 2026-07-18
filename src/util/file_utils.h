@@ -10,9 +10,9 @@
 #include <optional>
 #include <string>
 #include <string_view>
-#include <vector>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <vector>
 
 namespace FileUtils {
 
@@ -281,7 +281,7 @@ namespace FileUtils {
       const uid_t uid = ::geteuid();
       const std::filesystem::path root =
           std::filesystem::path("/tmp") / ("motion-" + std::to_string(static_cast<unsigned long long>(uid)));
-      struct stat st {};
+      struct stat st{};
       if (::mkdir(root.c_str(), 0700) == 0
           || (::lstat(root.c_str(), &st) == 0 && S_ISDIR(st.st_mode) && st.st_uid == uid)) {
         ::chmod(root.c_str(), 0700);
@@ -290,8 +290,7 @@ namespace FileUtils {
         }
       }
 
-      std::string pattern =
-          "/tmp/motion-" + std::to_string(static_cast<unsigned long long>(uid)) + "-cache-XXXXXX";
+      std::string pattern = "/tmp/motion-" + std::to_string(static_cast<unsigned long long>(uid)) + "-cache-XXXXXX";
       std::vector<char> writable(pattern.begin(), pattern.end());
       writable.push_back('\0');
       if (char* created = ::mkdtemp(writable.data()); created != nullptr) {

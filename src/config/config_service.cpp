@@ -1437,9 +1437,7 @@ void ConfigService::loadAll() {
       storedVersion = *parsedVersion;
       appliedVersion = motion::config::applyPendingConfigMigrations(effectiveOverrides, storedVersion, migrationDiag);
       sidecarNeedsPersist = appliedVersion != storedVersion;
-      effectiveOverrides.insert_or_assign(
-          motion::config::kConfigVersionKey, static_cast<std::int64_t>(appliedVersion)
-      );
+      effectiveOverrides.insert_or_assign(motion::config::kConfigVersionKey, static_cast<std::int64_t>(appliedVersion));
     }
   }
   for (const auto& entry : migrationDiag.entries) {

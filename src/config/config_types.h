@@ -1054,36 +1054,22 @@ struct SystemConfig {
     float memoryPollSeconds = 2.0f;
     float networkPollSeconds = 3.0f;
     float diskPollSeconds = 10.0f;
-    double cpuUsageActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuUsage).activityDefault;
-    double cpuUsageCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuUsage).criticalDefault;
-    double cpuTempActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuTemp).activityDefault;
-    double cpuTempCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuTemp).criticalDefault;
-    double gpuTempActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuTemp).activityDefault;
-    double gpuTempCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuTemp).criticalDefault;
-    double gpuUsageActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuUsage).activityDefault;
-    double gpuUsageCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuUsage).criticalDefault;
-    double gpuVramActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuVram).activityDefault;
-    double gpuVramCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuVram).criticalDefault;
+    double cpuUsageActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuUsage).activityDefault;
+    double cpuUsageCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuUsage).criticalDefault;
+    double cpuTempActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuTemp).activityDefault;
+    double cpuTempCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::CpuTemp).criticalDefault;
+    double gpuTempActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuTemp).activityDefault;
+    double gpuTempCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuTemp).criticalDefault;
+    double gpuUsageActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuUsage).activityDefault;
+    double gpuUsageCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuUsage).criticalDefault;
+    double gpuVramActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuVram).activityDefault;
+    double gpuVramCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::GpuVram).criticalDefault;
     double ramPctActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::RamPct).activityDefault;
     double ramPctCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::RamPct).criticalDefault;
-    double swapPctActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::SwapPct).activityDefault;
-    double swapPctCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::SwapPct).criticalDefault;
-    double diskPctActivityThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::DiskPct).activityDefault;
-    double diskPctCriticalThreshold =
-        motion::sysmon::thresholdProfile(motion::sysmon::Stat::DiskPct).criticalDefault;
+    double swapPctActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::SwapPct).activityDefault;
+    double swapPctCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::SwapPct).criticalDefault;
+    double diskPctActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::DiskPct).activityDefault;
+    double diskPctCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::DiskPct).criticalDefault;
     double netRxActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::NetRx).activityDefault;
     double netRxCriticalThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::NetRx).criticalDefault;
     double netTxActivityThreshold = motion::sysmon::thresholdProfile(motion::sysmon::Stat::NetTx).activityDefault;

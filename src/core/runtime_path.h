@@ -32,8 +32,12 @@ namespace motion::runtime_path {
     const uid_t uid = ::geteuid();
     if (const char* raw = std::getenv("XDG_RUNTIME_DIR"); raw != nullptr && raw[0] != '\0') {
       const std::filesystem::path candidate(raw);
-      struct stat st {};
-      if (candidate.is_absolute() && ::stat(candidate.c_str(), &st) == 0 && S_ISDIR(st.st_mode) && st.st_uid == uid && (st.st_mode & 0022) == 0) {
+      struct stat st{};
+      if (candidate.is_absolute()
+          && ::stat(candidate.c_str(), &st) == 0
+          && S_ISDIR(st.st_mode)
+          && st.st_uid == uid
+          && (st.st_mode & 0022) == 0) {
         return candidate;
       }
     }

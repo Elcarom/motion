@@ -10,14 +10,24 @@
 namespace {
   void clearOverrides() {
     for (const char* name : {
-             "MOTION_CONFIG_HOME", "MOTION_STATE_HOME", "MOTION_DATA_HOME", "MOTION_CACHE_HOME",
-             "NOCTALIA_CONFIG_HOME", "NOCTALIA_STATE_HOME", "NOCTALIA_DATA_HOME", "NOCTALIA_CACHE_HOME",
-             "XDG_CONFIG_HOME", "XDG_STATE_HOME", "XDG_DATA_HOME", "XDG_CACHE_HOME", "HOME",
+             "MOTION_CONFIG_HOME",
+             "MOTION_STATE_HOME",
+             "MOTION_DATA_HOME",
+             "MOTION_CACHE_HOME",
+             "NOCTALIA_CONFIG_HOME",
+             "NOCTALIA_STATE_HOME",
+             "NOCTALIA_DATA_HOME",
+             "NOCTALIA_CACHE_HOME",
+             "XDG_CONFIG_HOME",
+             "XDG_STATE_HOME",
+             "XDG_DATA_HOME",
+             "XDG_CACHE_HOME",
+             "HOME",
          }) {
       ::unsetenv(name);
     }
   }
-}
+} // namespace
 
 int main() {
   clearOverrides();
@@ -37,7 +47,7 @@ int main() {
   clearOverrides();
   const std::filesystem::path fallback = FileUtils::cacheDir();
   assert(!fallback.empty());
-  struct stat st {};
+  struct stat st{};
   const std::filesystem::path privateRoot = fallback.filename() == "cache" ? fallback.parent_path() : fallback;
   assert(::lstat(privateRoot.c_str(), &st) == 0);
   assert(S_ISDIR(st.st_mode));

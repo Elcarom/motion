@@ -46,8 +46,7 @@ int main() {
   const std::filesystem::path stateRoot = "/tmp/motion-path-test-state/motion";
   bool ok = true;
   ok = expectPath(
-           scripting::plugin_paths::localSourceRoot(), "/tmp/motion-path-test-data/motion/plugins",
-           "local source root"
+           scripting::plugin_paths::localSourceRoot(), "/tmp/motion-path-test-data/motion/plugins", "local source root"
        )
       && ok;
   ok = expectPath(
@@ -78,8 +77,7 @@ int main() {
        )
       && ok;
   ok = expect(
-           scripting::plugin_paths::pathIsInside("/tmp/motion/a/b", "/tmp/motion"),
-           "child path should be inside parent"
+           scripting::plugin_paths::pathIsInside("/tmp/motion/a/b", "/tmp/motion"), "child path should be inside parent"
        )
       && ok;
   ok = expect(

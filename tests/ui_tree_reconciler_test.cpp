@@ -501,7 +501,7 @@ int main() {
              control != nullptr && control->minHeight() == expected && control->maxHeight() == expected,
              "button controlSize 'sm' pins the scaled small control height"
          )
-         && ok;
+        && ok;
   }
 
   // The controlSize tier drives input, select and slider through setControlHeight().
@@ -522,7 +522,8 @@ int main() {
     if (column != nullptr && column->children().size() == 3) {
       for (const auto& child : column->children()) {
         const LayoutSize size = child->measure(renderer, LayoutConstraints::unconstrained());
-        ok = expect(size.height == Style::controlHeightSm, "controlSize 'sm' measures at the small control height") && ok;
+        ok = expect(size.height == Style::controlHeightSm, "controlSize 'sm' measures at the small control height")
+            && ok;
       }
     }
   }
@@ -572,19 +573,19 @@ int main() {
                pinnedButton != nullptr && pinnedButton->minHeight() == 50.0f && pinnedButton->maxHeight() == 50.0f,
                "explicit height wins over the controlSize tier"
            )
-           && ok;
+          && ok;
       ok = expect(
-               bogusButton != nullptr && plainButton != nullptr
-                   && bogusButton->minHeight() == plainButton->minHeight(),
+               bogusButton != nullptr && plainButton != nullptr && bogusButton->minHeight() == plainButton->minHeight(),
                "unknown controlSize tier leaves the default height"
            )
-           && ok;
+          && ok;
       ok = expect(
-               numericButton != nullptr && plainButton != nullptr
+               numericButton != nullptr
+                   && plainButton != nullptr
                    && numericButton->minHeight() == plainButton->minHeight(),
                "numeric controlSize is ignored, leaving the default height"
            )
-           && ok;
+          && ok;
     }
   }
 

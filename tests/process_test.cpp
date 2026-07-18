@@ -130,8 +130,7 @@ namespace {
     options.env.push_back({"MOTION_PROCESS_UNSET_TEST", std::nullopt});
 
     const auto result = process::runSync(
-        {"/bin/sh", "-lc", R"(printf '%s/%s' "$MOTION_PROCESS_SET_TEST" "${MOTION_PROCESS_UNSET_TEST-unset}")"},
-        options
+        {"/bin/sh", "-lc", R"(printf '%s/%s' "$MOTION_PROCESS_SET_TEST" "${MOTION_PROCESS_UNSET_TEST-unset}")"}, options
     );
     ::unsetenv("MOTION_PROCESS_UNSET_TEST");
 
@@ -156,8 +155,8 @@ namespace {
     ::setenv("MOTION_WALLPAPER_PATH", "/tmp/motion test/wallpaper.png", 1);
     ::setenv("MOTION_WALLPAPER_CONNECTOR", "DP-1", 1);
 
-    const std::string command = R"(printf '%s\n%s' "$MOTION_WALLPAPER_PATH" "$MOTION_WALLPAPER_CONNECTOR" > )"
-        + shellQuote(outPath.string());
+    const std::string command =
+        R"(printf '%s\n%s' "$MOTION_WALLPAPER_PATH" "$MOTION_WALLPAPER_CONNECTOR" > )" + shellQuote(outPath.string());
     const bool launched = process::runAsync(command);
     ::unsetenv("MOTION_WALLPAPER_PATH");
     ::unsetenv("MOTION_WALLPAPER_CONNECTOR");

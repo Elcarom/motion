@@ -673,7 +673,9 @@ bool WeatherService::coordinatesValid() const noexcept {
       && m_resolvedLongitude <= 180.0;
 }
 
-std::filesystem::path WeatherService::transportCacheDir() { return std::filesystem::path(FileUtils::cacheDir()) / "weather" / "transport"; }
+std::filesystem::path WeatherService::transportCacheDir() {
+  return std::filesystem::path(FileUtils::cacheDir()) / "weather" / "transport";
+}
 
 std::filesystem::path WeatherService::stateCacheFilePath() {
   return std::filesystem::path(FileUtils::cacheDir()) / "weather" / "snapshot.json";

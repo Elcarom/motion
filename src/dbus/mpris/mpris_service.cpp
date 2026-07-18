@@ -2273,9 +2273,7 @@ bool MprisService::onPlayPausePlayer(const std::string& busName) {
 
   const bool ok = playPause(busName);
   if (!ok) {
-    throw sdbus::Error(
-        sdbus::Error::Name{"dev.motion.Mpris.Error.NotSupported"}, "player does not support PlayPause"
-    );
+    throw sdbus::Error(sdbus::Error::Name{"dev.motion.Mpris.Error.NotSupported"}, "player does not support PlayPause");
   }
   return true;
 }

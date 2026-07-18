@@ -1,8 +1,8 @@
 #include "ipc/ipc_service.h"
 
 #include <cassert>
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -106,7 +106,7 @@ int main() {
 
   assert(ipc.start());
   const auto socketPath = runtimeDir / ("motion-" + std::string(kWaylandDisplay) + ".sock");
-  struct stat socketStat {};
+  struct stat socketStat{};
   assert(::lstat(socketPath.c_str(), &socketStat) == 0);
   assert(S_ISSOCK(socketStat.st_mode));
   assert((socketStat.st_mode & 0777) == 0600);

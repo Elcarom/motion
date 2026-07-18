@@ -342,17 +342,16 @@ location = "https://example.invalid/bad"
         .offsetY = 6,
         .monitors = {"DP-2"},
         .collapseOnDismiss = false,
-        .filters =
-            {NotificationFilterConfig{
-                .name = "discord",
-                .enabled = true,
-                .match = "discord",
-                .showToast = false,
-                .saveHistory = false,
-                .playSound = false,
-                .allowPermanent = false,
-                .allowedUrgencies = {"normal", "critical"},
-            }},
+        .filters = {NotificationFilterConfig{
+            .name = "discord",
+            .enabled = true,
+            .match = "discord",
+            .showToast = false,
+            .saveHistory = false,
+            .playSound = false,
+            .allowPermanent = false,
+            .allowedUrgencies = {"normal", "critical"},
+        }},
     };
     c.dock.enabled = true;
     c.dock.position = DockEdge::Left;
@@ -439,8 +438,7 @@ location = "https://example.invalid/bad"
     c.shell.launcher.dmenu.entries = {notifyDmenu};
     c.shell.launcher.providerPrefix = ".";
     c.shell.launcher.providers = {
-        LauncherProviderConfig{"session", "s", true},
-        LauncherProviderConfig{"wallpaper", "w"}
+        LauncherProviderConfig{"session", "s", true}, LauncherProviderConfig{"wallpaper", "w"}
     };
     c.shell.screenCorners.enabled = true;
     c.shell.screenCorners.size = 24;

@@ -28,7 +28,8 @@ int main() {
   const std::filesystem::path fallback = motion::runtime_path::path("lock");
   assert(fallback.parent_path() == std::filesystem::path("/tmp"));
   assert(fallback.filename().string().starts_with(
-      "motion-" + std::to_string(static_cast<unsigned long long>(::geteuid())) + "-"));
+      "motion-" + std::to_string(static_cast<unsigned long long>(::geteuid())) + "-"
+  ));
 
   std::filesystem::remove_all(base);
   return 0;

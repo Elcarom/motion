@@ -75,9 +75,7 @@ namespace motion::legacy {
       std::filesystem::remove_all(staged, ec);
       ec.clear();
       std::filesystem::copy(
-          pair.legacy,
-          staged,
-          std::filesystem::copy_options::recursive | std::filesystem::copy_options::copy_symlinks,
+          pair.legacy, staged, std::filesystem::copy_options::recursive | std::filesystem::copy_options::copy_symlinks,
           ec
       );
       if (ec) {
@@ -116,7 +114,9 @@ namespace motion::legacy {
     for (const auto& pair : pairs) {
       std::string warning;
       if (copyAtomically(pair, warning)) {
-        report.migrated.push_back(std::string(pair.label) + ": " + pair.legacy.string() + " -> " + pair.current.string());
+        report.migrated.push_back(
+            std::string(pair.label) + ": " + pair.legacy.string() + " -> " + pair.current.string()
+        );
       } else if (!warning.empty()) {
         report.warnings.push_back(std::move(warning));
       }

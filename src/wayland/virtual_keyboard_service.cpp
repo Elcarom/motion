@@ -10,8 +10,8 @@
 #include <filesystem>
 #include <linux/input-event-codes.h>
 #include <string>
-#include <vector>
 #include <unistd.h>
+#include <vector>
 #include <wayland-client-core.h>
 #include <xkbcommon/xkbcommon.h>
 

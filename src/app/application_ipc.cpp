@@ -392,7 +392,8 @@ void Application::initIpc() {
 
         if (icon.has_value()) {
           const std::string& iconValue = *icon;
-          const bool hasExplicitPrefix = iconValue.starts_with("motion-glyph:") || iconValue.starts_with("noctalia-glyph:");
+          const bool hasExplicitPrefix =
+              iconValue.starts_with("motion-glyph:") || iconValue.starts_with("noctalia-glyph:");
           const bool looksLikePath =
               iconValue.starts_with('/') || iconValue.starts_with("~/") || iconValue.contains('/');
           const bool looksLikeFileUri = iconValue.starts_with("file:");

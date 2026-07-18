@@ -725,9 +725,7 @@ namespace settings {
     entries.push_back(makeEntry(
         SettingsSection::Wallpaper, "transition", tr("settings.schema.wallpaper.transition-duration.label"),
         tr("settings.schema.wallpaper.transition-duration.description"), {"wallpaper", "transition_duration"},
-        sliderFor(
-            cfg.wallpaper.transitionDurationMs, motion::config::schema::kWallpaperTransitionDurationRange, true
-        ),
+        sliderFor(cfg.wallpaper.transitionDurationMs, motion::config::schema::kWallpaperTransitionDurationRange, true),
         "fade animation"
     ));
     entries.push_back(makeEntry(
@@ -1304,8 +1302,7 @@ namespace settings {
         &ShellConfig::PanelConfig::controlCenterPlacement, &ShellConfig::PanelConfig::controlCenterPosition
     ));
     {
-      SliderSetting width =
-          sliderFor(cfg.controlCenter.width, motion::config::schema::kControlCenterWidthRange, true);
+      SliderSetting width = sliderFor(cfg.controlCenter.width, motion::config::schema::kControlCenterWidthRange, true);
       width.valueSuffix = "px";
       entries.push_back(makeEntry(
           SettingsSection::ControlCenter, "general", tr("settings.schema.panels.control-center-width.label"),

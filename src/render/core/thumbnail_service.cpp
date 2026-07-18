@@ -29,9 +29,7 @@ namespace {
   constexpr std::size_t kMaxWorkers = 4;
   constexpr std::string_view kThumbnailCacheVersion = "thumbnail-service-v2";
 
-  std::filesystem::path thumbnailCacheDir() {
-    return std::filesystem::path(FileUtils::cacheDir()) / "thumbnails";
-  }
+  std::filesystem::path thumbnailCacheDir() { return std::filesystem::path(FileUtils::cacheDir()) / "thumbnails"; }
 
   std::uint64_t fnv1a64(std::string_view text) {
     std::uint64_t hash = 14695981039346656037ull;

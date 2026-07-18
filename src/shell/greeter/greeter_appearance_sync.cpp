@@ -110,8 +110,7 @@ namespace {
 
   [[nodiscard]] std::string findApplyHelper() {
     return resolveProgramPath(
-        kApplyHelperName,
-        {"/usr/bin/motion-greeter-apply-appearance", "/usr/local/bin/motion-greeter-apply-appearance"}
+        kApplyHelperName, {"/usr/bin/motion-greeter-apply-appearance", "/usr/local/bin/motion-greeter-apply-appearance"}
     );
   }
 
