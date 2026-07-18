@@ -304,20 +304,20 @@ void KeybindRecorder::refreshLabel() {
 void KeybindRecorder::applyVisualState(VisualState state) {
   m_visualState = state;
   if (!m_enabled) {
-    setFill(colorSpecFromRole(ColorRole::SurfaceVariant, 0.4f));
+    setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh, 0.4f));
     setBorder(colorSpecFromRole(ColorRole::Outline, Style::disabledOutlineAlpha), Style::borderWidth);
     if (m_label != nullptr) {
-      m_label->setColor(colorSpecFromRole(ColorRole::OnSurfaceVariant, 0.55f));
+      m_label->setColor(colorSpecFromRole(ColorRole::OnSurfaceVariant, motion::design::state::disabledContent));
     }
     if (m_glyph != nullptr) {
-      m_glyph->setColor(colorSpecFromRole(ColorRole::OnSurfaceVariant, 0.55f));
+      m_glyph->setColor(colorSpecFromRole(ColorRole::OnSurfaceVariant, motion::design::state::disabledContent));
     }
     return;
   }
 
   switch (state) {
   case VisualState::Idle:
-    setFill(colorSpecFromRole(ColorRole::SurfaceVariant));
+    setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
     setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth);
     if (m_label != nullptr) {
       const bool placeholder = !m_chord.has_value() || m_chord->sym == 0;
@@ -330,7 +330,7 @@ void KeybindRecorder::applyVisualState(VisualState state) {
     }
     break;
   case VisualState::Focused:
-    setFill(colorSpecFromRole(ColorRole::SurfaceVariant));
+    setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
     setBorder(focusRingColorSpec(), Style::focusRingWidth);
     if (m_label != nullptr) {
       const bool placeholder = !m_chord.has_value() || m_chord->sym == 0;
@@ -343,7 +343,7 @@ void KeybindRecorder::applyVisualState(VisualState state) {
     }
     break;
   case VisualState::Recording:
-    setFill(colorSpecFromRole(ColorRole::Primary, 0.12f));
+    setFill(colorSpecFromRole(ColorRole::PrimaryContainer, motion::design::state::focused));
     setBorder(colorSpecFromRole(ColorRole::Primary), Style::borderWidth);
     if (m_label != nullptr) {
       m_label->setColor(colorSpecFromRole(ColorRole::Primary));

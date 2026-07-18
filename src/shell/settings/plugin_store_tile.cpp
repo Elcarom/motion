@@ -24,7 +24,7 @@ namespace settings {
     setAlign(FlexAlign::Stretch);
     setGap(Style::spaceXs * scale);
     setPadding(Style::spaceSm * scale);
-    setFill(colorSpecFromRole(ColorRole::SurfaceVariant));
+    setFill(colorSpecFromRole(ColorRole::SurfaceContainer));
     setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth);
     setRadius(Style::scaledRadiusMd(scale));
 
@@ -186,7 +186,7 @@ namespace settings {
     m_addedGlyph->setVisible(onDisk);
     m_addedGlyph->setParticipatesInLayout(onDisk);
 
-    setBorder(colorSpecFromRole(hovered ? ColorRole::Hover : ColorRole::Outline), Style::borderWidth);
+    setBorder(colorSpecFromRole(hovered ? ColorRole::Primary : ColorRole::OutlineVariant), Style::borderWidth);
   }
 
 } // namespace settings

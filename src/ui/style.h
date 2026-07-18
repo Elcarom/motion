@@ -5,20 +5,30 @@
 
 namespace Style {
 
-  inline constexpr int barThicknessDefault = 36;
+  inline constexpr int barThicknessDefault = static_cast<int>(motion::design::size::barStandard);
 
   inline constexpr int animFast = motion::design::motion::fast;
   inline constexpr int animNormal = motion::design::motion::standard;
   inline constexpr int animSlow = motion::design::motion::longEnter;
 
   inline constexpr float radiusSm = motion::design::shape::extraSmall;
-  inline constexpr float radiusMd = motion::design::shape::small;
-  inline constexpr float radiusLg = motion::design::shape::medium;
-  inline constexpr float radiusXl = motion::design::shape::extraLarge;
+  inline constexpr float radiusMd = motion::design::shape::compactControl;
+  inline constexpr float radiusLg = motion::design::shape::standardControl;
+  inline constexpr float radiusXl = motion::design::shape::panel;
 
-  inline constexpr float borderWidth = 1.0f;
-  inline constexpr float emphasizedBorderWidth = 3.0f;
-  inline constexpr float focusRingWidth = 2.0f;
+  inline constexpr float radiusButton = motion::design::shape::prominentControl;
+  inline constexpr float radiusIconButton = motion::design::shape::circular;
+  inline constexpr float radiusField = motion::design::shape::standardControl;
+  inline constexpr float radiusRow = motion::design::shape::standardControl;
+  inline constexpr float radiusCard = motion::design::shape::card;
+  inline constexpr float radiusMenu = motion::design::shape::menu;
+  inline constexpr float radiusPopup = motion::design::shape::popup;
+  inline constexpr float radiusPanel = motion::design::shape::panel;
+  inline constexpr float radiusDialog = motion::design::shape::dialog;
+
+  inline constexpr float borderWidth = motion::design::border::hairline;
+  inline constexpr float emphasizedBorderWidth = motion::design::border::focusHighContrast;
+  inline constexpr float focusRingWidth = motion::design::border::focus;
   inline constexpr float disabledOutlineAlpha = motion::design::state::disabledOutline;
 
   inline constexpr float spaceXs = motion::design::spacing::xs;
@@ -35,8 +45,11 @@ namespace Style {
   inline constexpr float fontSizeMini = motion::design::type::labelSmall;
   inline constexpr float fontSizeCaption = motion::design::type::bodySmall;
   inline constexpr float fontSizeBody = motion::design::type::bodyMedium;
+  inline constexpr float fontSizeBodyLarge = motion::design::type::bodyLarge;
   inline constexpr float fontSizeTitle = motion::design::type::titleSmall;
+  inline constexpr float fontSizeTitleLarge = motion::design::type::titleLarge;
   inline constexpr float fontSizeHeader = motion::design::type::headlineSmall;
+  inline constexpr float fontSizeDisplay = motion::design::type::displaySmall;
 
   inline constexpr float controlHeightSm = motion::design::size::controlCompact;
   inline constexpr float controlHeight = motion::design::size::controlStandard;
@@ -44,6 +57,7 @@ namespace Style {
   inline constexpr float scrollWheelStep = 56.0f;
 
   inline constexpr float scrollbarWidth = 6.0f;
+  inline constexpr float scrollbarHoverWidth = 8.0f;
   inline constexpr float scrollbarGap = spaceSm;
   inline constexpr float scrollbarMinThumbHeight = 24.0f;
 
@@ -74,5 +88,6 @@ namespace Style {
   [[nodiscard]] float scaledRadiusMd(float localScale = 1.0f) noexcept;
   [[nodiscard]] float scaledRadiusLg(float localScale = 1.0f) noexcept;
   [[nodiscard]] float scaledRadiusXl(float localScale = 1.0f) noexcept;
+  [[nodiscard]] float scaledSemanticRadius(float radius, float localScale = 1.0f) noexcept;
 
 } // namespace Style

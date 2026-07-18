@@ -44,7 +44,7 @@ speed   = 1.0                       # 0.5 = 2× slower, 2.0 = 2× faster
 
 [shell.shadow]
 direction = "down"                  # center, up, down, left, right, up_left, up_right, down_left, down_right
-alpha     = 0.55                    # multiplied by each component's background opacity
+alpha     = 0.28                    # restrained floating-surface shadow; multiplied by background opacity
 
 [shell.panel]
 transparency_mode     = "solid"     # solid | soft | glass; controls floating/centered opacity and card translucency
@@ -317,7 +317,7 @@ auto_hide          = false
 # show_on_workspace_switch = true   # with auto_hide: briefly reveal when the active workspace changes
 reserve_space      = true
 capsule            = false
-# capsule_fill     = "surface_variant"
+# capsule_fill     = "surface_container_high"
 # capsule_radius   = 8.0            # omit/blank in Settings for automatic pill radius; 0.0 = square
 # capsule_opacity  = 1.0
 # capsule_border   = "outline"      # uncomment for a border on all widgets

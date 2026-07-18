@@ -712,7 +712,7 @@ void TestPanel::create() {
 
     auto demoBox = ui::box({
         .out = &m_transformDemoBox,
-        .fill = colorSpecFromRole(ColorRole::SurfaceVariant),
+        .fill = colorSpecFromRole(ColorRole::SurfaceContainer),
         .radius = Style::scaledRadiusLg(scale),
         .width = 180.0f * scale,
         .height = 100.0f * scale,

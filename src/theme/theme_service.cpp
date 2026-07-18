@@ -16,6 +16,7 @@
 #include "theme/palette_transform.h"
 #include "theme/scheme.h"
 #include "ui/app_icon_colorization.h"
+#include "ui/design_tokens.h"
 #include "util/checksum.h"
 #include "util/string_utils.h"
 
@@ -37,7 +38,7 @@ namespace motion::theme {
 
     constexpr auto kLog = Logger("theme");
 
-    constexpr float kTransitionDurationMs = 400.0f;
+    constexpr float kTransitionDurationMs = static_cast<float>(motion::design::motion::longEnter);
     constexpr std::chrono::milliseconds kTransitionTick{8};
 
     struct ResolvedTheme {

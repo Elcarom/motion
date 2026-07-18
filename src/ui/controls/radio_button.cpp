@@ -1,5 +1,6 @@
 #include "ui/controls/radio_button.h"
 
+#include "core/input/keybind_matcher.h"
 #include "render/scene/input_area.h"
 #include "ui/controls/box.h"
 #include "ui/palette.h"
@@ -16,9 +17,23 @@ RadioButton::RadioButton() {
   m_inner = static_cast<Box*>(addChild(std::move(inner)));
 
   auto area = std::make_unique<InputArea>();
+  area->setFocusable(true);
   area->setOnEnter([this](const InputArea::PointerData& /*data*/) { applyState(); });
   area->setOnLeave([this]() { applyState(); });
   area->setOnPress([this](const InputArea::PointerData& /*data*/) { applyState(); });
+  area->setOnFocusGain([this]() { applyState(); });
+  area->setOnFocusLoss([this]() { applyState(); });
+  area->setOnKeyDown([this](const InputArea::KeyData& key) {
+    if (!key.pressed || !m_enabled || m_checked
+        || !KeybindMatcher::matches(KeybindAction::Validate, key.sym, key.modifiers)) {
+      return;
+    }
+    m_checked = true;
+    applyState();
+    if (m_onChange) {
+      m_onChange(true);
+    }
+  });
   area->setOnClick([this](const InputArea::PointerData& /*data*/) {
     if (!m_enabled || m_checked) {
       return;
@@ -97,23 +112,30 @@ void RadioButton::applyState() {
     return;
   }
 
-  ColorSpec fill = colorSpecFromRole(ColorRole::Surface);
+  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceContainerLowest);
   ColorSpec border = colorSpecFromRole(ColorRole::Outline);
+  float borderWidth = Style::borderWidth * m_scale;
+  const bool focused = m_inputArea != nullptr && m_inputArea->focused();
   if (m_checked) {
     fill = colorSpecFromRole(ColorRole::Primary);
     border = colorSpecFromRole(ColorRole::Primary);
-  } else if (hovered()) {
-    border = colorSpecFromRole(ColorRole::Hover);
+  }
+
+  if (focused) {
+    border = focusRingColorSpec();
+    borderWidth = Style::focusRingWidth * m_scale;
+  } else if (!m_checked && hovered()) {
+    border = colorSpecFromRole(ColorRole::Primary);
   }
 
   m_outer->setFill(fill);
-  m_outer->setBorder(border, Style::borderWidth * m_scale);
+  m_outer->setBorder(border, borderWidth);
 
   const ColorSpec innerFill =
-      m_checked ? colorSpecFromRole(ColorRole::OnPrimary) : colorSpecFromRole(ColorRole::Surface);
+      m_checked ? colorSpecFromRole(ColorRole::OnPrimary) : colorSpecFromRole(ColorRole::SurfaceContainerLowest);
   m_inner->setFill(innerFill);
   m_inner->setBorder(innerFill, 0.0f);
   m_inner->setVisible(m_checked);
 
-  setOpacity(m_enabled ? 1.0f : 0.55f);
+  setOpacity(m_enabled ? 1.0f : motion::design::state::disabledContent);
 }

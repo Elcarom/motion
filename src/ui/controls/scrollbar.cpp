@@ -49,6 +49,8 @@ Scrollbar::Scrollbar() {
 
   auto thumbArea = std::make_unique<InputArea>();
   thumbArea->setCursorShape(WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_POINTER);
+  thumbArea->setOnEnter([this](const InputArea::PointerData& /*data*/) { applyPalette(); });
+  thumbArea->setOnLeave([this]() { applyPalette(); });
   thumbArea->setOnPress([this](const InputArea::PointerData& data) {
     if (data.button != BTN_LEFT) {
       return;
@@ -58,6 +60,7 @@ Scrollbar::Scrollbar() {
       m_dragStartOffset =
           std::clamp(m_maxScroll > 0.0f ? (m_thumb->y() / m_thumbTravel) * m_maxScroll : 0.0f, 0.0f, m_maxScroll);
     }
+    applyPalette();
   });
   thumbArea->setOnMotion([this](const InputArea::PointerData& data) {
     if (m_thumbTravel <= 0.0f || !m_onScrollChanged || m_thumbArea == nullptr || !m_thumbArea->pressed()) {
@@ -124,7 +127,13 @@ void Scrollbar::applyPalette() {
     m_track->setStyle(makeSolid(resolveColorSpec(scrollbarTrackColor())));
   }
   if (m_thumb != nullptr) {
-    m_thumb->setStyle(makeSolid(resolveColorSpec(scrollbarThumbColor())));
+    Color thumb = resolveColorSpec(scrollbarThumbColor());
+    if (m_thumbArea != nullptr && m_thumbArea->pressed()) {
+      thumb = colorForRole(ColorRole::Primary);
+    } else if (m_thumbArea != nullptr && m_thumbArea->hovered()) {
+      thumb = colorForRole(ColorRole::OnSurfaceVariant, 0.88f);
+    }
+    m_thumb->setStyle(makeSolid(thumb));
   }
 }
 

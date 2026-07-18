@@ -2,6 +2,19 @@
 
 All notable Motion changes are documented here.
 
+## Unreleased
+
+### Material 3 Expressive visual system
+
+- Expanded the runtime palette from the legacy compact role set to the complete UI-facing Material container,
+  background, outline-variant, inverse, scrim, tint, and paired foreground roles already produced by theme generation.
+- Reworked shared controls around semantic state layers, component-specific shapes, surface hierarchy, accessible focus,
+  desktop density, and centralized disabled-state opacity.
+- Unified launcher, clipboard, control center, notifications, OSDs, lock/greeter, switcher, wallpaper, settings,
+  workspace/taskbar, dock, panels, tooltips, dialogs, and tray menus through the shared visual primitives.
+- Replaced fixed colors in Qt and Helix exports and strengthened GTK export surface hierarchy.
+- Added runtime palette-role regression coverage and retained old color names only for profile compatibility.
+
 ## [0.1.1] - 2026-07-18
 
 ### Fork and branding

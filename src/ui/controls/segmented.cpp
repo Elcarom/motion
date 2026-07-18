@@ -180,7 +180,7 @@ void Segmented::setEnabled(bool enabled) {
       btn->setEnabled(enabled);
     }
   }
-  setOpacity(enabled ? 1.0f : 0.55f);
+  setOpacity(enabled ? 1.0f : motion::design::state::disabledContent);
 }
 
 std::unique_ptr<Separator> Segmented::makeSegmentSeparator() {
@@ -238,7 +238,7 @@ void Segmented::setEqualSegmentWidths(bool equalWidths) {
 
 void Segmented::refreshVariants() {
   const std::size_t n = m_buttons.size();
-  const float r = Style::scaledRadiusMd(m_scale);
+  const float r = Style::scaledSemanticRadius(Style::radiusButton, m_scale);
   for (std::size_t i = 0; i < n; ++i) {
     if (m_buttons[i] == nullptr) {
       continue;
@@ -262,7 +262,7 @@ void Segmented::applyOuterStyle() {
   Flex::setPadding(m_outerPadding);
   setFill(colorSpecFromRole(m_surfaceRole, m_surfaceOpacity));
   clearBorder();
-  setRadius(Style::scaledRadiusMd(m_scale));
+  setRadius(Style::scaledSemanticRadius(Style::radiusButton, m_scale));
 }
 
 void Segmented::doLayout(Renderer& renderer) {

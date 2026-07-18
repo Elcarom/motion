@@ -25,7 +25,7 @@ struct BarCapsuleGroupStyle {
   std::string id;
   std::vector<std::string> members; // ordered member widget references
   bool enabled = true;
-  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceVariant);
+  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceContainerHigh);
   // True when `border` is explicitly present (empty value = no outline); mirrors bar/widget border semantics.
   bool borderSpecified = false;
   std::optional<ColorSpec> border;
@@ -157,7 +157,7 @@ struct BarConfig {
                                          "battery", "control-center", "session"};
   // When true, widgets on this bar use a capsule unless `[widget.*] capsule = false`.
   bool widgetCapsuleDefault = false;
-  ColorSpec widgetCapsuleFill = colorSpecFromRole(ColorRole::SurfaceVariant);
+  ColorSpec widgetCapsuleFill = colorSpecFromRole(ColorRole::SurfaceContainerHigh);
   // When set, bar widgets with capsules use this for icon + primary label color unless overridden per widget.
   std::optional<ColorSpec> widgetCapsuleForeground;
   // Default primary label color for all widgets on this bar (same as per-widget `color`); per-widget `color`
@@ -341,7 +341,7 @@ using ConfigOverrideValue = std::variant<
 // Corner shape, border width, and edge softness are fixed in the shell code; padding/radius are configurable.
 struct WidgetBarCapsuleSpec {
   bool enabled = false;
-  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceVariant);
+  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceContainerHigh);
   // Opaque group ID (auto-generated). Adjacent widgets in the same section with the same non-empty ID share one
   // shell and inherit the group's `BarCapsuleGroupStyle`.
   std::string group;
@@ -869,7 +869,7 @@ struct ShellConfig {
 
   struct ShadowConfig {
     ShadowDirection direction = ShadowDirection::Down;
-    float alpha = 0.55f;
+    float alpha = 0.28f;
 
     bool operator==(const ShadowConfig&) const = default;
   };

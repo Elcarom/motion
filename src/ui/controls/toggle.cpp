@@ -174,8 +174,10 @@ void Toggle::applyState() { applyAnimatedState(m_checked ? 1.0f : 0.0f); }
 
 void Toggle::applyAnimatedState(float t) {
   m_animationProgress = t;
-  const Color trackColor = lerpColor(colorForRole(ColorRole::Outline), colorForRole(ColorRole::Primary), t);
-  const Color thumbColor = lerpColor(colorForRole(ColorRole::OnPrimary), colorForRole(ColorRole::OnPrimary), t);
+  const Color trackColor =
+      lerpColor(colorForRole(ColorRole::SurfaceContainerHighest), colorForRole(ColorRole::Primary), t);
+  const Color thumbColor =
+      lerpColor(colorForRole(ColorRole::Outline), colorForRole(ColorRole::OnPrimary), t);
   const float thumbX = m_inset + m_travel * t;
   ColorSpec borderColor = colorSpecFromRole(ColorRole::Outline);
 
@@ -183,7 +185,7 @@ void Toggle::applyAnimatedState(float t) {
     if (m_inputArea != nullptr && m_inputArea->focused()) {
       borderColor = focusRingColorSpec();
     } else if (hovered()) {
-      borderColor = colorSpecFromRole(ColorRole::Hover);
+      borderColor = colorSpecFromRole(ColorRole::Primary);
     } else if (m_checked) {
       borderColor = colorSpecFromRole(ColorRole::Primary);
     }
@@ -208,6 +210,6 @@ void Toggle::applyAnimatedState(float t) {
   if (m_enabled) {
     setOpacity(1.0f);
   } else {
-    setOpacity(0.55f);
+    setOpacity(motion::design::state::disabledContent);
   }
 }

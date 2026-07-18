@@ -27,7 +27,7 @@ namespace {
       setAlign(FlexAlign::Center);
       setGap(Style::spaceSm);
       setPadding(Style::spaceXs, Style::spaceSm);
-      setRadius(Style::scaledRadiusMd());
+      setRadius(Style::scaledSemanticRadius(Style::radiusRow));
       setFillWidth(true);
 
       auto preview = std::make_unique<ColorSwatchPreviewStrip>();
@@ -73,24 +73,27 @@ namespace {
       const bool hasPreview = !option.preview.empty();
 
       if (highlighted) {
-        setFill(colorSpecFromRole(ColorRole::Primary));
+        setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
       } else if (hovered) {
-        setFill(colorSpecFromRole(ColorRole::Hover));
+        setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
       } else if (selected) {
-        setFill(colorSpecFromRole(ColorRole::Primary, 0.16f));
+        setFill(colorSpecFromRole(ColorRole::PrimaryContainer));
       } else {
         setFill(clearColorSpec());
       }
 
       ColorSpec foreground =
-          option.enabled ? colorSpecFromRole(ColorRole::OnSurface) : colorSpecFromRole(ColorRole::OnSurface, 0.55f);
-      ColorSpec detailForeground = colorSpecFromRole(ColorRole::OnSurfaceVariant, option.enabled ? 1.0f : 0.55f);
+          option.enabled ? colorSpecFromRole(ColorRole::OnSurface)
+                         : colorSpecFromRole(ColorRole::OnSurface, motion::design::state::disabledContent);
+      ColorSpec detailForeground = colorSpecFromRole(
+          ColorRole::OnSurfaceVariant, option.enabled ? 1.0f : motion::design::state::disabledContent
+      );
       if (highlighted) {
-        foreground = colorSpecFromRole(ColorRole::OnPrimary);
-        detailForeground = colorSpecFromRole(ColorRole::OnPrimary);
+        foreground = colorSpecFromRole(ColorRole::OnSecondaryContainer);
+        detailForeground = colorSpecFromRole(ColorRole::OnSecondaryContainer);
       } else if (hovered) {
-        foreground = colorSpecFromRole(ColorRole::OnHover);
-        detailForeground = colorSpecFromRole(ColorRole::OnHover);
+        foreground = colorSpecFromRole(ColorRole::OnSurface);
+        detailForeground = colorSpecFromRole(ColorRole::OnSurfaceVariant);
       }
 
       if (m_preview != nullptr) {
@@ -137,9 +140,9 @@ SearchPicker::SearchPicker() {
   setAlign(FlexAlign::Stretch);
   setGap(Style::spaceSm);
   setPadding(Style::spaceSm);
-  setFill(colorSpecFromRole(ColorRole::Surface));
-  setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth);
-  setRadius(Style::scaledRadiusMd());
+  setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
+  setBorder(colorSpecFromRole(ColorRole::OutlineVariant), Style::borderWidth);
+  setRadius(Style::scaledSemanticRadius(Style::radiusPopup));
   setSize(kDefaultWidth, kDefaultHeight);
 
   addChild(
@@ -250,7 +253,7 @@ void SearchPicker::setEnabled(bool enabled) {
   if (m_list != nullptr) {
     m_list->notifyDataChanged();
   }
-  setOpacity(enabled ? 1.0f : 0.55f);
+  setOpacity(enabled ? 1.0f : motion::design::state::disabledContent);
 }
 
 void SearchPicker::doLayout(Renderer& renderer) { Flex::doLayout(renderer); }

@@ -40,4 +40,6 @@ namespace Style {
 
   float scaledRadiusXl(float localScale) noexcept { return scaledRadius(radiusXl, localScale); }
 
+  float scaledSemanticRadius(float radius, float localScale) noexcept { return scaledRadius(radius, localScale); }
+
 } // namespace Style

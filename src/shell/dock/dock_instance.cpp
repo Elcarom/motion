@@ -334,7 +334,7 @@ namespace shell::dock {
     if (instance.panel == nullptr)
       return;
     const float opacity = cfg.backgroundOpacity;
-    instance.panel->setFill(colorSpecFromRole(ColorRole::Surface, opacity));
+    instance.panel->setFill(colorSpecFromRole(ColorRole::SurfaceContainerLow, opacity));
     instance.panel->setBorder(cfg.border, cfg.borderWidth);
   }
 

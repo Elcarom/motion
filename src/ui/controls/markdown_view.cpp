@@ -113,7 +113,7 @@ namespace {
     auto block = ui::column({
         .align = FlexAlign::Start,
         .padding = pad,
-        .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.5f),
+        .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.5f),
         .radius = Style::scaledRadiusSm(ctx.scale),
         .fillWidth = true,
     });

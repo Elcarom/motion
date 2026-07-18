@@ -120,7 +120,9 @@ void ContextMenuPopup::open(ContextMenuPopupRequest request) {
 
     self->m_sceneRoot = std::make_unique<Node>();
     self->m_sceneRoot->setSize(fw, fh);
-    (void)popup_chrome::addShadow(*self->m_sceneRoot, chrome, self->m_shadowConfig, Style::scaledRadiusLg());
+    (void)popup_chrome::addShadow(
+        *self->m_sceneRoot, chrome, self->m_shadowConfig, Style::scaledSemanticRadius(Style::radiusMenu)
+    );
 
     auto scrollView = std::make_unique<ScrollView>();
     scrollView->setPosition(chrome.contentX(), chrome.contentY());

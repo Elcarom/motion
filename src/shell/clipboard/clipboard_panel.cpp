@@ -440,14 +440,14 @@ namespace {
       }
 
       if (m_selected) {
-        m_background->setFill(colorSpecFromRole(ColorRole::Primary));
+        m_background->setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
       } else if (m_hovered) {
-        m_background->setFill(colorSpecFromRole(ColorRole::Hover));
+        m_background->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
       } else {
         m_background->setFill(clearColorSpec());
       }
 
-      const auto activeRole = m_selected ? ColorRole::OnPrimary : ColorRole::OnHover;
+      const auto activeRole = m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface;
       const bool active = m_selected || m_hovered;
       m_glyph->setColor(
           active ? colorSpecFromRole(activeRole)

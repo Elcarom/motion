@@ -826,7 +826,7 @@ void DesktopWidgetsEditor::buildInspector(
               .gap = Style::spaceSm,
               .paddingV = Style::spaceXs,
               .paddingH = Style::spaceMd,
-              .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.85f),
+              .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.85f),
               .minHeight = Style::controlHeightSm,
               .fillWidth = true,
               .width = kInspectorWidth,

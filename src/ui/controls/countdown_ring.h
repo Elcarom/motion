@@ -3,6 +3,7 @@
 #include "render/scene/node.h"
 #include "ui/palette.h"
 #include "ui/signal.h"
+#include "ui/style.h"
 
 class CountdownRingNode;
 class Label;
@@ -35,5 +36,5 @@ private:
   Signal<>::ScopedConnection m_paletteConn;
   float m_ringSize = 64.0f;
   float m_thickness = 6.0f;
-  float m_fontSize = 22.0f;
+  float m_fontSize = Style::fontSizeTitleLarge;
 };

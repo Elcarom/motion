@@ -2770,7 +2770,7 @@ namespace settings {
           .align = FlexAlign::Stretch,
           .gap = Style::spaceXs * ctx.scale,
           .padding = Style::spaceSm * ctx.scale,
-          .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.45f),
+          .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.45f),
           .radius = Style::scaledRadiusMd(ctx.scale),
           .border = colorSpecFromRole(ColorRole::Outline),
           .minWidth = 160.0f * ctx.scale,
@@ -2917,7 +2917,7 @@ namespace settings {
           // A color meant to blend into surfaces (e.g. surface_variant) can't separate the box from the lane,
           // so fall back to a neutral border + slight surface lift when the fill is too close to the lane.
           const Color groupFillColor = resolveColorSpec(group->fill);
-          const Color laneBgColor = colorForRole(ColorRole::SurfaceVariant);
+          const Color laneBgColor = colorForRole(ColorRole::SurfaceContainer);
           const float dr = groupFillColor.r - laneBgColor.r;
           const float dg = groupFillColor.g - laneBgColor.g;
           const float db = groupFillColor.b - laneBgColor.b;
@@ -3198,7 +3198,7 @@ namespace settings {
                     .gap = 2.0f * ctx.scale,
                     .paddingV = Style::spaceMd * ctx.scale,
                     .paddingH = Style::spaceSm * ctx.scale,
-                    .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.25f),
+                    .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.25f),
                     .radius = Style::scaledRadiusSm(ctx.scale),
                     .border = colorSpecFromRole(ColorRole::Outline),
                 },

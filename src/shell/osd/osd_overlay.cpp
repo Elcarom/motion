@@ -146,7 +146,7 @@ namespace {
 
   [[nodiscard]] float osdCardRadius(float cw, float ch, float layoutScale) {
     const float maxR = std::min(cw, ch) * 0.5f;
-    return std::min(maxR, Style::scaledRadiusXl(layoutScale));
+    return std::min(maxR, Style::scaledSemanticRadius(Style::radiusPopup, layoutScale));
   }
 
   [[nodiscard]] float osdProgressRadius(float layoutScale) {
@@ -564,8 +564,8 @@ void OsdOverlay::buildScene(Instance& inst, std::uint32_t width, std::uint32_t h
           .height = ch,
           .configure = [cardX, cardY, cw, ch, s, border, backgroundOpacity](Box& box) {
             box.setCardStyle();
-            box.setFill(colorSpecFromRole(ColorRole::Surface, backgroundOpacity));
-            box.setBorder(colorSpecFromRole(ColorRole::Outline), border);
+            box.setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh, backgroundOpacity));
+            box.setBorder(colorSpecFromRole(ColorRole::OutlineVariant), border);
             box.setRadius(osdCardRadius(cw, ch, s));
             box.setPosition(cardX, cardY);
             box.setZIndex(0);
@@ -622,7 +622,7 @@ void OsdOverlay::buildScene(Instance& inst, std::uint32_t width, std::uint32_t h
   auto progress = ui::progressBar({
       .out = &inst.progress,
       .fill = colorSpecFromRole(ColorRole::Primary),
-      .track = colorSpecFromRole(ColorRole::SurfaceVariant),
+      .track = colorSpecFromRole(ColorRole::SecondaryContainer),
       .radius = osdProgressRadius(s),
       .orientation = vertical ? ProgressBarOrientation::Vertical : ProgressBarOrientation::Horizontal,
       .width = vertical ? verticalProgressWidth(s) : 0.0f,
@@ -660,7 +660,7 @@ void OsdOverlay::updateInstanceContent(Instance& inst) {
   // Card frame size is animated during reveal; measure layout against intrinsic size.
   const float cw = cardWidth(s, m_lastOrientation);
   const float ch = cardHeight(s, m_lastOrientation, m_lastShowProgress);
-  inst.background->setFill(colorSpecFromRole(ColorRole::Surface, osdBackgroundOpacity(m_config)));
+  inst.background->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh, osdBackgroundOpacity(m_config)));
 
   const ColorRole accentRole = m_content.overLimit ? ColorRole::Error
       : m_content.inactive                         ? ColorRole::OnSurfaceVariant

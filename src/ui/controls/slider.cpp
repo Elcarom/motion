@@ -283,22 +283,22 @@ void Slider::applyVisualState() {
   const bool pressing = m_inputArea != nullptr && m_inputArea->pressed();
   const bool focused = m_inputArea != nullptr && m_inputArea->focused();
 
-  Color trackColor = resolved(ColorRole::Outline);
+  Color trackColor = resolved(ColorRole::SurfaceContainerHighest);
   Color fillColor = resolved(ColorRole::Primary);
-  Color thumbColor = resolved(ColorRole::OnPrimary);
-  Color thumbBorder = resolved(ColorRole::Outline);
+  Color thumbColor = resolved(ColorRole::Primary);
+  Color thumbBorder = resolved(ColorRole::Primary);
 
   m_thumb->setVisible(m_enabled);
 
   if (!m_enabled) {
-    trackColor = resolved(ColorRole::Outline, Style::disabledOutlineAlpha);
-    fillColor = resolved(ColorRole::Primary, 0.5f);
+    trackColor = resolved(ColorRole::OnSurface, motion::design::state::disabledContainer);
+    fillColor = resolved(ColorRole::OnSurface, motion::design::state::disabledContent);
   } else if (pressing) {
     fillColor = resolved(ColorRole::Primary);
   } else if (focused) {
     thumbBorder = resolveColorSpec(focusRingColorSpec());
   } else if (hovering) {
-    thumbBorder = resolved(ColorRole::Hover);
+    thumbBorder = resolved(ColorRole::Primary);
   }
 
   auto trackStyle = solidStyle(trackColor, m_trackHeight * 0.5f);

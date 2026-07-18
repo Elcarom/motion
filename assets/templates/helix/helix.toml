@@ -86,9 +86,9 @@
 "ui.text" = { fg = "onBackground" }
 "ui.text.focus" = { fg = "onSurface", bg = "surfaceContainer", modifiers = ["bold"] }
 
-"ui.virtual" = "surfaceVariant"
+"ui.virtual" = "outlineVariant"
 "ui.virtual.ruler" = { bg = "surfaceContainerLow" }
-"ui.virtual.indent-guide" = "surfaceVariant"
+"ui.virtual.indent-guide" = "outlineVariant"
 "ui.virtual.inlay-hint" = { fg = "onSurfaceVariant", bg = "surfaceContainer", modifiers = ["dim"] }
 "ui.virtual.jump-label" = { fg = "primary", modifiers = ["bold"] }
 
@@ -116,11 +116,11 @@ hint = "hint"
 
 [palette]
 # Constants to be used in syntax highlighting, not meant for template processor.
-warning = "#f9e2af"
-info = "#89dceb"
-hint = "#94e2d5"
-plus = "#a6e3a1"
-delta = "#89b4fa"
+warning = "{{colors.tertiary.default.hex}}"
+info = "{{colors.primary.default.hex}}"
+hint = "{{colors.secondary.default.hex}}"
+plus = "{{colors.tertiary.default.hex}}"
+delta = "{{colors.secondary.default.hex}}"
 
 # Template colors
 primary = "{{colors.primary.default.hex}}"

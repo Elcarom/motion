@@ -591,7 +591,7 @@ void LockSurface::layoutScene(std::uint32_t width, std::uint32_t height) {
     if (showTint) {
       m_tintOverlay->setStyle(
           RoundedRectStyle{
-              .fill = colorForRole(ColorRole::Surface, tintIntensity),
+              .fill = colorForRole(ColorRole::SurfaceDim, tintIntensity),
               .fillMode = FillMode::Solid,
           }
       );
@@ -601,7 +601,7 @@ void LockSurface::layoutScene(std::uint32_t width, std::uint32_t height) {
   const lockscreen_login_box::LoginBoxStyle loginStyle = resolveLoginStyle();
 
   m_loginPanel->setFill(loginStyle.panelFill);
-  m_loginPanel->setBorder(colorForRole(ColorRole::Outline, loginStyle.panelOpacity), Style::borderWidth);
+  m_loginPanel->setBorder(colorForRole(ColorRole::OutlineVariant, loginStyle.panelOpacity), Style::borderWidth);
   m_loginPanel->setRadius(Style::scaledRadius(loginStyle.panelRadius));
   m_loginPanel->setSoftness(1.0f);
 

@@ -1975,11 +1975,11 @@ void PanelManager::applyAttachedDecorationStyle() {
     return;
   }
   const float scale = m_activePanel->contentScale();
-  const float radius = Style::scaledRadiusXl(scale);
+  const float radius = Style::scaledSemanticRadius(Style::radiusPanel, scale);
 
   if (m_bgNode != nullptr) {
     auto* bg = static_cast<Box*>(m_bgNode);
-    bg->setFill(colorSpecFromRole(ColorRole::Surface, m_attachedBackgroundOpacity));
+    bg->setFill(colorSpecFromRole(ColorRole::SurfaceContainerLow, m_attachedBackgroundOpacity));
   }
 
   if (m_panelShadowNode != nullptr && m_config != nullptr) {
@@ -2008,7 +2008,7 @@ void PanelManager::applyAttachedDecorationStyle() {
     // Gradient runs perpendicular to the bar edge, dark next to the bar, transparent toward
     // the panel interior. For top/left: dark at start. For bottom/right: dark at end.
     const bool darkAtStart = !(barIsBottom || barIsRight);
-    const Color darkColor = rgba(0.0f, 0.0f, 0.0f, contactAlpha);
+    const Color darkColor = colorForRole(ColorRole::Scrim, contactAlpha);
     const Color clearGradient = rgba(0.0f, 0.0f, 0.0f, 0.0f);
     const Color startColor = darkAtStart ? darkColor : clearGradient;
     const Color endColor = darkAtStart ? clearGradient : darkColor;
@@ -2047,7 +2047,7 @@ void PanelManager::onConfigReloaded() {
   if (!m_attachedToBar && m_bgNode != nullptr) {
     auto* bg = static_cast<Box*>(m_bgNode);
     bg->setPanelStyle(m_config->config().shell.panel.borders);
-    bg->setFill(colorSpecFromRole(ColorRole::Surface, panelBackgroundOpacity));
+    bg->setFill(colorSpecFromRole(ColorRole::SurfaceContainerLow, panelBackgroundOpacity));
   }
   if (m_panelShadowNode != nullptr) {
     const auto& shadowConfig = m_config->config().shell.shadow;
@@ -2055,7 +2055,7 @@ void PanelManager::onConfigReloaded() {
         m_config->config().shell.panel.shadow && shell::surface_shadow::enabled(true, shadowConfig);
     m_panelShadowNode->setVisible(panelShadow);
     if (!m_attachedToBar && panelShadow) {
-      const float shadowRadius = Style::scaledRadiusXl(m_activePanel->contentScale());
+      const float shadowRadius = Style::scaledSemanticRadius(Style::radiusPanel, m_activePanel->contentScale());
       m_panelShadowNode->setStyle(
           shell::surface_shadow::style(
               shadowConfig, panelBackgroundOpacity,
@@ -2148,14 +2148,16 @@ void PanelManager::buildScene(std::uint32_t width, std::uint32_t height) {
       const bool panelBorders = m_config != nullptr && m_config->config().shell.panel.borders;
       bg->setPanelStyle(panelBorders);
       if (m_attachedToBar) {
-        const float radius = Style::scaledRadiusXl(m_activePanel->contentScale());
+        const float radius = Style::scaledSemanticRadius(Style::radiusPanel, m_activePanel->contentScale());
         bg->clearBorder();
         bg->setCornerShapes(attached_panel::cornerShapes(m_attachedBarPosition));
         bg->setLogicalInset(attached_panel::logicalInset(m_attachedBarPosition, radius));
         bg->setRadii(Radii{radius, radius, radius, radius});
         // Fill (opacity-dependent) is applied via applyAttachedDecorationStyle() below.
       } else {
-        bg->setFill(colorSpecFromRole(ColorRole::Surface, resolveDetachedPanelBackgroundOpacity(m_config)));
+        bg->setFill(
+            colorSpecFromRole(ColorRole::SurfaceContainerLow, resolveDetachedPanelBackgroundOpacity(m_config))
+        );
       }
       m_bgNode = sceneParent->addChild(std::move(bg));
     }

@@ -1183,10 +1183,10 @@ void WorkspacesWidget::updateHoverOverlay() {
     for (auto& item : m_items) {
       if (&item == &hoveredItem) {
         if (item.indicator != nullptr) {
-          item.indicator->setFill(colorSpecFromRole(ColorRole::Hover));
+          item.indicator->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
         }
         if (item.text != nullptr) {
-          item.text->setColor(colorSpecFromRole(ColorRole::OnHover));
+          item.text->setColor(colorSpecFromRole(ColorRole::OnSurface));
         }
       } else {
         applyItemVisualStyle(item);
@@ -1503,30 +1503,7 @@ ColorSpec WorkspacesWidget::workspaceTextColor(const Workspace& workspace) const
 }
 
 ColorRole WorkspacesWidget::onRoleForFill(ColorRole fill) {
-  switch (fill) {
-  case ColorRole::Primary:
-    return ColorRole::OnPrimary;
-  case ColorRole::Secondary:
-    return ColorRole::OnSecondary;
-  case ColorRole::Tertiary:
-    return ColorRole::OnTertiary;
-  case ColorRole::Error:
-    return ColorRole::OnError;
-  case ColorRole::Surface:
-  case ColorRole::SurfaceVariant:
-  case ColorRole::Outline:
-  case ColorRole::Shadow:
-  case ColorRole::Hover:
-  case ColorRole::OnPrimary:
-  case ColorRole::OnSecondary:
-  case ColorRole::OnTertiary:
-  case ColorRole::OnError:
-  case ColorRole::OnSurface:
-  case ColorRole::OnSurfaceVariant:
-  case ColorRole::OnHover:
-    return ColorRole::OnSurface;
-  }
-  return ColorRole::OnSurface;
+  return onColorRoleFor(fill);
 }
 
 ColorSpec WorkspacesWidget::readableColorForFill(const ColorSpec& fill) {

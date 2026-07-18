@@ -129,7 +129,7 @@ void Checkbox::applyState() {
     return;
   }
 
-  ColorSpec fill = colorSpecFromRole(ColorRole::Surface);
+  ColorSpec fill = colorSpecFromRole(ColorRole::SurfaceContainerLowest);
   ColorSpec border = colorSpecFromRole(ColorRole::Outline);
   ColorSpec glyph = colorSpecFromRole(ColorRole::OnPrimary);
   float borderWidth = Style::borderWidth * m_scale;
@@ -139,15 +139,15 @@ void Checkbox::applyState() {
     border = m_checkedBorder.value_or(colorSpecFromRole(ColorRole::Primary));
     glyph = m_checkedGlyph.value_or(colorSpecFromRole(ColorRole::OnPrimary));
     if (focused) {
-      border = colorSpecFromRole(ColorRole::Secondary);
+      border = focusRingColorSpec();
       borderWidth = Style::emphasizedBorderWidth * m_scale;
     }
   } else if (focused) {
-    fill = colorSpecFromRole(ColorRole::Secondary, 0.18f);
-    border = colorSpecFromRole(ColorRole::Secondary);
+    fill = colorSpecFromRole(ColorRole::PrimaryContainer, motion::design::state::focused);
+    border = focusRingColorSpec();
     borderWidth = Style::emphasizedBorderWidth * m_scale;
   } else if (hovered()) {
-    border = colorSpecFromRole(ColorRole::Hover);
+    border = colorSpecFromRole(ColorRole::Primary);
   }
 
   m_box->setFill(fill);
@@ -156,5 +156,5 @@ void Checkbox::applyState() {
   m_checkGlyph->setColor(glyph);
   m_checkGlyph->setVisible(m_checked);
 
-  setOpacity(m_enabled ? 1.0f : 0.55f);
+  setOpacity(m_enabled ? 1.0f : motion::design::state::disabledContent);
 }

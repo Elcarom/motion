@@ -496,27 +496,29 @@ namespace settings {
               .normal =
                   Button::ButtonStateColors{
                       .bg = colorSpecFromRole(
-                          active ? ColorRole::Primary : ColorRole::SurfaceVariant, active ? 1.0f : 0.45f
+                          active ? ColorRole::SecondaryContainer : ColorRole::SurfaceContainer, active ? 1.0f : 0.45f
                       ),
-                      .border = active ? colorSpecFromRole(ColorRole::Primary, 0.9f)
-                                       : colorSpecFromRole(ColorRole::Outline, Style::disabledOutlineAlpha),
-                      .label = colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnSurface),
+                      .border = active ? colorSpecFromRole(ColorRole::SecondaryContainer)
+                                       : colorSpecFromRole(ColorRole::OutlineVariant),
+                      .label = colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface),
                   },
               .hover =
                   Button::ButtonStateColors{
-                      .bg = colorSpecFromRole(active ? ColorRole::Primary : ColorRole::Hover),
-                      .border = colorSpecFromRole(active ? ColorRole::Primary : ColorRole::Hover),
-                      .label = colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnHover),
+                      .bg = colorSpecFromRole(
+                          active ? ColorRole::SecondaryContainer : ColorRole::SurfaceContainerHighest
+                      ),
+                      .border = colorSpecFromRole(active ? ColorRole::SecondaryContainer : ColorRole::OutlineVariant),
+                      .label = colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface),
                   },
               .pressed =
                   Button::ButtonStateColors{
-                      .bg = colorSpecFromRole(ColorRole::Primary),
-                      .border = colorSpecFromRole(ColorRole::Primary),
-                      .label = colorSpecFromRole(ColorRole::OnPrimary),
+                      .bg = colorSpecFromRole(ColorRole::SecondaryContainer),
+                      .border = colorSpecFromRole(ColorRole::SecondaryContainer),
+                      .label = colorSpecFromRole(ColorRole::OnSecondaryContainer),
                   },
               .disabled =
                   Button::ButtonStateColors{
-                      .bg = colorSpecFromRole(ColorRole::SurfaceVariant, 0.35f),
+                      .bg = colorSpecFromRole(ColorRole::SurfaceContainer, 0.35f),
                       .border = colorSpecFromRole(ColorRole::Outline, Style::disabledOutlineAlpha),
                       .label = colorSpecFromRole(ColorRole::OnSurfaceVariant),
                   },
@@ -567,7 +569,7 @@ namespace settings {
                 .text = option.label,
                 .fontSize = Style::fontSizeBody * scale,
                 .fontWeight = FontWeight::Medium,
-                .color = colorSpecFromRole(checked ? ColorRole::OnPrimary : ColorRole::OnSurface),
+                .color = colorSpecFromRole(checked ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface),
                 .maxLines = 1,
             })
         );
@@ -578,7 +580,7 @@ namespace settings {
                   .text = option.description,
                   .fontSize = Style::fontSizeCaption * scale,
                   .color = colorSpecFromRole(
-                      checked ? ColorRole::OnPrimary : ColorRole::OnSurfaceVariant, checked ? 0.75f : 1.0f
+                      checked ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant, checked ? 0.75f : 1.0f
                   ),
                   .maxLines = 1,
               })
@@ -587,28 +589,32 @@ namespace settings {
         card->addChild(std::move(text));
         const auto syncNormalText = [titleLabel, categoryLabel](bool active) {
           if (titleLabel != nullptr) {
-            titleLabel->setColor(colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnSurface));
+            titleLabel->setColor(colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface));
           }
           if (categoryLabel != nullptr) {
             categoryLabel->setColor(
-                colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnSurfaceVariant, active ? 0.75f : 1.0f)
+                colorSpecFromRole(
+                    active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant, active ? 0.75f : 1.0f
+                )
             );
           }
         };
         const auto syncHoverText = [titleLabel, categoryLabel](bool active) {
           if (titleLabel != nullptr) {
-            titleLabel->setColor(colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnHover));
+            titleLabel->setColor(colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface));
           }
           if (categoryLabel != nullptr) {
-            categoryLabel->setColor(colorSpecFromRole(active ? ColorRole::OnPrimary : ColorRole::OnHover, 0.75f));
+            categoryLabel->setColor(
+                colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant, 0.75f)
+            );
           }
         };
         const auto syncPressedText = [titleLabel, categoryLabel]() {
           if (titleLabel != nullptr) {
-            titleLabel->setColor(colorSpecFromRole(ColorRole::OnPrimary));
+            titleLabel->setColor(colorSpecFromRole(ColorRole::OnSecondaryContainer));
           }
           if (categoryLabel != nullptr) {
-            categoryLabel->setColor(colorSpecFromRole(ColorRole::OnPrimary, 0.75f));
+            categoryLabel->setColor(colorSpecFromRole(ColorRole::OnSecondaryContainer, 0.75f));
           }
         };
         auto setTileActive = [selected, value, commit, checkedState, card, checkbox, cardPaletteFor,
@@ -1432,7 +1438,7 @@ namespace settings {
            .justify = FlexJustify::Center,
            .gap = Style::spaceSm * scale,
            .padding = (Style::spaceLg * 2.0f) * scale,
-           .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.24f),
+           .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.24f),
            .radius = Style::scaledRadiusMd(scale),
            .border = colorSpecFromRole(ColorRole::Outline),
            .minWidth = 360.0f * scale,

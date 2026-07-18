@@ -35,6 +35,9 @@ python3 tools/validate_repository.py
 python3 tools/branding_audit.py
 ```
 
+The Meson test suite includes `palette_roles`, which checks role-token round trips, generated-to-runtime mapping,
+semantic foreground lookup, state-layer composition, and interpolation of the extended runtime palette.
+
 ## Clean-room build
 
 Create a source-only archive or copy, extract it outside the working directory, then configure and build without local
@@ -69,6 +72,8 @@ compositor and protocol versions.
 - [ ] dark, light, auto;
 - [ ] `m3-expressive` wallpaper palette and manual/fixed palette;
 - [ ] wallpaper change while panels are open;
+- [ ] verify all five surface-container levels update together while launcher, control center, menus, and notifications
+      are visible;
 - [ ] high contrast and pure black;
 - [ ] UI scale 1.0/1.25/1.5/2.0;
 - [ ] reduced motion;
@@ -87,6 +92,8 @@ compositor and protocol versions.
 - [ ] clipboard text/image history, pin, clear, auto-paste;
 - [ ] wallpaper picker and dynamic color update;
 - [ ] settings, dialogs, pickers, errors, empty and loading states;
+- [ ] button variants, sliders/range sliders, switches, checkboxes, radios, inputs, selects, segmented controls,
+      scrollbars, progress indicators, focus rings, disabled states, and destructive states;
 - [ ] lock screen, authentication failure/success, idle grace;
 - [ ] session actions in a disposable test session;
 - [ ] desktop widgets, edit mode, persistence;

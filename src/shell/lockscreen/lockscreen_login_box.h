@@ -28,7 +28,7 @@ namespace lockscreen_login_box {
   constexpr std::string_view kShowKeyboardLayoutKey = "show_keyboard_layout";
 
   struct LoginBoxStyle {
-    ColorSpec panelFill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.88f);
+    ColorSpec panelFill = colorSpecFromRole(ColorRole::SurfaceContainerHigh, 0.92f);
     float panelOpacity = 0.88f;
     float panelRadius = 12.0f;
     float inputOpacity = 1.0f;

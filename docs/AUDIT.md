@@ -29,6 +29,32 @@ Ninja 1.12, CMake 3.31, Python 3.13, and Git 2.47 were available. See `artifacts
 - The theme pipeline already generated broad Material token maps, but runtime layout/style constants were less
   centralized. Motion adds a canonical token layer and routes the established `Style` facade through it.
 
+## Material 3 Expressive visual-system pass
+
+The repository-wide visual audit covered every directory under `src/ui/controls`, `src/ui/dialogs`, `src/ui/visuals`,
+`src/theme`, and `src/shell`, plus configuration defaults, theme templates, scaling, motion, accessibility, and assets.
+The highest-impact inherited limitation was architectural: palette generation emitted the complete Material role map,
+while runtime controls received only 16 colors and used a global tertiary-derived hover pair as a parallel appearance
+path.
+
+The pass made the following repository changes:
+
+- expanded the runtime palette to all UI-facing generated roles and included those roles in live theme interpolation;
+- centralized semantic foreground selection and state-layer composition;
+- added semantic geometry, typography metrics, borders, panel/dock sizing, density, and motion-intent tokens;
+- remapped shared buttons, fields, selection controls, sliders, menus, cards, scrollbars, progress, picker rows, and
+  dialogs to component-specific roles and shapes;
+- migrated launcher, clipboard, control center, notification, OSD, lock/greeter, switcher, wallpaper, settings,
+  workspace/taskbar, desktop editor/widget, and tray-menu primitives through shared styling;
+- exported the complete role set to the greeter and retained legacy color names only as parseable profile aliases;
+- reduced the default floating-surface shadow alpha from 0.55 to 0.28 and shifted separation toward container tones and
+  outline variants;
+- added `palette_roles_test` for generated role coverage, state layers, semantic foregrounds, and theme interpolation.
+
+No compositor, IPC, service, persistence, plugin, migration, command, or feature contract was changed. Required
+Noctalia provenance, profile migration, legacy paths/environment variables, command alias, and inherited compatibility
+endpoints remain intact.
+
 ## Correctness findings and fixes
 
 - Added parsing, serialization, CLI, template, generation, default, and regression-test coverage for `m3-expressive`.

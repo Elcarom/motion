@@ -560,7 +560,7 @@ void Input::setEnabled(bool enabled) {
   if (m_clearButtonArea != nullptr) {
     m_clearButtonArea->setEnabled(enabled);
   }
-  setOpacity(enabled ? 1.0f : 0.55f);
+  setOpacity(enabled ? 1.0f : motion::design::state::disabledContent);
   applyVisualState();
 }
 
@@ -1381,12 +1381,12 @@ void Input::applyVisualState() {
 
   if (m_frameVisible) {
     m_background->setVisible(true);
-    const Color fill = focused ? resolved(ColorRole::Surface, m_surfaceOpacity)
-                               : resolved(ColorRole::SurfaceVariant, m_surfaceOpacity);
+    const Color fill = focused ? resolved(ColorRole::SurfaceContainerHighest, m_surfaceOpacity)
+                               : resolved(ColorRole::SurfaceContainerHigh, m_surfaceOpacity);
     const Color border = m_invalid
         ? resolved(ColorRole::Error)
         : (focused ? resolveColorSpec(focusRingColorSpec())
-                   : (inputHovered ? resolved(ColorRole::Hover) : resolved(ColorRole::Outline)));
+                   : (inputHovered ? resolved(ColorRole::Primary) : resolved(ColorRole::Outline)));
 
     m_background->setStyle(
         RoundedRectStyle{

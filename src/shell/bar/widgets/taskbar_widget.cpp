@@ -837,7 +837,7 @@ void TaskbarWidget::buildTaskButtons(Renderer& renderer) {
       }
 
       const bool emptyWorkspace = renderedTasks.empty();
-      const auto surfaceFill = colorSpecFromRole(ColorRole::SurfaceVariant, ws.workspace.active ? 0.52f : 0.18f);
+      const auto surfaceFill = colorSpecFromRole(ColorRole::SurfaceContainerHighest, ws.workspace.active ? 0.52f : 0.18f);
       const auto borderColor = colorSpecFromRole(ColorRole::Primary, ws.workspace.active ? 0.65f : 0.16f);
 
       const float crossSize = std::round(tileSize + groupPad * 2.0f);
@@ -2349,30 +2349,7 @@ ColorSpec TaskbarWidget::workspaceTextColor(const Workspace& workspace) const {
 }
 
 ColorRole TaskbarWidget::onRoleForFill(ColorRole fill) {
-  switch (fill) {
-  case ColorRole::Primary:
-    return ColorRole::OnPrimary;
-  case ColorRole::Secondary:
-    return ColorRole::OnSecondary;
-  case ColorRole::Tertiary:
-    return ColorRole::OnTertiary;
-  case ColorRole::Error:
-    return ColorRole::OnError;
-  case ColorRole::Surface:
-  case ColorRole::SurfaceVariant:
-  case ColorRole::Outline:
-  case ColorRole::Shadow:
-  case ColorRole::Hover:
-  case ColorRole::OnPrimary:
-  case ColorRole::OnSecondary:
-  case ColorRole::OnTertiary:
-  case ColorRole::OnError:
-  case ColorRole::OnSurface:
-  case ColorRole::OnSurfaceVariant:
-  case ColorRole::OnHover:
-    return ColorRole::OnSurface;
-  }
-  return ColorRole::OnSurface;
+  return onColorRoleFor(fill);
 }
 
 ColorSpec TaskbarWidget::readableColorForFill(const ColorSpec& fill) {

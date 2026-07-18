@@ -4,8 +4,9 @@
 
 Motion's architecture includes keyboard event handling, focusable reusable controls, semantic control state, focus
 rings, configurable UI scale, high-contrast state, reduced motion, notification behavior, and pointer/touch protocol
-paths. This transformation reviewed and documented those systems and centralized target, focus, type, shape, and motion
-values.
+paths. The shared button, input, select, slider, range-slider, switch, checkbox, and radio paths now resolve keyboard
+focus separately from pointer hover. Radio buttons support the same Validate-key activation path as the other selection
+controls. Target, focus, type, shape, state-layer, and motion values are centralized.
 
 No formal WCAG, EN 301 549, Section 508, or screen-reader certification is claimed. The transformation environment did
 not provide a graphical Wayland session, accessibility bus, screen reader, touch device, or colorimeter.
@@ -37,6 +38,10 @@ surface is preferred.
 
 Material generated palettes provide paired roles, but actual component contrast must still be reviewed because opacity,
 wallpaper translucency, imagery, and state layers affect the final result.
+
+The runtime no longer discards generated container and inverse roles. High-contrast and dynamic themes therefore reach
+the same semantic control slots as fixed themes, including error containers, focus rings, floating surfaces, and menu
+selection. Compatibility color names remain accepted for old profiles but are not used by canonical controls.
 
 ## Motion accessibility
 

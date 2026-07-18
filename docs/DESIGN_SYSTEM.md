@@ -32,15 +32,17 @@ size, algorithm threshold, or surface-specific constraint that cannot be express
 
 ## Color system
 
-The runtime `Palette` exposes primary, secondary, tertiary, error, surface, surface-container-equivalent, outline,
-shadow, hover, and corresponding on-colors. Theme generation additionally produces the fuller Material role set used by
-templates: containers, fixed roles, surface dim/bright, five surface-container levels, outline variant, scrim, inverse
-roles, background, and terminal colors.
+The runtime `Palette` exposes the complete UI-facing Material role set: primary/secondary/tertiary/error groups and
+their containers, background, surface dim/bright, all five surface-container levels, outline variant, inverse roles,
+surface tint, scrim, shadow, and paired on-colors. The generated palette maps directly into these roles; it is no longer
+collapsed into one generic surface variant before reaching controls. Fixed and community palettes are expanded through
+the same path, so live wallpaper changes, light/dark changes, and manual palettes update every role coherently.
 
-The current renderer maps generated `surface_container` to the compact runtime `surfaceVariant` role. This preserves
-compatibility with the existing scene graph while allowing exported templates to consume the full generated role set.
-Contributors should extend runtime roles only when a component genuinely needs a distinct semantic layer; avoid
-hardcoded palette arithmetic inside feature code.
+`stateLayerColor(container, content, opacity)` is the canonical resolver for hover, focus, press, and drag overlays.
+This preserves the identity of a component's container rather than switching the whole UI to a global hover color.
+`hover`, `on_hover`, and `surface_variant` remain parseable only for configuration and profile compatibility. Canonical
+Motion controls do not use them. `onColorRoleFor()` centralizes role-backed foreground selection for workspace and
+taskbar custom fills.
 
 ### Dynamic color
 
@@ -125,6 +127,23 @@ Every interactive component should account for relevant states:
 
 State must never be conveyed only by color. Use selection geometry, iconography, text, focus rings, or motion as
 appropriate.
+
+### Implemented component language
+
+- Buttons map the existing default, primary, secondary, destructive, outlined, ghost, and tab APIs to filled-tonal,
+  filled, tertiary-tonal, error-container, outlined, text/icon, and selected-navigation treatments. Text buttons and
+  circular icon buttons select different semantic shapes automatically.
+- Inputs, selects, steppers, and keybind recorders use high surface containers, field geometry, primary hover outlines,
+  persistent error roles, and distinct focus rings.
+- Sliders and range sliders use a primary active track/thumb against a highest-container inactive track. Switches,
+  checkboxes, and radios share primary selection, semantic disabled opacity, and keyboard focus treatment.
+- Menus and picker popups use high-container chrome, outline-variant separation, menu geometry, and secondary-container
+  keyboard/hover selection. File rows, launcher results, clipboard entries, and switcher tiles use the same selection
+  grammar.
+- Cards use `surface_container`; panels use `surface_container_low`; dialogs, notifications, OSDs, and other floating
+  content use higher container levels. This makes nesting visible without putting every group in another outlined card.
+- Scrollbars remain compact at rest, strengthen on hover, use primary during drag, and retain the existing pointer and
+  wheel behavior. Progress tracks use secondary containers and primary fill.
 
 ## Responsive and multi-monitor guidance
 

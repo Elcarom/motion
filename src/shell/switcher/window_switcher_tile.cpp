@@ -69,7 +69,7 @@ WindowSwitcherTile::WindowSwitcherTile(float contentScale, AsyncTextureCache* as
     : m_contentScale(contentScale), m_asyncTextures(asyncTextures) {
   setHitTestVisible(false);
 
-  const float frameRadius = Style::scaledRadiusXl(m_contentScale);
+  const float frameRadius = Style::scaledSemanticRadius(Style::radiusCard, m_contentScale);
   const float iconRadius = Style::scaledRadiusLg(m_contentScale);
   const float closeBackdropSize = closeHitSize(m_contentScale) + Style::spaceXs * m_contentScale * 0.45f;
 
@@ -82,7 +82,7 @@ WindowSwitcherTile::WindowSwitcherTile(float contentScale, AsyncTextureCache* as
   m_layout->addChild(
       ui::box({
           .out = &m_frame,
-          .fill = colorSpecFromRole(ColorRole::Surface, 0.9f),
+          .fill = colorSpecFromRole(ColorRole::SurfaceContainerHigh, 0.94f),
           .radius = frameRadius,
           .configure = [frameRadius](Box& box) {
             box.setRadius(frameRadius);
@@ -100,7 +100,7 @@ WindowSwitcherTile::WindowSwitcherTile(float contentScale, AsyncTextureCache* as
             column.addChild(
                 ui::box({
                     .out = &m_iconHost,
-                    .fill = colorSpecFromRole(ColorRole::SurfaceVariant),
+                    .fill = colorSpecFromRole(ColorRole::SurfaceContainer),
                     .radius = iconRadius,
                     .configure = [iconRadius](Box& box) {
                       box.setRadius(iconRadius);
@@ -148,7 +148,7 @@ WindowSwitcherTile::WindowSwitcherTile(float contentScale, AsyncTextureCache* as
             m_iconHost->addChild(
                 ui::box({
                     .out = &m_closeBackdrop,
-                    .fill = colorSpecFromRole(ColorRole::Surface, 0.92f),
+                    .fill = colorSpecFromRole(ColorRole::SurfaceContainerHighest, 0.94f),
                     .radius = closeBackdropSize * 0.5f,
                     .visible = false,
                     .participatesInLayout = false,
@@ -295,21 +295,31 @@ bool WindowSwitcherTile::refreshIcon(Renderer& renderer) {
 }
 
 void WindowSwitcherTile::applyVisualState() {
-  const float frameRadius = Style::scaledRadiusXl(m_contentScale);
+  const float frameRadius = Style::scaledSemanticRadius(Style::radiusCard, m_contentScale);
   if (m_selected) {
-    m_frame->setFill(colorSpecFromRole(ColorRole::Surface));
+    m_frame->setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
     m_frame->setBorder(colorSpecFromRole(ColorRole::Primary), Style::emphasizedBorderWidth);
     m_frame->setOpacity(1.0f);
   } else if (m_hovered) {
-    m_frame->setFill(colorSpecFromRole(ColorRole::Surface));
-    m_frame->setBorder(colorSpecFromRole(ColorRole::Hover), Style::emphasizedBorderWidth);
+    m_frame->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
+    m_frame->setBorder(colorSpecFromRole(ColorRole::Primary), Style::emphasizedBorderWidth);
     m_frame->setOpacity(1.0f);
   } else {
-    m_frame->setFill(colorSpecFromRole(ColorRole::Surface));
-    m_frame->setBorder(colorSpecFromRole(ColorRole::Outline, Style::disabledOutlineAlpha), Style::borderWidth);
+    m_frame->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
+    m_frame->setBorder(colorSpecFromRole(ColorRole::OutlineVariant), Style::borderWidth);
     m_frame->setOpacity(1.0f);
   }
   m_frame->setRadius(frameRadius);
+
+  const ColorRole foreground = m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface;
+  if (m_title != nullptr) {
+    m_title->setColor(colorSpecFromRole(foreground));
+  }
+  if (m_subtitle != nullptr) {
+    m_subtitle->setColor(
+        colorSpecFromRole(m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant)
+    );
+  }
 
   if (m_iconHost != nullptr) {
     m_iconHost->clearBorder();

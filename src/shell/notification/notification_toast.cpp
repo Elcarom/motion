@@ -2144,7 +2144,9 @@ void NotificationToast::updateInputRegion(Instance& inst) const {
     const int rw = std::max(1, static_cast<int>(std::ceil(card.cardNode->width())));
     const int rh = std::max(1, static_cast<int>(std::ceil(card.cardNode->height())));
     rects.push_back({rx, ry, rw, rh});
-    auto strips = Surface::tessellateRoundedRect(rx, ry, rw, rh, Style::scaledRadiusXl(notificationUiScale(m_config)));
+    auto strips = Surface::tessellateRoundedRect(
+        rx, ry, rw, rh, Style::scaledSemanticRadius(Style::radiusCard, notificationUiScale(m_config))
+    );
     blurRects.insert(blurRects.end(), strips.begin(), strips.end());
   }
 
@@ -2554,9 +2556,9 @@ InputArea* NotificationToast::buildCard(
           .height = cardHeight,
           .configure = [scale, bgAlpha, borderWidth](Box& box) {
             box.setCardStyle();
-            box.setRadius(Style::scaledRadiusXl(scale));
-            box.setFill(colorSpecFromRole(ColorRole::Surface, bgAlpha));
-            box.setBorder(colorSpecFromRole(ColorRole::Outline), borderWidth);
+            box.setRadius(Style::scaledSemanticRadius(Style::radiusCard, scale));
+            box.setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh, bgAlpha));
+            box.setBorder(colorSpecFromRole(ColorRole::OutlineVariant), borderWidth);
           },
       })
   );

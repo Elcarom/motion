@@ -5,6 +5,15 @@
 **Validation date:** 2026-07-18  
 **Status:** completed to the maximum extent supported by the available non-graphical build environment
 
+## Material 3 Expressive redesign addendum
+
+The repository-wide visual-system pass added complete runtime palette roles, semantic component/state styling, updated
+theme exports, and the `palette_roles` Meson test. In the Windows workspace used for this pass, Python repository,
+branding, translation, TOML, source-diff, and asset/template checks were available and passed. `just`, Meson, Ninja,
+G++, Clang, clang-format, clang-tidy, a WSL distribution, and a graphical Wayland session were unavailable, so the new
+native test and full build remain dependency-complete CI checks. The template comparison helper was also unavailable
+because its external Python `lib.renderer` module was not installed.
+
 ## Environment
 
 | Tool | Result |

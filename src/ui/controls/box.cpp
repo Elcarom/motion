@@ -118,9 +118,9 @@ void Box::setFlatStyle() {
 }
 
 void Box::setPanelStyle(bool showBorder) {
-  m_fill = colorSpecFromRole(ColorRole::Surface);
+  m_fill = colorSpecFromRole(ColorRole::SurfaceContainerLow);
   if (showBorder) {
-    m_border = colorSpecFromRole(ColorRole::Outline);
+    m_border = colorSpecFromRole(ColorRole::OutlineVariant);
     m_borderWidth = Style::borderWidth;
   } else {
     m_border = clearColorSpec();
@@ -134,21 +134,25 @@ void Box::setPanelStyle(bool showBorder) {
   m_style.fillMode = FillMode::Solid;
   m_style.corners = {};
   m_style.logicalInset = {};
-  m_style.radius = Style::scaledRadiusXl();
+  m_style.radius = Style::scaledSemanticRadius(Style::radiusPanel);
   m_style.softness = 1.0f;
   syncStyle();
 }
 
-void Box::setDialogStyle() { setPanelStyle(/*showBorder=*/true); }
+void Box::setDialogStyle() {
+  setPanelStyle(/*showBorder=*/true);
+  setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
+  setRadius(Style::scaledSemanticRadius(Style::radiusDialog));
+}
 
 void Box::setCardStyle(float scale, float fillOpacity, bool showBorder) {
-  setFill(colorSpecFromRole(ColorRole::SurfaceVariant, fillOpacity));
+  setFill(colorSpecFromRole(ColorRole::SurfaceContainer, fillOpacity));
   if (showBorder) {
-    setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth);
+    setBorder(colorSpecFromRole(ColorRole::OutlineVariant), Style::borderWidth);
   } else {
     clearBorder();
   }
-  setRadius(Style::scaledRadiusXl(scale));
+  setRadius(Style::scaledSemanticRadius(Style::radiusCard, scale));
 }
 
 void Box::syncStyle() { m_rect->setStyle(m_style); }

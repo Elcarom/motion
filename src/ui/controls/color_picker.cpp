@@ -297,7 +297,7 @@ void ColorPicker::setEnabled(bool enabled) {
       field->setEnabled(enabled);
     }
   }
-  setOpacity(enabled ? 1.0f : 0.55f);
+  setOpacity(enabled ? 1.0f : motion::design::state::disabledContent);
 }
 
 void ColorPicker::rebuildSvTexture(Renderer& renderer) {

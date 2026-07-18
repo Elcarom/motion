@@ -22,7 +22,9 @@ namespace {
 
   ColorSpec enabledItemColor() { return colorSpecFromRole(ColorRole::OnSurface); }
 
-  ColorSpec disabledItemColor() { return colorSpecFromRole(ColorRole::OnSurface, 0.55f); }
+  ColorSpec disabledItemColor() {
+    return colorSpecFromRole(ColorRole::OnSurface, motion::design::state::disabledContent);
+  }
 
   bool hasToggle(const ContextMenuControlEntry& entry) { return entry.checkmark || entry.radio; }
 
@@ -218,9 +220,9 @@ void ContextMenuControl::rebuild(Renderer& renderer) {
       ui::box({
           .configure = [this](Box& bg) {
             bg.setCardStyle(m_contentScale);
-            bg.setRadius(Style::scaledRadiusLg(m_contentScale));
-            bg.setFill(colorSpecFromRole(ColorRole::SurfaceVariant));
-            bg.setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth * m_contentScale);
+            bg.setRadius(Style::scaledSemanticRadius(Style::radiusMenu, m_contentScale));
+            bg.setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
+            bg.setBorder(colorSpecFromRole(ColorRole::OutlineVariant), Style::borderWidth * m_contentScale);
             bg.setFrameSize(width(), height());
           },
       })
@@ -240,7 +242,7 @@ void ContextMenuControl::rebuildRows(Renderer& renderer) {
   const float rowWidth = width() - menuPadding * 2.0f;
   // Concentric with the container: the highlight is inset by menuPadding, so its
   // radius tracks the container radius minus that inset at any corner roundness.
-  const float highlightRadius = std::max(0.0f, Style::scaledRadiusLg(scale) - menuPadding);
+  const float highlightRadius = std::max(0.0f, Style::scaledSemanticRadius(Style::radiusMenu, scale) - menuPadding);
   float currentY = menuPadding;
   m_rows.clear();
   m_rows.reserve(visibleItems);
@@ -370,24 +372,24 @@ void ContextMenuControl::rebuildRows(Renderer& renderer) {
     };
     if (rowBgPtr != nullptr && labelPtr != nullptr) {
       visual.apply = [rowBgPtr, labelPtr, togglePtr, chevronPtr, interactive, separator](bool highlighted) {
-        rowBgPtr->setFill(highlighted ? colorSpecFromRole(ColorRole::Hover) : clearColorSpec());
+        rowBgPtr->setFill(highlighted ? colorSpecFromRole(ColorRole::SecondaryContainer) : clearColorSpec());
         if (separator) {
           labelPtr->setColor(colorSpecFromRole(ColorRole::OnSurfaceVariant));
         } else {
           labelPtr->setColor(
-              highlighted ? colorSpecFromRole(ColorRole::OnHover)
+              highlighted ? colorSpecFromRole(ColorRole::OnSecondaryContainer)
                           : (interactive ? enabledItemColor() : disabledItemColor())
           );
         }
         if (togglePtr != nullptr) {
           togglePtr->setColor(
-              highlighted ? colorSpecFromRole(ColorRole::OnHover)
+              highlighted ? colorSpecFromRole(ColorRole::OnSecondaryContainer)
                           : (interactive ? enabledItemColor() : disabledItemColor())
           );
         }
         if (chevronPtr != nullptr) {
           chevronPtr->setColor(
-              highlighted ? colorSpecFromRole(ColorRole::OnHover)
+              highlighted ? colorSpecFromRole(ColorRole::OnSecondaryContainer)
                           : (interactive ? enabledItemColor() : disabledItemColor())
           );
         }

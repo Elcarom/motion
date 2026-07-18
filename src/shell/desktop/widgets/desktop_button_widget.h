@@ -16,7 +16,7 @@ public:
     ButtonVariant variant = ButtonVariant::Default;
     bool showBackground = true;
     std::optional<ColorSpec> labelColor;
-    ColorSpec hoverBackground = colorSpecFromRole(ColorRole::Hover);
+    ColorSpec hoverBackground = colorSpecFromRole(ColorRole::SurfaceContainerHighest);
   };
 
   explicit DesktopButtonWidget(Options options);

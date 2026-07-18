@@ -324,7 +324,8 @@ std::unique_ptr<DesktopWidget> DesktopWidgetFactory::create(
         .variant = getButtonVariant(settings),
         .showBackground = getBoolSetting(settings, "background", true),
         .labelColor = getOptionalColorSpecSetting(settings, "color"),
-        .hoverBackground = getColorSpecSetting(settings, "hover_background", colorSpecFromRole(ColorRole::Hover)),
+        .hoverBackground =
+            getColorSpecSetting(settings, "hover_background", colorSpecFromRole(ColorRole::SurfaceContainerHighest)),
     });
     widget->setFontFamily(getStringSetting(settings, "font_family", ""));
     widget->setContentScale(contentScale);

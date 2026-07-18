@@ -333,18 +333,19 @@ void Select::applyVisualState() {
   const bool triggerPressed = m_triggerArea != nullptr && m_triggerArea->pressed();
   const bool triggerFocused = m_triggerArea != nullptr && m_triggerArea->focused();
 
-  Color triggerBg = resolved(ColorRole::SurfaceVariant, m_surfaceOpacity);
+  Color triggerBg = resolved(ColorRole::SurfaceContainerHigh, m_surfaceOpacity);
   Color triggerBorder = resolved(ColorRole::Outline);
   ColorSpec triggerText = selectedText().empty() ? colorSpecFromRole(ColorRole::OnSurfaceVariant, kPlaceholderAlpha)
                                                  : colorSpecFromRole(ColorRole::OnSurface);
 
   if (!m_enabled) {
-    triggerBg = resolved(ColorRole::SurfaceVariant, m_surfaceOpacity * 0.75f);
+    triggerBg = resolved(ColorRole::SurfaceContainerHigh, m_surfaceOpacity * 0.75f);
     triggerBorder = resolved(ColorRole::Outline, Style::disabledOutlineAlpha);
-    triggerText = colorSpecFromRole(ColorRole::OnSurface, 0.55f);
+    triggerText = colorSpecFromRole(ColorRole::OnSurface, motion::design::state::disabledContent);
   } else if (triggerHovered || triggerPressed) {
-    triggerBg = resolved(ColorRole::SurfaceVariant, m_surfaceOpacity);
-    triggerBorder = resolved(ColorRole::Hover);
+    triggerBg = stateLayerColor(ColorRole::SurfaceContainerHigh, ColorRole::OnSurface, motion::design::state::hovered);
+    triggerBg.a *= m_surfaceOpacity;
+    triggerBorder = resolved(ColorRole::Primary);
   } else if (triggerFocused) {
     triggerBorder = resolveColorSpec(focusRingColorSpec());
   }
@@ -358,7 +359,7 @@ void Select::applyVisualState() {
           .fill = triggerBg,
           .border = triggerBorder,
           .fillMode = FillMode::Solid,
-          .radius = Style::scaledRadiusMd(),
+          .radius = Style::scaledSemanticRadius(Style::radiusField),
           .softness = 1.0f,
           .borderWidth = triggerFocused ? Style::focusRingWidth : Style::borderWidth,
       }

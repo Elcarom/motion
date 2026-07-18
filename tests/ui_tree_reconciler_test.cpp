@@ -228,6 +228,7 @@ int main() {
   {
     Style::setButtonBordersEnabled(true);
     Button button;
+    button.setVariant(ButtonVariant::Outline);
     auto backgroundBorderWidth = [&button]() {
       for (const auto& child : button.children()) {
         if (const auto* background = dynamic_cast<const RectNode*>(child.get())) {
@@ -237,9 +238,9 @@ int main() {
       return -1.0f;
     };
 
-    ok = expect(backgroundBorderWidth() == Style::borderWidth, "button border enabled by default") && ok;
+    ok = expect(backgroundBorderWidth() == Style::borderWidth, "outlined button border enabled") && ok;
 
-    Button::ButtonPalette custom = Button::defaultPalette(ButtonVariant::Default);
+    Button::ButtonPalette custom = Button::defaultPalette(ButtonVariant::Outline);
     custom.borderWidth = 4.0f;
     button.setCustomPalette(custom);
     ok = expect(backgroundBorderWidth() == 4.0f, "custom button border width applied") && ok;

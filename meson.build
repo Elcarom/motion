@@ -1283,6 +1283,21 @@ scheme_test = executable('scheme_test',
 
 test('scheme', scheme_test)
 
+palette_roles_test = executable('palette_roles_test',
+  sources: files(
+    'tests/palette_roles_test.cpp',
+    'src/render/core/color.cpp',
+    'src/ui/palette.cpp',
+    'src/theme/builtin_palettes.cpp',
+    'src/theme/fixed_palette.cpp',
+    'src/theme/color.cpp',
+    'src/theme/contrast.cpp',
+  ),
+  include_directories: _motion_inc,
+)
+
+test('palette_roles', palette_roles_test)
+
 plugin_source_paths_test = executable('plugin_source_paths_test',
   sources: files(
     'tests/plugin_source_paths_test.cpp',

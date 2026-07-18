@@ -89,9 +89,9 @@ public:
         glyph->setColor(colorSpecFromRole(ColorRole::OnPrimary));
       }
     } else if (hovered) {
-      flex->setFill(colorSpecFromRole(ColorRole::Hover));
+      flex->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
       if (glyph != nullptr) {
-        glyph->setColor(colorSpecFromRole(ColorRole::OnHover));
+        glyph->setColor(colorSpecFromRole(ColorRole::OnSurface));
       }
     } else {
       flex->clearFill();
@@ -315,7 +315,7 @@ void GlyphPicker::setEnabled(bool enabled) {
   if (m_applyButton != nullptr) {
     m_applyButton->setEnabled(enabled);
   }
-  setOpacity(enabled ? 1.0f : 0.55f);
+  setOpacity(enabled ? 1.0f : motion::design::state::disabledContent);
 }
 
 std::optional<GlyphPickerResult> GlyphPicker::currentResult() const {

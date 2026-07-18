@@ -676,7 +676,7 @@ void DesktopWidgetsEditor::rebuildScene(OverlaySurface& surface) {
   }
 
   auto dim = ui::box({
-      .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.14f),
+      .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.14f),
   });
   dim->setPosition(0.0f, 0.0f);
   dim->setFrameSize(root->width(), root->height());
@@ -1098,7 +1098,7 @@ void DesktopWidgetsEditor::rebuildScene(OverlaySurface& surface) {
                           .gap = Style::spaceXs,
                           .paddingV = Style::spaceXs,
                           .paddingH = Style::spaceSm,
-                          .fill = colorSpecFromRole(ColorRole::SurfaceVariant, 0.85f),
+                          .fill = colorSpecFromRole(ColorRole::SurfaceContainer, 0.85f),
                           .radius = Style::scaledRadiusLg(),
                           .minHeight = Style::controlHeightSm,
                       },

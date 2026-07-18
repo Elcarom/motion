@@ -121,7 +121,7 @@ namespace settings {
             .configure =
                 [this](Flex& row) {
                   row.setRadius(Style::scaledRadiusMd(m_scale));
-                  row.setFill(colorSpecFromRole(ColorRole::SurfaceVariant, 0.45f));
+                  row.setFill(colorSpecFromRole(ColorRole::SurfaceContainer, 0.45f));
                   row.setBorder(colorSpecFromRole(ColorRole::Outline), Style::borderWidth);
                 },
         },

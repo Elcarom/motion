@@ -241,7 +241,7 @@ private:
     } else {
       setFill(colorSpecFromRole(ColorRole::Surface));
       if (hov) {
-        setBorder(colorSpecFromRole(ColorRole::Hover), Style::borderWidth);
+        setBorder(colorSpecFromRole(ColorRole::Primary), Style::borderWidth);
       } else {
         clearBorder();
       }
@@ -375,7 +375,7 @@ namespace {
       }
       setFill(colorSpecFromRole(ColorRole::Surface));
       if (hov) {
-        setBorder(colorSpecFromRole(ColorRole::Hover), Style::borderWidth);
+        setBorder(colorSpecFromRole(ColorRole::Primary), Style::borderWidth);
       } else {
         clearBorder();
       }

@@ -372,14 +372,14 @@ namespace {
   private:
     void applyVisualState() {
       if (m_selected) {
-        m_row->setFill(colorSpecFromRole(ColorRole::Primary));
+        m_row->setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
       } else if (m_hovered) {
-        m_row->setFill(colorSpecFromRole(ColorRole::Hover));
+        m_row->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
       } else {
         m_row->setFill(rgba(0, 0, 0, 0));
       }
 
-      const auto activeRole = m_selected ? ColorRole::OnPrimary : ColorRole::OnHover;
+      const auto activeRole = m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface;
       const bool active = m_selected || m_hovered;
       const ColorSpec foreground = colorSpecFromRole(active ? activeRole : ColorRole::OnSurface);
       const ColorSpec mutedForeground =
@@ -548,14 +548,14 @@ namespace {
   private:
     void applyVisualState() {
       if (m_selected) {
-        m_col->setFill(colorSpecFromRole(ColorRole::Primary));
+        m_col->setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
       } else if (m_hovered) {
-        m_col->setFill(colorSpecFromRole(ColorRole::Hover));
+        m_col->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
       } else {
         m_col->setFill(rgba(0, 0, 0, 0));
       }
 
-      const auto activeRole = m_selected ? ColorRole::OnPrimary : ColorRole::OnHover;
+      const auto activeRole = m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface;
       const bool active = m_selected || m_hovered;
       const ColorSpec foreground = colorSpecFromRole(active ? activeRole : ColorRole::OnSurface);
       m_glyph->setColor(foreground);

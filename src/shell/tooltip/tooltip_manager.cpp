@@ -614,11 +614,11 @@ void TooltipManager::buildScene(const TooltipContent& content, float w, float h,
 
   m_sceneRoot->addChild(
       ui::box({
-          .fill = colorSpecFromRole(ColorRole::Surface),
-          .radius = Style::scaledRadiusMd(),
+          .fill = colorSpecFromRole(ColorRole::InverseSurface),
+          .radius = Style::scaledSemanticRadius(Style::radiusMd),
           .width = w,
           .height = h,
-          .configure = [](Box& box) { box.setBorder(colorSpecFromRole(ColorRole::Outline), kBorder); },
+          .configure = [](Box& box) { box.setBorder(colorSpecFromRole(ColorRole::InverseSurface), kBorder); },
       })
   );
 
@@ -634,7 +634,7 @@ void TooltipManager::buildScene(const TooltipContent& content, float w, float h,
     auto label = ui::label({
         .text = *text,
         .fontSize = fontSize,
-        .color = colorSpecFromRole(ColorRole::OnSurface),
+        .color = colorSpecFromRole(ColorRole::InverseOnSurface),
         .maxWidth = maxContentWidth,
         .maxLines = kMaxTextLines,
     });
@@ -668,7 +668,7 @@ void TooltipManager::buildScene(const TooltipContent& content, float w, float h,
       auto keyLabel = ui::label({
           .text = row.key,
           .fontSize = fontSize,
-          .color = colorSpecFromRole(ColorRole::Secondary),
+          .color = colorSpecFromRole(ColorRole::InversePrimary),
           .maxLines = 1,
       });
       const auto km = m_renderContext->measureText(row.key, fontSize);
@@ -680,7 +680,7 @@ void TooltipManager::buildScene(const TooltipContent& content, float w, float h,
       auto valLabel = ui::label({
           .text = row.value,
           .fontSize = fontSize,
-          .color = colorSpecFromRole(ColorRole::OnSurface),
+          .color = colorSpecFromRole(ColorRole::InverseOnSurface),
           .maxLines = 1,
           .textAlign = TextAlign::End,
           .ellipsize = row.valueEllipsize,

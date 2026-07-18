@@ -230,15 +230,15 @@ void SelectDropdownPopup::buildScene(const DropdownRequest& request) {
   const auto chrome = popup_chrome::computeGeometry(m_menuWidth, m_viewportHeight, m_shadowConfig);
   const float menuX = chrome.contentX();
   const float menuY = chrome.contentY();
-  const float radius = Style::scaledRadiusMd();
+  const float radius = Style::scaledSemanticRadius(Style::radiusMenu);
 
   (void)popup_chrome::addShadow(*m_sceneRoot, chrome, m_shadowConfig, radius);
 
   auto bg = std::make_unique<RectNode>();
   bg->setStyle(
       RoundedRectStyle{
-          .fill = resolved(ColorRole::SurfaceVariant),
-          .border = resolved(ColorRole::Outline),
+          .fill = resolved(ColorRole::SurfaceContainerHigh),
+          .border = resolved(ColorRole::OutlineVariant),
           .fillMode = FillMode::Solid,
           .radius = radius,
           .softness = 1.0f,
@@ -418,8 +418,9 @@ void SelectDropdownPopup::applyHoverVisuals() {
   for (std::size_t i = 0; i < m_optionViews.size(); ++i) {
     auto& view = m_optionViews[i];
     const bool isHovered = (i == m_hoveredIndex);
-    const Color bgColor = isHovered ? resolved(ColorRole::Hover) : clearColor();
-    const ColorSpec fg = isHovered ? colorSpecFromRole(ColorRole::OnHover) : colorSpecFromRole(ColorRole::OnSurface);
+    const Color bgColor = isHovered ? resolved(ColorRole::SecondaryContainer) : clearColor();
+    const ColorSpec fg = isHovered ? colorSpecFromRole(ColorRole::OnSecondaryContainer)
+                                   : colorSpecFromRole(ColorRole::OnSurface);
 
     if (view.background != nullptr) {
       view.background->setStyle(
