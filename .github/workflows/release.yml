@@ -13,7 +13,7 @@ jobs:
     name: Source archive
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Create reproducible source archive
@@ -43,7 +43,7 @@ jobs:
             wayland wayland-protocols libglvnd freetype2 fontconfig cairo pango harfbuzz \
             libxkbcommon glib2 sdbus-cpp libpipewire wireplumber polkit pam curl libwebp \
             librsvg libqalculate libxml2 md4c tomlplusplus nlohmann-json stb jemalloc
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build and stage
         run: |
           set -euo pipefail

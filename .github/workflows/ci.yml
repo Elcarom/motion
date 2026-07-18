@@ -18,7 +18,7 @@ jobs:
     name: Repository validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -35,7 +35,7 @@ jobs:
       image: archlinux:latest
     steps:
       - run: pacman -Syu --noconfirm --needed git clang
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Check C/C++ formatting
         run: |
           mapfile -d '' files < <(find src tests -type f \( -name '*.cpp' -o -name '*.h' \) -print0)
@@ -58,7 +58,7 @@ jobs:
             wayland wayland-protocols libglvnd freetype2 fontconfig cairo pango harfbuzz \
             libxkbcommon glib2 sdbus-cpp libpipewire wireplumber polkit pam curl libwebp \
             librsvg libqalculate libxml2 md4c tomlplusplus nlohmann-json stb jemalloc
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure
         run: just configure ${{ matrix.mode }}
       - name: Build
@@ -93,7 +93,7 @@ jobs:
             wayland wayland-protocols libglvnd freetype2 fontconfig cairo pango harfbuzz \
             libxkbcommon glib2 sdbus-cpp libpipewire wireplumber polkit pam curl libwebp \
             librsvg libqalculate libxml2 md4c tomlplusplus nlohmann-json stb jemalloc
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: just configure asan
       - run: just test asan --print-errorlogs
         env:
