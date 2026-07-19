@@ -6,9 +6,9 @@
 #include "cpp/quantize/wu.h"
 #include "cpp/scheme/scheme_expressive.h"
 #include "cpp/utils/utils.h"
-#include "theme/palette_mapping.h"
 #include "theme/palette.h"
 #include "theme/palette_generator.h"
+#include "theme/palette_mapping.h"
 
 #include <algorithm>
 #include <array>

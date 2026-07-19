@@ -2,7 +2,6 @@
 
 #include "render/core/color.h"
 
-
 namespace motion::theme {
 
   namespace {
