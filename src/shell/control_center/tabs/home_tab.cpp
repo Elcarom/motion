@@ -632,8 +632,6 @@ void HomeTab::doLayout(Renderer& renderer, float contentWidth, float bodyHeight)
     const float gridHeight = static_cast<float>(rows) * Style::quickSettingTileHeight * scale
         + static_cast<float>(rows - 1) * m_shortcutsGrid->rowGap();
     m_shortcutsGrid->setColumns(cols);
-    m_shortcutsGrid->setMinHeight(gridHeight);
-    m_shortcutsGrid->setMaxHeight(gridHeight);
     m_shortcutsGrid->setSize(contentWidth, gridHeight);
   }
   m_rootLayout->setSize(contentWidth, bodyHeight);
