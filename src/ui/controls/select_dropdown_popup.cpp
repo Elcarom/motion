@@ -419,8 +419,8 @@ void SelectDropdownPopup::applyHoverVisuals() {
     auto& view = m_optionViews[i];
     const bool isHovered = (i == m_hoveredIndex);
     const Color bgColor = isHovered ? resolved(ColorRole::SecondaryContainer) : clearColor();
-    const ColorSpec fg = isHovered ? colorSpecFromRole(ColorRole::OnSecondaryContainer)
-                                   : colorSpecFromRole(ColorRole::OnSurface);
+    const ColorSpec fg =
+        isHovered ? colorSpecFromRole(ColorRole::OnSecondaryContainer) : colorSpecFromRole(ColorRole::OnSurface);
 
     if (view.background != nullptr) {
       view.background->setStyle(

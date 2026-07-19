@@ -2155,9 +2155,7 @@ void PanelManager::buildScene(std::uint32_t width, std::uint32_t height) {
         bg->setRadii(Radii{radius, radius, radius, radius});
         // Fill (opacity-dependent) is applied via applyAttachedDecorationStyle() below.
       } else {
-        bg->setFill(
-            colorSpecFromRole(ColorRole::SurfaceContainerLow, resolveDetachedPanelBackgroundOpacity(m_config))
-        );
+        bg->setFill(colorSpecFromRole(ColorRole::SurfaceContainerLow, resolveDetachedPanelBackgroundOpacity(m_config)));
       }
       m_bgNode = sceneParent->addChild(std::move(bg));
     }

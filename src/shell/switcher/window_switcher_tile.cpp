@@ -316,9 +316,7 @@ void WindowSwitcherTile::applyVisualState() {
     m_title->setColor(colorSpecFromRole(foreground));
   }
   if (m_subtitle != nullptr) {
-    m_subtitle->setColor(
-        colorSpecFromRole(m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant)
-    );
+    m_subtitle->setColor(colorSpecFromRole(m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant));
   }
 
   if (m_iconHost != nullptr) {

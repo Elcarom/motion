@@ -82,9 +82,9 @@ namespace {
         setFill(clearColorSpec());
       }
 
-      ColorSpec foreground =
-          option.enabled ? colorSpecFromRole(ColorRole::OnSurface)
-                         : colorSpecFromRole(ColorRole::OnSurface, motion::design::state::disabledContent);
+      ColorSpec foreground = option.enabled
+          ? colorSpecFromRole(ColorRole::OnSurface)
+          : colorSpecFromRole(ColorRole::OnSurface, motion::design::state::disabledContent);
       ColorSpec detailForeground = colorSpecFromRole(
           ColorRole::OnSurfaceVariant, option.enabled ? 1.0f : motion::design::state::disabledContent
       );

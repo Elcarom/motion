@@ -837,7 +837,8 @@ void TaskbarWidget::buildTaskButtons(Renderer& renderer) {
       }
 
       const bool emptyWorkspace = renderedTasks.empty();
-      const auto surfaceFill = colorSpecFromRole(ColorRole::SurfaceContainerHighest, ws.workspace.active ? 0.52f : 0.18f);
+      const auto surfaceFill =
+          colorSpecFromRole(ColorRole::SurfaceContainerHighest, ws.workspace.active ? 0.52f : 0.18f);
       const auto borderColor = colorSpecFromRole(ColorRole::Primary, ws.workspace.active ? 0.65f : 0.16f);
 
       const float crossSize = std::round(tileSize + groupPad * 2.0f);
@@ -2348,9 +2349,7 @@ ColorSpec TaskbarWidget::workspaceTextColor(const Workspace& workspace) const {
   return color;
 }
 
-ColorRole TaskbarWidget::onRoleForFill(ColorRole fill) {
-  return onColorRoleFor(fill);
-}
+ColorRole TaskbarWidget::onRoleForFill(ColorRole fill) { return onColorRoleFor(fill); }
 
 ColorSpec TaskbarWidget::readableColorForFill(const ColorSpec& fill) {
   if (fill.role.has_value()) {

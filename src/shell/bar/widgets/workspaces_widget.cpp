@@ -1502,9 +1502,7 @@ ColorSpec WorkspacesWidget::workspaceTextColor(const Workspace& workspace) const
   return color;
 }
 
-ColorRole WorkspacesWidget::onRoleForFill(ColorRole fill) {
-  return onColorRoleFor(fill);
-}
+ColorRole WorkspacesWidget::onRoleForFill(ColorRole fill) { return onColorRoleFor(fill); }
 
 ColorSpec WorkspacesWidget::readableColorForFill(const ColorSpec& fill) {
   if (fill.role.has_value()) {

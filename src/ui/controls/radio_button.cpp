@@ -24,7 +24,9 @@ RadioButton::RadioButton() {
   area->setOnFocusGain([this]() { applyState(); });
   area->setOnFocusLoss([this]() { applyState(); });
   area->setOnKeyDown([this](const InputArea::KeyData& key) {
-    if (!key.pressed || !m_enabled || m_checked
+    if (!key.pressed
+        || !m_enabled
+        || m_checked
         || !KeybindMatcher::matches(KeybindAction::Validate, key.sym, key.modifiers)) {
       return;
     }

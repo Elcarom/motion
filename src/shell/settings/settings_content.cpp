@@ -592,11 +592,9 @@ namespace settings {
             titleLabel->setColor(colorSpecFromRole(active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface));
           }
           if (categoryLabel != nullptr) {
-            categoryLabel->setColor(
-                colorSpecFromRole(
-                    active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant, active ? 0.75f : 1.0f
-                )
-            );
+            categoryLabel->setColor(colorSpecFromRole(
+                active ? ColorRole::OnSecondaryContainer : ColorRole::OnSurfaceVariant, active ? 0.75f : 1.0f
+            ));
           }
         };
         const auto syncHoverText = [titleLabel, categoryLabel](bool active) {
