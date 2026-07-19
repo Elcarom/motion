@@ -1089,13 +1089,7 @@ namespace motion::config::schema {
 
   const Schema<ThemeConfig>& themeSchema() {
     static const Schema<ThemeConfig> s = {
-        enumField(&ThemeConfig::source, "source", kPaletteSources),
-        field(&ThemeConfig::builtinPalette, "builtin"),
-        field(&ThemeConfig::communityPalette, "community_palette"),
-        field(&ThemeConfig::customPalette, "custom_palette"),
-        field(&ThemeConfig::wallpaperScheme, "wallpaper_scheme"),
         enumField(&ThemeConfig::mode, "mode", kThemeModes),
-        field(&ThemeConfig::pureBlackDark, "pure_black_dark"),
         subTable(&ThemeConfig::templates, "templates", templatesSchema()),
     };
     return s;

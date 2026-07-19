@@ -714,9 +714,7 @@
       "polkit-no-session": "Polkit agent cần logind, elogind, hoặc XDG_SESSION_ID. Với những hệ thống chỉ có seatd thì nó không thể chạy giao diện xác thực. Sử dụng pkexec để đông bộ hóa greeter, hoặc cài đặt elogind để có xác thực giữa session.",
       "screen-time-reset": "Thời gian sử dụng",
       "screen-time-reset-success": "Đã xóa toàn bộ dữ liệu sử dụng.",
-      "session-bus-unavailable": "Bus phiên không khả dụng",
-      "wallpaper-palette-export": "Bảng màu tùy chỉnh",
-      "wallpaper-palette-export-success": "Đã lưu \"{name}\" và chuyển từ bảng màu sang tùy chỉnh."
+      "session-bus-unavailable": "Bus phiên không khả dụng"
     }
   },
   "osd": {
@@ -1021,7 +1019,6 @@
       },
       "batch-write": "Một số cài đặt không thể lưu.",
       "export-config": "Lưu xuất cấu hình thất bại.",
-      "export-wallpaper-palette": "Không thể lưu bảng màu hình nền thành bảng màu tùy chỉnh.",
       "monitor-override": {
         "create": "Không thể tạo ghi đè màn hình.",
         "delete": "Không thể xóa ghi đè màn hình.",
@@ -1308,12 +1305,6 @@
         "mode": {
           "dark": "Tối",
           "light": "Sáng"
-        },
-        "source": {
-          "built-in": "Tích hợp sẵn",
-          "community": "Cộng đồng",
-          "custom": "Tùy chỉnh",
-          "wallpaper": "Hình nền"
         }
       },
       "theme-role": {
@@ -1445,32 +1436,13 @@
           "description": "Đổi màu biểu tượng ứng dụng trên toàn bộ Motion để phù hợp với bảng màu đang hoạt động",
           "label": "Tô màu biểu tượng ứng dụng"
         },
-        "builtin-palette": {
-          "description": "Chọn một bảng màu từ danh mục có sẵn",
-          "label": "Bảng màu tích hợp sẵn"
-        },
         "button-borders": {
           "description": "Hiển thị đường viền quanh các nút trong toàn bộ giao diện",
           "label": "Đường viền nút"
         },
-        "community-palette": {
-          "description": "Chọn một bảng màu từ danh mục cộng đồng",
-          "label": "Bảng màu cộng đồng",
-          "search-placeholder": "Tìm kiếm bảng màu..."
-        },
         "corner-roundness": {
           "description": "Điều chỉnh bán kính bo góc trên toàn bộ các vùng chứa và điều khiển giao diện người dùng của shell",
           "label": "Độ bo góc"
-        },
-        "custom-palette": {
-          "description": "Chọn bảng màu từ ~/.config/motion/palettes/",
-          "label": "Bảng màu tùy chỉnh",
-          "search-placeholder": "Tìm kiếm bảng màu tùy chỉnh..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Lưu thành Bảng màu Tùy chỉnh",
-          "description": "Lưu bảng màu hiện tại được tạo từ hình nền dưới dạng một tệp bảng màu tùy chỉnh có thể tái sử dụng",
-          "label": "Xuất Palette hình nền"
         },
         "font-family": {
           "description": "Kiểu chữ cho giao diện shell",
@@ -1486,14 +1458,6 @@
           "description": "Ghi đè phát hiện ngôn ngữ tự động",
           "label": "Ngôn ngữ"
         },
-        "palette-source": {
-          "description": "Lấy bảng màu từ đâu",
-          "label": "Nguồn bảng màu"
-        },
-        "pure-black-dark": {
-          "description": "Đặt các bề mặt tối thành màu đen thuần để giảm hiện tượng dải màu trên màn hình OLED (chỉ áp dụng ở chế độ tối)",
-          "label": "Đen thuần"
-        },
         "theme-mode": {
           "description": "Chọn tối, sáng hoặc tự động theo thời gian trong ngày",
           "label": "Chế độ giao diện"
@@ -1501,10 +1465,6 @@
         "ui-scale": {
           "description": "Phóng to hoặc thu nhỏ toàn bộ giao diện",
           "label": "Tỷ lệ UI"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Chọn cách màu sắc hình nền được chuyển đổi thành bảng màu",
-          "label": "Cơ chế tạo hình nền"
         }
       },
       "backdrop": {
@@ -3336,7 +3296,6 @@
   },
   "setup-wizard": {
     "browse": "Duyệt",
-    "builtin-palette": "Bảng màu tích hợp sẵn",
     "footer-note": "Bạn có thể thay đổi chúng sau này trong cài đặt.",
     "get-started": "Bắt đầu",
     "mode": "Chế độ",
@@ -3344,8 +3303,7 @@
     "select-wallpaper": "Chọn hình nền",
     "subtitle": "Một vài lựa chọn nhanh để bạn bắt đầu.",
     "title": "Chào mừng đến với Motion",
-    "wallpaper": "Hình nền",
-    "wallpaper-scheme": "Chế độ hình nền"
+    "wallpaper": "Hình nền"
   },
   "system": {
     "hardware": {
@@ -3353,19 +3311,6 @@
       "unknown-cpu": "CPU không xác định",
       "unknown-distro": "Bản phân phối không xác định",
       "unknown-gpu": "GPU không xác định"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Trục trặc",
-      "faithful": "Trung thực",
-      "m3-content": "Nội dung M3",
-      "m3-fruit-salad": "M3 Trái cây trộn",
-      "m3-monochrome": "M3 Đơn sắc",
-      "m3-rainbow": "M3 Cầu vồng",
-      "m3-tonal-spot": "M3 Điểm tông màu",
-      "muted": "Tắt tiếng",
-      "vibrant": "Rực rỡ"
     }
   },
   "time": {

@@ -109,22 +109,4 @@ namespace motion::theme {
     );
   }
 
-  double hueDistance(double h1, double h2) {
-    const double diff = std::fabs(h1 - h2);
-    return std::min(diff, 360.0 - diff);
-  }
-
-  Color shiftHue(const Color& c, double degrees) {
-    auto [h, s, l] = c.toHsl();
-    double newH = std::fmod(h + degrees, 360.0);
-    if (newH < 0.0)
-      newH += 360.0;
-    return Color::fromHsl(newH, s, l);
-  }
-
-  Color adjustSurface(const Color& base, double sMax, double lTarget) {
-    auto [h, s, _l] = base.toHsl();
-    return Color::fromHsl(h, std::min(s, sMax), lTarget);
-  }
-
 } // namespace motion::theme

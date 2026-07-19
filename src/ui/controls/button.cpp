@@ -101,6 +101,10 @@ namespace {
           ),
           .selected = selectedState(),
       };
+    case ButtonVariant::Tile:
+      return filledPalette(ColorRole::SurfaceContainerHigh, ColorRole::OnSurface);
+    case ButtonVariant::TileActive:
+      return filledPalette(ColorRole::SecondaryContainer, ColorRole::OnSecondaryContainer);
     case ButtonVariant::Tab:
       return Button::ButtonPalette{
           .borderWidth = 0.0f,

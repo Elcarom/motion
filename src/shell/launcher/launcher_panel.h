@@ -49,8 +49,8 @@ public:
   // Drops persisted usage data when sort-by-usage is off (including after config reload).
   void syncUsageTrackingState();
 
-  [[nodiscard]] float preferredWidth() const override { return scaled(560.0f); }
-  [[nodiscard]] float preferredHeight() const override { return scaled(500.0f); }
+  [[nodiscard]] float preferredWidth() const override { return scaled(920.0f); }
+  [[nodiscard]] float preferredHeight() const override { return scaled(680.0f); }
   [[nodiscard]] LayerShellLayer layer() const override { return LayerShellLayer::Overlay; }
   [[nodiscard]] LayerShellKeyboard keyboardMode() const override { return LayerShellKeyboard::Exclusive; }
   [[nodiscard]] InputArea* initialFocusArea() const override;
@@ -105,6 +105,7 @@ private:
   Input* m_input = nullptr;
   Segmented* m_categoryFilter = nullptr;
   Flex* m_body = nullptr;
+  Flex* m_gridHeader = nullptr;
   VirtualGridView* m_grid = nullptr;
   ScrollView* m_detailScroll = nullptr;
   Label* m_detailSubtitle = nullptr;

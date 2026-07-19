@@ -716,9 +716,7 @@
       "polkit-no-session": "Polkit agent needs logind, elogind, or XDG_SESSION_ID. On seatd-only setups it cannot register for graphical prompts. Use terminal pkexec for greeter sync, or install elogind for in-session authentication.",
       "screen-time-reset": "Screen Time",
       "screen-time-reset-success": "Usage history cleared.",
-      "session-bus-unavailable": "Session bus unavailable",
-      "wallpaper-palette-export": "Custom Palette",
-      "wallpaper-palette-export-success": "Saved \"{name}\" and switched palette source to custom."
+      "session-bus-unavailable": "Session bus unavailable"
     }
   },
   "osd": {
@@ -1024,7 +1022,6 @@
       "batch-write": "Some settings could not be saved.",
       "custom-schedule-times": "A custom schedule needs both a sunrise and a sunset time in HH:MM form.",
       "export-config": "Failed to save config export.",
-      "export-wallpaper-palette": "Could not save the wallpaper palette as a custom palette.",
       "monitor-override": {
         "create": "Could not create monitor override.",
         "delete": "Could not delete monitor override.",
@@ -1319,12 +1316,6 @@
         "mode": {
           "dark": "Dark",
           "light": "Light"
-        },
-        "source": {
-          "built-in": "Built-In",
-          "community": "Community",
-          "custom": "Custom",
-          "wallpaper": "Wallpaper"
         }
       },
       "theme-role": {
@@ -1464,32 +1455,13 @@
           "description": "Recolor application icons across the shell to match the active palette",
           "label": "Colorize App Icons"
         },
-        "builtin-palette": {
-          "description": "Choose a palette from the bundled catalog",
-          "label": "Built-In Palette"
-        },
         "button-borders": {
           "description": "Draw outlines around buttons throughout the shell",
           "label": "Button Borders"
         },
-        "community-palette": {
-          "description": "Choose a palette from the community catalog",
-          "label": "Community Palette",
-          "search-placeholder": "Search palettes…"
-        },
         "corner-roundness": {
           "description": "Scale corner radius across shell UI containers and controls",
           "label": "Corner Roundness"
-        },
-        "custom-palette": {
-          "description": "Choose a palette from ~/.config/motion/palettes/",
-          "label": "Custom Palette",
-          "search-placeholder": "Search custom palettes…"
-        },
-        "export-wallpaper-palette": {
-          "button": "Save as Custom Palette",
-          "description": "Save the current wallpaper-generated palette as a reusable custom palette file",
-          "label": "Export Wallpaper Palette"
         },
         "font-family": {
           "description": "Font family for the shell interface",
@@ -1505,14 +1477,6 @@
           "description": "Override automatic locale detection",
           "label": "Language"
         },
-        "palette-source": {
-          "description": "Where to derive the color palette from",
-          "label": "Palette Source"
-        },
-        "pure-black-dark": {
-          "description": "Anchor dark surfaces to true black, preventing banding on OLED panels (dark mode only)",
-          "label": "Pure Black"
-        },
         "theme-mode": {
           "description": "Choose dark, light, or auto based on time of day",
           "label": "Theme Mode"
@@ -1520,10 +1484,6 @@
         "ui-scale": {
           "description": "Scale the entire interface up or down",
           "label": "UI Scale"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Choose how wallpaper colors are converted into a palette",
-          "label": "Wallpaper Generation Scheme"
         }
       },
       "backdrop": {
@@ -3522,7 +3482,6 @@
   },
   "setup-wizard": {
     "browse": "Browse",
-    "builtin-palette": "Built-In Palette",
     "footer-note": "You can change these later in settings.",
     "get-started": "Get Started",
     "mode": "Mode",
@@ -3530,8 +3489,7 @@
     "select-wallpaper": "Select Wallpaper",
     "subtitle": "A few quick choices to get you started.",
     "title": "Welcome to Motion",
-    "wallpaper": "Wallpaper",
-    "wallpaper-scheme": "Wallpaper Scheme"
+    "wallpaper": "Wallpaper"
   },
   "system": {
     "hardware": {
@@ -3539,20 +3497,6 @@
       "unknown-cpu": "Unknown CPU",
       "unknown-distro": "Unknown distro",
       "unknown-gpu": "Unknown GPU"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Soft",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

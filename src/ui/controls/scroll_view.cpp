@@ -242,7 +242,7 @@ void ScrollView::setSoftness(float softness) {
 }
 
 void ScrollView::setCardStyle(float scale, float fillOpacity, bool showBorder) {
-  setFill(colorSpecFromRole(ColorRole::SurfaceContainer, fillOpacity));
+  setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh, fillOpacity));
   if (showBorder) {
     setBorder(colorSpecFromRole(ColorRole::OutlineVariant), Style::borderWidth);
   } else {

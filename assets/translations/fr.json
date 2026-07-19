@@ -707,9 +707,7 @@
       "polkit-no-session": "Le polkit agent nécessite logind, elogind ou XDG_SESSION_ID. Sur les configurations utilisant uniquement seatd, il ne peut pas s'enregistrer pour les demandes d'authentification graphiques. Utilise pkexec depuis un terminal pour synchroniser le greeter, ou installe elogind pour l'authentification dans la session.",
       "screen-time-reset": "Temps d'écran",
       "screen-time-reset-success": "Historique d'utilisation effacé.",
-      "session-bus-unavailable": "Bus de session indisponible",
-      "wallpaper-palette-export": "Palette personnalisée",
-      "wallpaper-palette-export-success": "\"{name}\" enregistré et palette basculée sur personnalisée."
+      "session-bus-unavailable": "Bus de session indisponible"
     }
   },
   "osd": {
@@ -1000,7 +998,6 @@
       },
       "batch-write": "Certains paramètres pourraient ne pas être sauvegardés",
       "export-config": "Échec de l’export de la configuration.",
-      "export-wallpaper-palette": "Impossible d’enregistrer la palette du fond d’écran comme palette personnalisée.",
       "monitor-override": {
         "create": "Impossible de créer un remplacement d’écran.",
         "delete": "Impossible de supprimer un remplacement d’écran.",
@@ -1279,12 +1276,6 @@
         "mode": {
           "dark": "Sombre",
           "light": "Clair"
-        },
-        "source": {
-          "built-in": "Intégré",
-          "community": "Communauté",
-          "custom": "Personnalisé",
-          "wallpaper": "Fond d'écran"
         }
       },
       "theme-role": {
@@ -1412,32 +1403,13 @@
           "description": "Recolorise les icônes d’application dans toute l’interface pour les adapter à la palette active",
           "label": "Coloriser les icônes d'application"
         },
-        "builtin-palette": {
-          "description": "Choisir une palette dans la liste pré-intégré",
-          "label": "Palette intégrée"
-        },
         "button-borders": {
           "description": "Dessinez des contours autour des boutons dans tout le shell",
           "label": "Contour des boutons"
         },
-        "community-palette": {
-          "description": "Choisir une palette dans le catalogue communautaire",
-          "label": "Palette communautaire",
-          "search-placeholder": "Chercher des palettes..."
-        },
         "corner-roundness": {
           "description": "Ajuste le rayon des coins de tous les conteneurs et contrôles de l'interface",
           "label": "Arrondi des coins"
-        },
-        "custom-palette": {
-          "description": "Choisir une palette depuis ~/.config/motion/palettes/",
-          "label": "Palette personnalisée",
-          "search-placeholder": "Chercher des palettes personnalisées..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Enregistrer comme palette personnalisée",
-          "description": "Enregistre la palette générée à partir du fond d'écran dans un fichier de palette réutilisable",
-          "label": "Exporter la palette du fond d’écran"
         },
         "font-family": {
           "description": "Police utilisée par l'interface",
@@ -1453,10 +1425,6 @@
           "description": "Remplacer la détection automatique de la langue",
           "label": "Langue"
         },
-        "palette-source": {
-          "description": "Source de génération de la palette de couleurs",
-          "label": "Source de la palette"
-        },
         "theme-mode": {
           "description": "Choisir sombre, clair ou automatique selon l’heure de la journée",
           "label": "Mode du thème"
@@ -1464,10 +1432,6 @@
         "ui-scale": {
           "description": "Ajuste la taille globale de l’interface",
           "label": "Échelle de l’interface"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Définit comment les couleurs du fond d'écran sont converties en palette",
-          "label": "Schéma de génération du fond d’écran"
         }
       },
       "backdrop": {
@@ -3040,7 +3004,6 @@
   },
   "setup-wizard": {
     "browse": "Chercher",
-    "builtin-palette": "Palette intégrée",
     "footer-note": "Vous pourrez les changer plus tard dans les paramètres.",
     "get-started": "Commencer",
     "mode": "Mode",
@@ -3048,8 +3011,7 @@
     "select-wallpaper": "Choisir un fond d'écran",
     "subtitle": "Quelques options avant de commencer.",
     "title": "Bienvenue sur Motion",
-    "wallpaper": "Fond d'écran",
-    "wallpaper-scheme": "Schéma de fond d’écran"
+    "wallpaper": "Fond d'écran"
   },
   "system": {
     "hardware": {
@@ -3057,20 +3019,6 @@
       "unknown-cpu": "CPU inconnu",
       "unknown-distro": "Distro inconnue",
       "unknown-gpu": "GPU inconnu"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfonctionnel",
-      "faithful": "Fidèle",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Soft",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

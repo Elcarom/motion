@@ -1,7 +1,5 @@
 #include "theme/palette_generator.h"
 
-#include "theme/scheme.h"
-
 #include <utility>
 
 namespace motion::theme {
@@ -23,12 +21,12 @@ namespace motion::theme {
 
   } // namespace
 
-  std::expected<GeneratedPalette, std::string> generate(const std::vector<uint8_t>& rgb112, Scheme scheme) {
+  std::expected<GeneratedPalette, std::string> generate(const std::vector<uint8_t>& rgb112) {
     if (rgb112.size() != 112u * 112u * 3u) {
       return std::unexpected("expected 112x112x3 pixel buffer");
     }
 
-    auto palette = isMaterialScheme(scheme) ? generateMaterial(rgb112, scheme) : generateCustom(rgb112, scheme);
+    auto palette = generateExpressive(rgb112);
     return validateGeneratedPalette(std::move(palette));
   }
 

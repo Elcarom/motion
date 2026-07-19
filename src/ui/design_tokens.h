@@ -33,13 +33,13 @@ namespace motion::design {
     // controls with the larger shapes reserved for important shell surfaces.
     inline constexpr float compactControl = small;
     inline constexpr float standardControl = medium;
-    inline constexpr float prominentControl = large;
+    inline constexpr float prominentControl = 20.0f;
     inline constexpr float selection = large;
-    inline constexpr float card = large;
+    inline constexpr float card = 20.0f;
     inline constexpr float menu = large;
-    inline constexpr float popup = extraLarge;
-    inline constexpr float panel = extraLarge;
-    inline constexpr float dialog = extraLarge;
+    inline constexpr float popup = 28.0f;
+    inline constexpr float panel = 32.0f;
+    inline constexpr float dialog = 28.0f;
     inline constexpr float circular = full;
   } // namespace shape
 
@@ -92,13 +92,17 @@ namespace motion::design {
     inline constexpr float iconLarge = 24.0f;
     inline constexpr float iconExtraLarge = 32.0f;
     inline constexpr float barCompact = 32.0f;
-    inline constexpr float barStandard = 36.0f;
+    inline constexpr float barStandard = 48.0f;
     inline constexpr float dockItem = 44.0f;
     inline constexpr float menuItem = 36.0f;
     inline constexpr float listRow = 40.0f;
     inline constexpr float listRowTwoLine = 52.0f;
     inline constexpr float panelCompact = 320.0f;
     inline constexpr float panelStandard = 392.0f;
+    inline constexpr float searchHero = 56.0f;
+    inline constexpr float quickSettingTile = 72.0f;
+    inline constexpr float launcherTile = 148.0f;
+    inline constexpr float launcherTileMinWidth = 128.0f;
   } // namespace size
 
   namespace border {

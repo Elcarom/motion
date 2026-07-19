@@ -27,6 +27,8 @@ enum class ButtonVariant : std::uint8_t {
   Destructive,
   Outline,
   Ghost,
+  Tile,
+  TileActive,
   Tab,
   TabActive,
 };

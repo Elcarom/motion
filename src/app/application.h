@@ -68,7 +68,6 @@
 #include "system/telemetry_service.h"
 #include "system/weather_poll_source.h"
 #include "system/weather_service.h"
-#include "theme/community_palettes.h"
 #include "theme/community_templates.h"
 #include "theme/template_apply_service.h"
 #include "theme/theme_service.h"
@@ -218,9 +217,8 @@ private:
   ConfigService m_configService;
   HttpClient m_httpClient;
   FileWatcher m_fileWatcher;
-  motion::theme::CommunityPaletteService m_communityPaletteService{m_httpClient};
   motion::theme::CommunityTemplateService m_communityTemplateService{m_httpClient};
-  motion::theme::ThemeService m_themeService{m_configService, m_httpClient};
+  motion::theme::ThemeService m_themeService{m_configService};
   motion::theme::TemplateApplyService m_templateApplyService{m_configService};
   scripting::ScriptApiContext m_scriptApi;
   std::function<void()> m_syncScriptApiOutputs;

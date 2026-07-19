@@ -42,18 +42,11 @@ namespace {
   constexpr Logger kLog("control-center");
 
   constexpr float kHomeAvatarScale = 2.6f;
-  // Bottom row split: media/clock column grows more than the shortcuts column so the row feels balanced
-  // (tweak either value slightly if needed).
-  constexpr float kHomeMainColumnFlexGrow = 1.66f;
-  constexpr float kHomeShortcutsFlexGrow = 1.0f;
+  constexpr float kHomeMainColumnFlexGrow = 1.0f;
   // Left-column card height split (media above, clock/weather below).
   constexpr float kHomeMediaCardFlexGrow = 1.4f;
   constexpr float kHomeDateTimeCardFlexGrow = 1.0f;
   constexpr std::size_t kHomeShortcutGridColumns = 2;
-  // At or below this count the shortcuts stack in a single narrow column instead of the 2-column grid.
-  constexpr std::size_t kHomeStackedShortcutMax = 2;
-  // Square tiles are trimmed slightly (height = width * trim) so the grid stays compact.
-  constexpr float kHomeShortcutSquareTrim = 0.82f;
   constexpr auto kHomeTransientPositionRegressionWindow = std::chrono::milliseconds(1500);
   constexpr std::int64_t kHomeTransientPositionRegressionFloorUs = 5'000'000;
   constexpr std::int64_t kHomeTransientPositionRegressionCeilingUs = 1'500'000;
@@ -61,27 +54,6 @@ namespace {
   constexpr int kHomeMediaArtLayoutPassLimit = 8;
 
   float homeAvatarSize(float scale) { return Style::controlHeightLg * kHomeAvatarScale * scale; }
-
-  // Width for the stacked (single-column) shortcuts so each tile keeps the same width it would have
-  // as one cell of the standard 2-column grid, rather than stretching across the whole column.
-  float homeStackedShortcutsWidth(float contentWidth, float bottomRowGap, const GridView& grid) {
-    const float totalGrow = kHomeMainColumnFlexGrow + kHomeShortcutsFlexGrow;
-    const float fullGridWidth = std::max(1.0f, contentWidth - bottomRowGap) * (kHomeShortcutsFlexGrow / totalGrow);
-    const float horizontalPadding = grid.paddingLeft() + grid.paddingRight();
-    const float fullGridInnerWidth = std::max(1.0f, fullGridWidth - horizontalPadding);
-    const float cellWidth = std::max(
-        1.0f,
-        (fullGridInnerWidth - grid.columnGap() * static_cast<float>(kHomeShortcutGridColumns - 1))
-            / static_cast<float>(kHomeShortcutGridColumns)
-    );
-    return cellWidth + horizontalPadding;
-  }
-
-  // The 2-column shortcuts grid's natural width = its flex share of the bottom row.
-  float homeShortcutsGridNaturalWidth(float contentWidth, float bottomRowGap) {
-    const float totalGrow = kHomeMainColumnFlexGrow + kHomeShortcutsFlexGrow;
-    return std::max(1.0f, contentWidth - bottomRowGap) * (kHomeShortcutsFlexGrow / totalGrow);
-  }
 
   std::filesystem::path avatarStartDirectory(const AccountsService* accounts, const ConfigService* config) {
     const std::string currentPath =
@@ -122,8 +94,8 @@ namespace {
 
   void applyShortcutButtonStyle(Button& button, bool enabled, bool active, float fillOpacity) {
     const bool on = enabled && active;
-    button.setVariant(on ? ButtonVariant::Primary : ButtonVariant::Default);
-    button.setSurfaceOpacity(on ? 1.0f : fillOpacity);
+    button.setVariant(on ? ButtonVariant::TileActive : ButtonVariant::Tile);
+    button.setSurfaceOpacity(fillOpacity);
     button.setEnabled(enabled);
   }
 
@@ -365,13 +337,12 @@ std::unique_ptr<Flex> HomeTab::create() {
       addCardOverlay(*m_userCard, openWallpaperPanel, {.keyboardFocus = true, .pointerHitTest = false});
   m_userCardArea = addCardOverlay(*m_userCard, openWallpaperPanel, {.keyboardFocus = false, .pointerHitTest = true});
 
-  tab->addChild(std::move(userCard));
-
   auto bottomRow = ui::row({
       .out = &m_bottomRow,
       .align = FlexAlign::Stretch,
       .gap = Style::spaceMd * scale,
       .fillWidth = true,
+      .flexGrow = 1.0f,
   });
 
   auto leftColumn = ui::column({
@@ -524,8 +495,8 @@ std::unique_ptr<Flex> HomeTab::create() {
   grid->setUniformCellSize(true);
   grid->setStretchItems(true);
   grid->setSquareCells(false);
-  grid->setMinCellHeight(0.0f);
-  grid->setFlexGrow(kHomeShortcutsFlexGrow);
+  grid->setMinCellHeight(Style::quickSettingTileHeight * scale);
+  grid->setFlexGrow(0.0f);
   m_shortcutsGrid = grid.get();
   m_shortcutPads.clear();
 
@@ -544,11 +515,13 @@ std::unique_ptr<Flex> HomeTab::create() {
     auto btn = ui::button({
         .text = label,
         .glyph = shortcut->displayIcon(),
-        .glyphSize = Style::fontSizeTitle * 1.35f * scale,
-        .minHeight = 0.0f,
-        .padding = Style::spaceSm * scale,
-        .gap = Style::spaceXs * scale,
-        .radius = Style::scaledRadiusXl(scale),
+        .glyphSize = Style::fontSizeTitleLarge * scale,
+        .contentAlign = ButtonContentAlign::Start,
+        .minHeight = Style::quickSettingTileHeight * scale,
+        .paddingV = Style::spaceMd * scale,
+        .paddingH = Style::spaceLg * scale,
+        .gap = Style::spaceMd * scale,
+        .radius = Style::scaledSemanticRadius(Style::radiusCard, scale),
         .onClick =
             [this, padIdx]() {
               if (padIdx < m_shortcutPads.size()) {
@@ -563,15 +536,12 @@ std::unique_ptr<Flex> HomeTab::create() {
             },
         .configure =
             [enabled, isActive, fillOpacity = panelCardOpacity(), scale](Button& button) {
-              // Match media card column: Stretch so label width follows the cell; Center uses intrinsic text width and
-              // fights setMaxWidth.
               button.setAlign(FlexAlign::Stretch);
-              // Label font only: Button::setFontSize also resizes the glyph. Mini + uiScale keeps tiles closer to
-              // other CC rows that use raw fontSizeCaption, while still scaling with shell.uiScale for consistency.
-              button.label()->setFontSize(Style::fontSizeMini * scale);
+              button.label()->setFontSize(Style::fontSizeBody * scale);
+              button.label()->setFontWeight(FontWeight::SemiBold);
               button.label()->setMaxLines(1);
-              button.label()->setTextAlign(TextAlign::Center);
-              button.setDirection(FlexDirection::Vertical);
+              button.label()->setTextAlign(TextAlign::Start);
+              button.setDirection(FlexDirection::Horizontal);
               applyShortcutButtonStyle(button, enabled, isActive, fillOpacity);
             },
     });
@@ -600,16 +570,16 @@ std::unique_ptr<Flex> HomeTab::create() {
     grid->addChild(std::move(btn));
   }
 
-  if (m_shortcutPads.size() <= kHomeStackedShortcutMax) {
+  if (m_shortcutPads.size() == 1) {
     grid->setColumns(1);
-    grid->setFlexGrow(0.0f);
   }
 
   if (!m_shortcutPads.empty()) {
-    bottomRow->addChild(std::move(grid));
+    tab->addChild(std::move(grid));
   } else {
     m_shortcutsGrid = nullptr;
   }
+  tab->addChild(std::move(userCard));
   tab->addChild(std::move(bottomRow));
 
   return tab;
@@ -655,43 +625,16 @@ void HomeTab::doLayout(Renderer& renderer, float contentWidth, float bodyHeight)
   }
   if (m_shortcutsGrid != nullptr && !m_shortcutPads.empty()) {
     const float scale = contentScale();
-    const float bottomRowGap = m_bottomRow != nullptr ? m_bottomRow->gap() : 0.0f;
-    const bool stacked = m_shortcutPads.size() <= kHomeStackedShortcutMax;
-    const std::size_t cols = stacked ? 1u : kHomeShortcutGridColumns;
+    const float twoColumnThreshold = 360.0f * scale;
+    const std::size_t cols =
+        m_shortcutPads.size() == 1 || contentWidth < twoColumnThreshold ? 1u : kHomeShortcutGridColumns;
     const std::size_t rows = (m_shortcutPads.size() + cols - 1) / cols;
-    const float padH = m_shortcutsGrid->paddingLeft() + m_shortcutsGrid->paddingRight();
-    const float padV = m_shortcutsGrid->paddingTop() + m_shortcutsGrid->paddingBottom();
-    const float colGap = m_shortcutsGrid->columnGap();
-    const float rowGap = m_shortcutsGrid->rowGap();
-
-    float gridWidth = stacked ? homeStackedShortcutsWidth(contentWidth, bottomRowGap, *m_shortcutsGrid)
-                              : homeShortcutsGridNaturalWidth(contentWidth, bottomRowGap);
-
-    // A wide control center would otherwise grow the square tiles tall enough to crush the
-    // user card (which content-overflows). Reserve the user card's natural height and cap the
-    // square side to fit; cap the grid width to keep tiles square, handing the freed width to
-    // the media/clock column.
-    const float userCardReserve = homeAvatarSize(scale) + 2.0f * (Style::spaceSm + Style::spaceXs) * scale;
-    const float rootGap = m_rootLayout->gap();
-    const float availForGrid = std::max(1.0f, bodyHeight - userCardReserve - rootGap);
-    const float maxCellSide =
-        std::max(1.0f, (availForGrid - static_cast<float>(rows - 1) * rowGap - padV) / static_cast<float>(rows));
-    const float maxGridWidth = static_cast<float>(cols) * (maxCellSide / kHomeShortcutSquareTrim)
-        + static_cast<float>(cols - 1) * colGap
-        + padH;
-
-    const bool capped = gridWidth > maxGridWidth;
-    if (capped) {
-      gridWidth = maxGridWidth;
-    }
-    // Pin the width (flexGrow 0) for the stacked column or whenever capped, so the left column
-    // absorbs the slack; otherwise let the 2-column grid flex-grow normally.
-    if (stacked || capped) {
-      m_shortcutsGrid->setFlexGrow(0.0f);
-      m_shortcutsGrid->setSize(gridWidth, m_shortcutsGrid->height());
-    } else {
-      m_shortcutsGrid->setFlexGrow(kHomeShortcutsFlexGrow);
-    }
+    const float gridHeight = static_cast<float>(rows) * Style::quickSettingTileHeight * scale
+        + static_cast<float>(rows - 1) * m_shortcutsGrid->rowGap();
+    m_shortcutsGrid->setColumns(cols);
+    m_shortcutsGrid->setMinHeight(gridHeight);
+    m_shortcutsGrid->setMaxHeight(gridHeight);
+    m_shortcutsGrid->setSize(contentWidth, gridHeight);
   }
   m_rootLayout->setSize(contentWidth, bodyHeight);
   m_rootLayout->layout(renderer);
@@ -785,44 +728,6 @@ void HomeTab::doLayout(Renderer& renderer, float contentWidth, float bodyHeight)
     }
     m_userMain->setMinHeight(desiredAvatar);
     m_userMain->setSize(m_userMain->width(), desiredAvatar);
-  }
-
-  // Lock the shortcuts grid height to its square-cell natural size so it does not vary
-  // when the media or clock cards change. The leftColumn stretches to match this height.
-  if (m_shortcutsGrid != nullptr && !m_shortcutPads.empty()) {
-    const float gridW = m_shortcutsGrid->width();
-    const float innerGridW = std::max(1.0f, gridW - m_shortcutsGrid->paddingLeft() - m_shortcutsGrid->paddingRight());
-    const std::size_t cols = std::max<std::size_t>(1, std::min(m_shortcutsGrid->columns(), m_shortcutPads.size()));
-    const std::size_t rows = (m_shortcutPads.size() + cols - 1) / cols;
-    const float cellWidth = std::max(
-        1.0f, (innerGridW - static_cast<float>(cols - 1) * m_shortcutsGrid->columnGap()) / static_cast<float>(cols)
-    );
-    // Cells aim for square but trimmed slightly so the grid stays compact and the bottom row
-    // doesn't tower over the user card area. The width was capped earlier so this stays bounded.
-    const float cellSide = cellWidth * kHomeShortcutSquareTrim;
-    const float measuredRowH = m_bottomRow != nullptr ? m_bottomRow->height() : m_shortcutsGrid->height();
-    const float formulaH = static_cast<float>(rows) * cellSide
-        + static_cast<float>(rows > 0 ? rows - 1 : 0) * m_shortcutsGrid->rowGap()
-        + m_shortcutsGrid->paddingTop()
-        + m_shortcutsGrid->paddingBottom();
-    const float gridH = std::round(std::max(measuredRowH, formulaH));
-    if (m_bottomRow != nullptr) {
-      m_bottomRow->setMinHeight(gridH);
-    }
-
-    // Integer card heights track the snapped row height so top/bottom borders land on pixels.
-    if (m_mediaCard != nullptr && m_dateTimeCard != nullptr) {
-      const float colGap = Style::spaceSm * contentScale();
-      const float avail = std::max(0.0f, gridH - colGap);
-      const float cardGrowTotal = kHomeMediaCardFlexGrow + kHomeDateTimeCardFlexGrow;
-      const float mediaH = std::round(avail * (kHomeMediaCardFlexGrow / cardGrowTotal));
-      const float dateH = std::max(0.0f, avail - mediaH);
-
-      m_mediaCard->setMinHeight(mediaH);
-      m_mediaCard->setMaxHeight(mediaH);
-      m_dateTimeCard->setMinHeight(dateH);
-      m_dateTimeCard->setMaxHeight(dateH);
-    }
   }
 
   bool artSizeChanged = false;

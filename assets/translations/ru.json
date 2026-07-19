@@ -690,9 +690,7 @@
       "polkit-agent": "Агент аутентификации",
       "screen-time-reset": "Экранное время",
       "screen-time-reset-success": "История использования очищена.",
-      "session-bus-unavailable": "Шина сеанса недоступна",
-      "wallpaper-palette-export": "Пользовательская палитра",
-      "wallpaper-palette-export-success": "\"{name}\" сохранена; источник палитры переключён на пользовательский."
+      "session-bus-unavailable": "Шина сеанса недоступна"
     }
   },
   "osd": {
@@ -965,7 +963,6 @@
       },
       "batch-write": "Некоторые настройки не удалось сохранить.",
       "export-config": "Не удалось сохранить экспорт конфигурации.",
-      "export-wallpaper-palette": "Не удалось сохранить палитру обоев как пользовательскую.",
       "monitor-override": {
         "create": "Не удалось создать переопределение монитора.",
         "delete": "Не удалось удалить переопределение монитора.",
@@ -1218,12 +1215,6 @@
         "mode": {
           "dark": "Тёмная",
           "light": "Светлая"
-        },
-        "source": {
-          "built-in": "Встроенная",
-          "community": "Сообщество",
-          "custom": "Пользовательская",
-          "wallpaper": "Обои"
         }
       },
       "theme-role": {
@@ -1329,28 +1320,9 @@
           "description": "Перекрасить значки приложений в оболочке в соответствии с активной палитрой",
           "label": "Раскрасить значки приложений"
         },
-        "builtin-palette": {
-          "description": "Выберите палитру из встроенного набора",
-          "label": "Встроенная палитра"
-        },
-        "community-palette": {
-          "description": "Выберите палитру из набора сообщества",
-          "label": "Палитра сообщества",
-          "search-placeholder": "Поиск палитр..."
-        },
         "corner-roundness": {
           "description": "Масштаб радиуса углов во всех контейнерах и элементах управления оболочки",
           "label": "Скругление углов"
-        },
-        "custom-palette": {
-          "description": "Выберите палитру из ~/.config/motion/palettes/",
-          "label": "Пользовательская палитра",
-          "search-placeholder": "Поиск пользовательских палитр..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Сохранить как пользовательскую палитру",
-          "description": "Сохранить текущую палитру, созданную из обоев, как переиспользуемый файл пользовательской палитры",
-          "label": "Экспорт палитры обоев"
         },
         "font-family": {
           "description": "Семейство шрифтов для интерфейса оболочки",
@@ -1366,10 +1338,6 @@
           "description": "Переопределить автоматическое определение локали",
           "label": "Язык"
         },
-        "palette-source": {
-          "description": "Откуда взять цветовую палитру",
-          "label": "Источник палитры"
-        },
         "theme-mode": {
           "description": "Выберите тёмный, светлый или автоматический режим в зависимости от времени суток",
           "label": "Режим темы"
@@ -1377,10 +1345,6 @@
         "ui-scale": {
           "description": "Увеличить или уменьшить весь интерфейс",
           "label": "Масштаб интерфейса"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Выберите, как цвета обоев преобразуются в палитру",
-          "label": "Схема генерации обоев"
         }
       },
       "backdrop": {
@@ -3051,7 +3015,6 @@
   },
   "setup-wizard": {
     "browse": "Обзор",
-    "builtin-palette": "Встроенная палитра",
     "footer-note": "Вы можете изменить их позже в настройках.",
     "get-started": "Начать",
     "mode": "Режим",
@@ -3059,8 +3022,7 @@
     "select-wallpaper": "Выбрать обои",
     "subtitle": "Несколько быстрых вариантов для начала.",
     "title": "Добро пожаловать в Motion",
-    "wallpaper": "Обои",
-    "wallpaper-scheme": "Схема обоев"
+    "wallpaper": "Обои"
   },
   "system": {
     "hardware": {
@@ -3068,20 +3030,6 @@
       "unknown-cpu": "Неизвестный ЦП",
       "unknown-distro": "Неизвестный дистрибутив",
       "unknown-gpu": "Неизвестный графический процессор"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Мягкая",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

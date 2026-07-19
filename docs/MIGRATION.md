@@ -47,9 +47,9 @@ New configuration and automation should use Motion names.
 Most schema keys remain compatible because the fork preserves the supplied shell functionality. Notable behavior:
 
 - `shell.telemetry_enabled` is accepted but ignored; Motion never sends telemetry.
-- Default wallpaper color scheme is `m3-expressive`.
+- Wallpaper palettes are always generated with Material 3 Expressive.
 - New paths and generated caches use the `motion` directory name.
-- Community palette/template, Google OAuth, geolocation, and plugin defaults can still point to inherited Noctalia
+- Community template, Google OAuth, geolocation, and plugin defaults can still point to inherited Noctalia
   services or repositories where no fork-operated service exists.
 
 ## Recommended migration procedure

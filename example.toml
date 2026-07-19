@@ -52,7 +52,8 @@ borders               = true        # panel shell outline and in-panel section c
 shadow                = true        # cast the global [shell.shadow] from panel surfaces
 launcher_placement       = "centered" # attached | floating | centered
 clipboard_placement      = "centered" # attached | floating | centered
-control_center_placement = "attached" # attached | floating | centered
+control_center_placement = "floating" # attached | floating | centered
+control_center_position  = "top_right" # auto | top_left | top_center | top_right | center | bottom_*
 wallpaper_placement      = "attached" # attached | floating | centered
 session_placement        = "attached" # attached | floating | centered
 open_near_click_control_center = false # for attached/floating placement, follow the bar click instead of bar-center
@@ -65,7 +66,7 @@ open_near_click_session        = false # for attached/floating placement, follow
 categories    = true                    # show category filters in the launcher
 show_icons    = true                    # show application icons in launcher results
 compact       = false                   # use smaller icons and tighter result rows
-app_grid      = false                   # show app icon grid view when results are apps only
+app_grid      = true                    # show the expressive app-card grid when results are apps only
 sort_by_usage = true                    # sort apps by usage frequency
 provider_prefix = "/"                     # common prefix character for provider trigger words (e.g. "/" or ".")
 
@@ -117,16 +118,7 @@ recursive                  = true    # include subdirectories when picking rando
 # ── Theme ─────────────────────────────────────────────────────────────────────
 
 [theme]
-mode   = "dark"                     # dark | light | auto
-source = "builtin"                  # builtin | wallpaper | community
-builtin = "Motion"                # Ayu | Catppuccin | Dracula | Eldritch | Gruvbox |
-                                    # Kanagawa | Motion | Nord | Rosé Pine | Tokyo-Night
-# community_palette = "Motion"    # fetched from api.noctalia.dev, cached locally
-# wallpaper_scheme  = "m3-expressive"  # m3-expressive | m3-tonal-spot | m3-content | m3-fruit-salad |
-                                    # m3-rainbow | m3-monochrome | vibrant | faithful |
-                                    # dysfunctional | muted
-pure_black_dark = false             # anchor dark surfaces to true black (OLED); applies to
-                                    # every palette source, not just wallpaper-generated ones
+mode = "dark"                       # dark | light | auto; palette is always wallpaper-derived M3 Expressive
 
 [theme.templates]
 enable_builtin_templates            = true
@@ -303,13 +295,15 @@ tab_previous = ["shift+iso_left_tab"]
 
 [bar.main]
 position           = "top"          # top | bottom | left | right
-thickness          = 34
+thickness          = 48
 background_opacity = 1.0
-radius             = 12
-margin_h           = 180
-margin_v           = 10
-padding            = 14
-widget_spacing     = 6
+border             = "outline_variant"
+border_width       = 1
+radius             = 24
+margin_h           = 12
+margin_v           = 8
+padding            = 16
+widget_spacing     = 8
 scale              = 1.0
 shadow             = true
 auto_hide          = false
@@ -420,7 +414,12 @@ enabled = false
 
 # ── Control Center ────────────────────────────────────────────────────────────
 
-# Shortcut buttons shown on the right side of the dashboard (up to 6).
+# A compact, sidebar-free control center matches the floating quick-settings layout.
+[control_center]
+sidebar = "none"
+width = 700
+
+# Shortcut buttons shown in the two-column quick-settings grid (up to 6).
 # [[control_center.shortcuts]]
 # type = "wifi"
 # [[control_center.shortcuts]]

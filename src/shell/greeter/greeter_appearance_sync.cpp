@@ -22,7 +22,6 @@
 #include <string>
 #include <string_view>
 #include <system_error>
-#include <toml++/toml.hpp>
 #include <vector>
 
 namespace {
@@ -31,9 +30,6 @@ namespace {
 
   constexpr std::string_view kApplyHelperName = "motion-greeter-apply-appearance";
   constexpr std::string_view kGreeterName = "motion-greeter";
-  constexpr std::string_view kGreeterTomlFileName = "greeter.toml";
-  constexpr std::string_view kDefaultGreeterStateDir = "/var/lib/motion-greeter";
-  constexpr std::string_view kGreeterStateDirEnv = "MOTION_GREETER_STATE_DIR";
   constexpr std::string_view kStagedOutputLayoutFileName = "output_layout";
 
   [[nodiscard]] std::string
@@ -65,46 +61,7 @@ namespace {
     palette[std::string(key)] = formatRgbHex(color);
   }
 
-  [[nodiscard]] std::filesystem::path greeterTomlPath() {
-    const char* stateDir = std::getenv(kGreeterStateDirEnv.data());
-    if (stateDir != nullptr && stateDir[0] != '\0') {
-      return std::filesystem::path(stateDir) / kGreeterTomlFileName;
-    }
-    return std::filesystem::path(kDefaultGreeterStateDir) / kGreeterTomlFileName;
-  }
-
-  [[nodiscard]] std::optional<std::string> readGreeterConfiguredOutput() {
-    const auto path = greeterTomlPath();
-    std::error_code ec;
-    if (!std::filesystem::is_regular_file(path, ec) || ec) {
-      return std::nullopt;
-    }
-
-    try {
-      const toml::table table = toml::parse_file(path.string());
-      if (const toml::table* output = table["output"].as_table()) {
-        const auto name = (*output)["name"].value<std::string>();
-        if (name.has_value() && !name->empty()) {
-          return name;
-        }
-      }
-      return std::nullopt;
-    } catch (const toml::parse_error& e) {
-      kLog.warn("failed to parse {}: {}", path.string(), e.description());
-      return std::nullopt;
-    }
-  }
-
   [[nodiscard]] std::string resolveSyncWallpaperPath(const ConfigService& configService) {
-    const Config& config = configService.config();
-    if (config.theme.source != PaletteSource::Wallpaper) {
-      if (const auto output = readGreeterConfiguredOutput(); output.has_value() && !output->empty()) {
-        const std::string path = configService.getWallpaperPath(*output);
-        if (!path.empty()) {
-          return path;
-        }
-      }
-    }
     return configService.getGreeterSyncWallpaperPath();
   }
 

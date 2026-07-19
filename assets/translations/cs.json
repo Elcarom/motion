@@ -709,9 +709,7 @@
       "polkit-no-session": "Polkit agent vyžaduje logind, elogind nebo XDG_SESSION_ID. Na seatd-only sestavách se nemůže registrovat pro grafické výzvy. Pro synchronizaci greetera použij pkexec v terminálu, nebo nainstaluj elogind pro autentizaci v rámci sezení.",
       "screen-time-reset": "Čas u obrazovky",
       "screen-time-reset-success": "Historie použití byla vymazána.",
-      "session-bus-unavailable": "Session bus není k dispozici",
-      "wallpaper-palette-export": "Vlastní paleta",
-      "wallpaper-palette-export-success": "„{name}“ uloženo a zdroj palety přepnut na vlastní."
+      "session-bus-unavailable": "Session bus není k dispozici"
     }
   },
   "osd": {
@@ -985,7 +983,6 @@
       },
       "batch-write": "Některá nastavení se nepodařilo uložit.",
       "export-config": "Nepodařilo se uložit export konfigurace.",
-      "export-wallpaper-palette": "Nepodařilo se uložit paletu tapety jako vlastní paletu.",
       "monitor-override": {
         "create": "Nepodařilo se vytvořit přepsání monitoru.",
         "delete": "Nepodařilo se smazat přepsání monitoru.",
@@ -1258,12 +1255,6 @@
         "mode": {
           "dark": "Tmavý",
           "light": "Světlý"
-        },
-        "source": {
-          "built-in": "Vestavěná",
-          "community": "Komunitní",
-          "custom": "Vlastní",
-          "wallpaper": "Tapeta"
         }
       },
       "theme-role": {
@@ -1385,28 +1376,9 @@
           "description": "Přebarvit ikony aplikací v celém shellu tak, aby odpovídaly aktivní paletě",
           "label": "Obarvit ikony aplikací"
         },
-        "builtin-palette": {
-          "description": "Vybrat paletu z vestavěného katalogu",
-          "label": "Vestavěná paleta"
-        },
-        "community-palette": {
-          "description": "Vybrat paletu z komunitního katalogu",
-          "label": "Komunitní paleta",
-          "search-placeholder": "Hledat palety..."
-        },
         "corner-roundness": {
           "description": "Škálovat poloměr rohů napříč kontejnery a ovládacími prvky rozhraní shellu",
           "label": "Zaoblení rohů"
-        },
-        "custom-palette": {
-          "description": "Vybrat paletu z ~/.config/motion/palettes/",
-          "label": "Vlastní paleta",
-          "search-placeholder": "Hledat vlastní palety..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Uložit jako vlastní paletu",
-          "description": "Uložit aktuální paletu vygenerovanou z tapety jako znovupoužitelný soubor vlastní palety",
-          "label": "Exportovat paletu tapety"
         },
         "font-family": {
           "description": "Rodina písma pro rozhraní shellu",
@@ -1422,10 +1394,6 @@
           "description": "Přepsat automatickou detekci jazyka",
           "label": "Jazyk"
         },
-        "palette-source": {
-          "description": "Odkud odvodit barevnou paletu",
-          "label": "Zdroj palety"
-        },
         "theme-mode": {
           "description": "Vybrat tmavý, světlý nebo automatický režim podle denní doby",
           "label": "Režim motivu"
@@ -1433,10 +1401,6 @@
         "ui-scale": {
           "description": "Zvětšit nebo zmenšit celé rozhraní",
           "label": "Měřítko rozhraní"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Vybrat, jak se barvy tapety převádějí na paletu",
-          "label": "Schéma generování z tapety"
         }
       },
       "backdrop": {
@@ -3303,7 +3267,6 @@
   },
   "setup-wizard": {
     "browse": "Procházet",
-    "builtin-palette": "Vestavěná paleta",
     "footer-note": "Toto můžete později změnit v nastavení.",
     "get-started": "Začít",
     "mode": "Režim",
@@ -3311,8 +3274,7 @@
     "select-wallpaper": "Vybrat tapetu",
     "subtitle": "Několik rychlých voleb pro začátek.",
     "title": "Vítejte v Noctalii",
-    "wallpaper": "Tapeta",
-    "wallpaper-scheme": "Schéma tapety"
+    "wallpaper": "Tapeta"
   },
   "system": {
     "hardware": {
@@ -3320,20 +3282,6 @@
       "unknown-cpu": "Neznámý procesor",
       "unknown-distro": "Neznámá distribuce",
       "unknown-gpu": "Neznámá grafická karta"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Nefunkční",
-      "faithful": "Věrné",
-      "m3-content": "M3 Obsah",
-      "m3-fruit-salad": "M3 Ovocný salát",
-      "m3-monochrome": "M3 Monochromatické",
-      "m3-rainbow": "M3 Duha",
-      "m3-tonal-spot": "M3 Tónová skvrna",
-      "muted": "Tlumené",
-      "soft": "Jemné",
-      "vibrant": "Syté"
     }
   },
   "time": {

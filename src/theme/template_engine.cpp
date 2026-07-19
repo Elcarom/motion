@@ -5,12 +5,7 @@
 #include "core/toml.h" // IWYU pragma: keep
 #include "cpp/cam/hct.h"
 #include "cpp/palettes/tones.h"
-#include "cpp/scheme/scheme_content.h"
 #include "cpp/scheme/scheme_expressive.h"
-#include "cpp/scheme/scheme_fruit_salad.h"
-#include "cpp/scheme/scheme_monochrome.h"
-#include "cpp/scheme/scheme_rainbow.h"
-#include "cpp/scheme/scheme_tonal_spot.h"
 #include "theme/color.h"
 #include "theme/palette.h"
 #include "util/file_utils.h"
@@ -1132,19 +1127,8 @@ namespace motion::theme {
 
   namespace {
 
-    material_color_utilities::DynamicScheme
-    makeCustomColorScheme(std::string_view schemeType, material_color_utilities::Hct source) {
-      if (schemeType == "expressive")
-        return material_color_utilities::SchemeExpressive(source, false);
-      if (schemeType == "tonal-spot")
-        return material_color_utilities::SchemeTonalSpot(source, false);
-      if (schemeType == "fruit-salad")
-        return material_color_utilities::SchemeFruitSalad(source, false);
-      if (schemeType == "rainbow")
-        return material_color_utilities::SchemeRainbow(source, false);
-      if (schemeType == "monochrome")
-        return material_color_utilities::SchemeMonochrome(source, false);
-      return material_color_utilities::SchemeContent(source, false);
+    material_color_utilities::DynamicScheme makeExpressiveColorScheme(material_color_utilities::Hct source) {
+      return material_color_utilities::SchemeExpressive(source, false);
     }
 
     std::string harmonizeHex(std::string_view srcHex, std::string_view targetHex) {
@@ -1406,9 +1390,8 @@ namespace motion::theme {
           for (std::string_view mode : kTemplateModes) {
             const std::string& colorHex = (mode == "dark") ? darkHex : lightHex;
             const std::string paletteHex = (blend && !sourceHex.empty()) ? harmonizeHex(colorHex, sourceHex) : colorHex;
-            const auto scheme = makeCustomColorScheme(
-                m_options.schemeType, material_color_utilities::Hct(Color::fromHex(paletteHex).toArgb())
-            );
+            const auto scheme =
+                makeExpressiveColorScheme(material_color_utilities::Hct(Color::fromHex(paletteHex).toArgb()));
             const auto& palette = scheme.primary_palette;
 
             auto& modeData = m_themeData[std::string(mode)];

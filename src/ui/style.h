@@ -12,9 +12,9 @@ namespace Style {
   inline constexpr int animSlow = motion::design::motion::longEnter;
 
   inline constexpr float radiusSm = motion::design::shape::extraSmall;
-  inline constexpr float radiusMd = motion::design::shape::compactControl;
-  inline constexpr float radiusLg = motion::design::shape::standardControl;
-  inline constexpr float radiusXl = motion::design::shape::panel;
+  inline constexpr float radiusMd = motion::design::shape::standardControl;
+  inline constexpr float radiusLg = motion::design::shape::large;
+  inline constexpr float radiusXl = motion::design::shape::extraLarge;
 
   inline constexpr float radiusButton = motion::design::shape::prominentControl;
   inline constexpr float radiusIconButton = motion::design::shape::circular;
@@ -37,7 +37,7 @@ namespace Style {
   inline constexpr float spaceLg = motion::design::spacing::lg;
 
   inline constexpr float cardPadding = motion::design::spacing::lg;
-  inline constexpr float panelPadding = motion::design::spacing::lg;
+  inline constexpr float panelPadding = motion::design::spacing::xl;
 
   inline constexpr float barCapsulePadding = motion::design::spacing::sm;
   inline constexpr float baseGlyphSize = motion::design::size::iconSmall;
@@ -54,6 +54,10 @@ namespace Style {
   inline constexpr float controlHeightSm = motion::design::size::controlCompact;
   inline constexpr float controlHeight = motion::design::size::controlStandard;
   inline constexpr float controlHeightLg = motion::design::size::controlProminent;
+  inline constexpr float searchHeroHeight = motion::design::size::searchHero;
+  inline constexpr float quickSettingTileHeight = motion::design::size::quickSettingTile;
+  inline constexpr float launcherTileHeight = motion::design::size::launcherTile;
+  inline constexpr float launcherTileMinWidth = motion::design::size::launcherTileMinWidth;
   inline constexpr float scrollWheelStep = 56.0f;
 
   inline constexpr float scrollbarWidth = 6.0f;

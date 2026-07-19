@@ -36,7 +36,6 @@ namespace motion::theme {
       std::string configFile;
       std::unordered_set<std::string> enabledTemplates;
       std::function<bool()> cancelRequested;
-      std::string schemeType = "content";
       bool verbose = true;
     };
 

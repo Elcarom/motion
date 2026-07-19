@@ -24,9 +24,7 @@
 #include "system/battery_warning_monitor.h"
 #include "system/dependency_service.h"
 #include "theme/builtin_templates.h"
-#include "theme/community_palettes.h"
 #include "theme/community_templates.h"
-#include "theme/custom_palettes.h"
 #include "ui/builders.h"
 #include "ui/controls/select_dropdown_popup.h"
 #include "ui/palette.h"
@@ -54,35 +52,6 @@ namespace {
   constexpr Logger kLog("settings");
 
   constexpr auto kSearchDebounceInterval = std::chrono::milliseconds(120);
-
-  bool useLightPalettePreview(ThemeMode mode) { return mode == ThemeMode::Light; }
-
-  ColorSwatchPreview palettePreviewFromMetadata(const motion::theme::AvailablePalette::PreviewMode& metadata) {
-    ColorSwatchPreview preview;
-    Color surface;
-    if (tryParseHexColor(metadata.surface, surface)) {
-      preview.surface = fixedColorSpec(surface);
-    }
-    preview.swatches.reserve(metadata.accents.size());
-    for (const auto& hexColor : metadata.accents) {
-      Color color;
-      if (tryParseHexColor(hexColor, color)) {
-        preview.swatches.push_back(fixedColorSpec(color));
-      }
-    }
-    return preview;
-  }
-
-  ColorSwatchPreview availablePalettePreview(const motion::theme::AvailablePalette& palette, ThemeMode mode) {
-    if (useLightPalettePreview(mode)) {
-      ColorSwatchPreview preview = palettePreviewFromMetadata(palette.preview.light);
-      if (!preview.empty()) {
-        return preview;
-      }
-      return palettePreviewFromMetadata(palette.preview.dark);
-    }
-    return palettePreviewFromMetadata(palette.preview.dark);
-  }
 
   std::unique_ptr<Label>
   makeLabel(std::string_view text, float fontSize, const ColorSpec& color, FontWeight fontWeight = FontWeight::Normal) {
@@ -738,27 +707,6 @@ settings::RegistryEnvironment SettingsWindow::buildRegistryEnvironment() const {
   env.gammaControlAvailable = (m_wayland != nullptr && m_wayland->hasGammaControl());
   env.greeterSyncAvailable =
       m_config != nullptr && greeter::appearanceSyncAvailable(m_config->config().shell.greeterSync);
-  const ThemeMode previewMode = m_config != nullptr ? m_config->config().theme.mode : ThemeMode::Dark;
-  for (const auto& paletteInfo : motion::theme::availableCommunityPalettes()) {
-    env.communityPalettes.push_back(
-        settings::SelectOption{
-            .value = paletteInfo.name,
-            .label = paletteInfo.name,
-            .description = {},
-            .preview = availablePalettePreview(paletteInfo, previewMode),
-        }
-    );
-  }
-  for (const auto& p : motion::theme::availableCustomPalettes()) {
-    env.customPalettes.push_back(
-        settings::SelectOption{
-            .value = p.name,
-            .label = p.name,
-            .description = {},
-            .preview = availablePalettePreview(p, previewMode),
-        }
-    );
-  }
   for (const auto& t : motion::theme::CommunityTemplateService::availableTemplates()) {
     env.communityTemplates.push_back(
         settings::SelectOption{
@@ -1453,32 +1401,6 @@ void SettingsWindow::refreshSettingsRegistry(const Config& cfg) {
             },
         .searchText = "screen time reset usage history clear tracking",
         .visibleWhen = [](const Config& c) { return c.shell.screenTimeEnabled; },
-    };
-    m_settingsRegistry.insert(it, std::move(btn));
-  }
-
-  if (m_saveWallpaperPaletteAsCustom && cfg.theme.source == PaletteSource::Wallpaper) {
-    auto it = std::ranges::find_if(m_settingsRegistry, [](const settings::SettingEntry& e) {
-      return e.section == settings::SettingsSection::Appearance
-          && e.group == "theme"
-          && e.path == std::vector<std::string>{"theme", "wallpaper_scheme"};
-    });
-    if (it != m_settingsRegistry.end()) {
-      ++it;
-    }
-    settings::SettingEntry btn{
-        .section = settings::SettingsSection::Appearance,
-        .group = "theme",
-        .title = i18n::tr("settings.schema.appearance.export-wallpaper-palette.label"),
-        .subtitle = i18n::tr("settings.schema.appearance.export-wallpaper-palette.description"),
-        .path = {},
-        .control =
-            settings::ButtonSetting{
-                .label = i18n::tr("settings.schema.appearance.export-wallpaper-palette.button"),
-                .action = m_saveWallpaperPaletteAsCustom,
-                .glyph = {},
-            },
-        .searchText = "wallpaper palette export custom save colors theme",
     };
     m_settingsRegistry.insert(it, std::move(btn));
   }

@@ -715,9 +715,7 @@
       "polkit-no-session": "A Polkit agent-nek szüksége van a logind-re, az elogind-re vagy az XDG_SESSION_ID-re. A kizárólag seatd-t futtató rendszereken nem tud regisztrálni a grafikus bejelentkezési képernyőkhöz. A bejelentkezési képernyő szinkronizálásához használd a terminálon futó pkexec parancsot, vagy telepítsd az elogind-t a munkamenet közbeni hitelesítéshez.",
       "screen-time-reset": "Képernyőidő",
       "screen-time-reset-success": "A felhasználói előzmények törlődtek.",
-      "session-bus-unavailable": "A munkamenet-busz nem érhető el",
-      "wallpaper-palette-export": "Egyéni paletta",
-      "wallpaper-palette-export-success": "A(z) „{name}” mentve, és a paletta forrása egyénire váltott."
+      "session-bus-unavailable": "A munkamenet-busz nem érhető el"
     }
   },
   "osd": {
@@ -1023,7 +1021,6 @@
       "batch-write": "Néhány beállítást nem sikerült menteni.",
       "custom-schedule-times": "Egy egyéni ütemtervhez mind a napkelte, mind a napnyugta idejére szükség van ÓÓ:PP formátumban.",
       "export-config": "Nem sikerült menteni a konfigurációexportálást.",
-      "export-wallpaper-palette": "Nem sikerült elmenteni a háttérkép-palettát egyedi palettaként.",
       "monitor-override": {
         "create": "Nem sikerült létrehozni a monitor felülbírálást.",
         "delete": "Nem sikerült törölni a monitor-felülbírálást.",
@@ -1317,12 +1314,6 @@
         "mode": {
           "dark": "Sötét",
           "light": "Világos"
-        },
-        "source": {
-          "built-in": "Beépített",
-          "community": "Közösség",
-          "custom": "Egyéni",
-          "wallpaper": "Háttérkép"
         }
       },
       "theme-role": {
@@ -1456,32 +1447,13 @@
           "description": "Alkalmazásikonok újraszínezése a teljes felületen az aktív palettának megfelelően",
           "label": "Alkalmazásikonok színezése"
         },
-        "builtin-palette": {
-          "description": "Válassz egy palettát a beépített katalógusból",
-          "label": "Beépített paletta"
-        },
         "button-borders": {
           "description": "Rajzolj szegélyeket a gombok köré a teljes felületen",
           "label": "Gombkeretek"
         },
-        "community-palette": {
-          "description": "Válassz egy palettát a közösségi katalógusból",
-          "label": "Közösségi paletta",
-          "search-placeholder": "Paletták keresése…"
-        },
         "corner-roundness": {
           "description": "Sarokkerekítés méretezése a felület összes konténerén és vezérlőelemén",
           "label": "Sarokkerekítés"
-        },
-        "custom-palette": {
-          "description": "Válassz egy palettát a ~/.config/motion/palettes/ mappából",
-          "label": "Egyéni paletta",
-          "search-placeholder": "Egyéni paletták keresése…"
-        },
-        "export-wallpaper-palette": {
-          "button": "Mentés egyéni palettaként",
-          "description": "A háttérkép alapján generált jelenlegi paletta mentése újrafelhasználható egyéni palettafájlként",
-          "label": "Háttérképpaletta exportálása"
         },
         "font-family": {
           "description": "A rendszerfelület betűtípusa",
@@ -1497,14 +1469,6 @@
           "description": "Automatikus területi beállítások felülbírálása",
           "label": "Nyelv"
         },
-        "palette-source": {
-          "description": "Színpaletta forrása",
-          "label": "Paletta forrása"
-        },
-        "pure-black-dark": {
-          "description": "A sötét felületeket valódi feketéhez igazítja, így megelőzve a sávosodást az OLED-paneleknél (csak sötét módban)",
-          "label": "Tiszta fekete"
-        },
         "theme-mode": {
           "description": "Válassz sötét, világos vagy a napszakhoz igazodó automatikus témát",
           "label": "Témamód"
@@ -1512,10 +1476,6 @@
         "ui-scale": {
           "description": "A teljes felület nagyítása vagy kicsinyítése",
           "label": "Felület skálázása"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Válaszd ki, hogyan alakuljanak át a háttérkép színei palettává",
-          "label": "Háttérkép generálási séma"
         }
       },
       "backdrop": {
@@ -3493,7 +3453,6 @@
   },
   "setup-wizard": {
     "browse": "Tallózás",
-    "builtin-palette": "Beépített paletta",
     "footer-note": "Ezeket később megváltoztathatod a beállításokban.",
     "get-started": "Kezdés",
     "mode": "Mód",
@@ -3501,8 +3460,7 @@
     "select-wallpaper": "Háttérkép kiválasztása",
     "subtitle": "Pár gyors választás az induláshoz.",
     "title": "Üdvözlünk a Noctaliában",
-    "wallpaper": "Háttérkép",
-    "wallpaper-scheme": "Háttérkép Séma"
+    "wallpaper": "Háttérkép"
   },
   "system": {
     "hardware": {
@@ -3510,20 +3468,6 @@
       "unknown-cpu": "Ismeretlen CPU",
       "unknown-distro": "Ismeretlen disztribúció",
       "unknown-gpu": "Ismeretlen GPU"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Működésképtelen",
-      "faithful": "Hű",
-      "m3-content": "M3 Tartalom",
-      "m3-fruit-salad": "M3 Gyümölcssaláta",
-      "m3-monochrome": "M3 Monokróm",
-      "m3-rainbow": "M3 Szivárvány",
-      "m3-tonal-spot": "M3 Tónusos Folt",
-      "muted": "Némítva",
-      "soft": "Lágy",
-      "vibrant": "Élénk"
     }
   },
   "time": {

@@ -35,7 +35,6 @@ namespace motion::theme {
       ThemeConfig::TemplatesConfig templates;
       std::string defaultMode;
       std::string imagePath;
-      std::string schemeType;
       std::uint64_t generation = 0;
     };
 

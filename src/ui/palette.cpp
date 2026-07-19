@@ -1,18 +1,14 @@
 #include "ui/palette.h"
 
 #include "render/core/color.h"
-#include "theme/builtin_palettes.h"
-#include "theme/fixed_palette.h"
 #include "util/string_utils.h"
 
 #include <algorithm>
 #include <string>
 
-Palette palette = [] {
-  const auto* builtin = motion::theme::findBuiltinPalette("Motion");
-  const auto generated = motion::theme::expandBuiltinPalette(*builtin);
-  return motion::theme::mapGeneratedPaletteMode(generated.dark);
-}();
+// ThemeService replaces this bootstrap value with the wallpaper-derived M3
+// Expressive palette before shell surfaces are shown.
+Palette palette{};
 bool g_resolvedThemeLight = false;
 
 namespace {

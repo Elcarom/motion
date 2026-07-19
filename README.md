@@ -18,7 +18,7 @@ or endorsed by Google, the Material Design team, Android, or the Noctalia mainta
 - **Cohesive shell surfaces:** bars and widgets, launcher and search, control center and quick settings, notifications,
   dock, tray, clipboard, lock screen, session actions, OSDs, wallpaper picker, settings, and desktop widgets.
 - **Material 3 Expressive principles:** centralized spacing, shape, typography, size, elevation, state-layer, breakpoint,
-  and motion tokens; light/dark dynamic palettes; and a default `m3-expressive` wallpaper scheme.
+  and motion tokens, with light/dark palettes derived exclusively from the wallpaper through Material 3 Expressive.
 - **Desktop-first interaction:** pointer and keyboard density, focus rings, reduced motion, fractional scaling, and
   multi-monitor-aware shell surfaces rather than mobile-sized components copied unchanged.
 - **Local-first privacy:** inherited telemetry configuration remains parseable for compatibility but is ignored. Motion
@@ -152,7 +152,7 @@ The old profile is therefore the rollback copy. Full behavior and recovery steps
 ## Privacy and networking
 
 Motion does not transmit telemetry. Optional user-facing features can still make network requests: weather and
-geolocation, public-IP display, community palettes/templates, remote notification or media artwork, calendar providers,
+geolocation, public-IP display, community templates, remote notification or media artwork, calendar providers,
 plugin Git sources, and explicitly configured integrations. Set `shell.offline_mode = true` to block outgoing HTTP
 through Motion's HTTP client. Existing inherited community/catalog and OAuth compatibility endpoints remain operated by
 the upstream Noctalia service and are labeled as such in code and documentation.

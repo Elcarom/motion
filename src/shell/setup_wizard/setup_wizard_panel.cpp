@@ -6,7 +6,6 @@
 #include "i18n/i18n.h"
 #include "render/core/renderer.h"
 #include "shell/panel/panel_manager.h"
-#include "theme/builtin_palettes.h"
 #include "ui/builders.h"
 #include "ui/dialogs/file_dialog.h"
 #include "ui/palette.h"
@@ -14,9 +13,7 @@
 
 #include <cstdlib>
 #include <filesystem>
-#include <iterator>
 #include <memory>
-#include <span>
 #include <string>
 #include <utility>
 #include <vector>
@@ -24,29 +21,6 @@
 namespace {
 
   constexpr Logger kLog("setup-wizard");
-
-  struct SelectOption {
-    std::string_view labelKey;
-    std::string_view value;
-  };
-
-  constexpr SelectOption kSetupPaletteSources[] = {
-      {"settings.options.theme.source.built-in", "builtin"},
-      {"settings.options.theme.source.wallpaper", "wallpaper"},
-  };
-
-  constexpr SelectOption kWallpaperSchemes[] = {
-      {"theme.scheme.m3-content", "m3-content"},
-      {"theme.scheme.m3-tonal-spot", "m3-tonal-spot"},
-      {"theme.scheme.m3-fruit-salad", "m3-fruit-salad"},
-      {"theme.scheme.m3-rainbow", "m3-rainbow"},
-      {"theme.scheme.m3-monochrome", "m3-monochrome"},
-      {"theme.scheme.vibrant", "vibrant"},
-      {"theme.scheme.faithful", "faithful"},
-      {"theme.scheme.soft", "soft"},
-      {"theme.scheme.dysfunctional", "dysfunctional"},
-      {"theme.scheme.muted", "muted"},
-  };
 
   std::unique_ptr<Label>
   makeLabel(std::string_view text, float fontSize, const ColorSpec& color, FontWeight fontWeight = FontWeight::Normal) {
@@ -56,44 +30,6 @@ namespace {
         .fontWeight = fontWeight,
         .color = color,
     });
-  }
-
-  std::vector<std::string> labelsFromOptions(std::span<const SelectOption> options) {
-    std::vector<std::string> labels;
-    labels.reserve(options.size());
-    for (const auto& option : options) {
-      labels.emplace_back(i18n::tr(option.labelKey));
-    }
-    return labels;
-  }
-
-  std::size_t selectedOptionIndex(std::span<const SelectOption> options, std::string_view value) {
-    for (std::size_t i = 0; i < options.size(); ++i) {
-      if (options[i].value == value) {
-        return i;
-      }
-    }
-    return 0;
-  }
-
-  std::vector<std::string> builtinPaletteNames() {
-    std::vector<std::string> paletteNames;
-    paletteNames.reserve(motion::theme::builtinPalettes().size());
-    for (const auto& entry : motion::theme::builtinPalettes()) {
-      paletteNames.emplace_back(entry.name);
-    }
-    return paletteNames;
-  }
-
-  std::size_t selectedBuiltinPaletteIndex(std::string_view name) {
-    std::size_t index = 0;
-    for (const auto& entry : motion::theme::builtinPalettes()) {
-      if (entry.name == name) {
-        return index;
-      }
-      ++index;
-    }
-    return 0;
   }
 
   std::unique_ptr<Flex> makeCard(float scale, float fillOpacity, bool showBorder) {
@@ -314,69 +250,6 @@ void SetupWizardPanel::create() {
       card->addChild(std::move(row));
     }
 
-    // Theme source row
-    {
-      auto row = makeRow(scale);
-      auto label = makeLabel(
-          i18n::tr("settings.schema.appearance.palette-source.label"), Style::fontSizeBody * scale,
-          colorSpecFromRole(ColorRole::OnSurface)
-      );
-      label->setFlexGrow(1.0f);
-      row->addChild(std::move(label));
-
-      // Respect the user's existing palette: seed controls from current config
-      // and write no override until the user actually changes a control. The
-      // wizard only offers builtin/wallpaper, so community/custom sources are
-      // displayed as builtin but left untouched in config unless changed.
-      m_paletteSource =
-          cfg.theme.source == PaletteSource::Wallpaper ? PaletteSource::Wallpaper : PaletteSource::Builtin;
-      m_builtinPalette = cfg.theme.builtinPalette;
-      const std::string_view currentSource = m_paletteSource == PaletteSource::Wallpaper ? "wallpaper" : "builtin";
-      row->addChild(
-          ui::select({
-              .out = &m_themeSourceSelect,
-              .options = labelsFromOptions(kSetupPaletteSources),
-              .selectedIndex = selectedOptionIndex(kSetupPaletteSources, currentSource),
-              .fontSize = Style::fontSizeBody * scale,
-              .controlHeight = Style::controlHeight * scale,
-              .horizontalPadding = Style::spaceMd * scale,
-              .onSelectionChanged =
-                  [this](std::size_t index, std::string_view /*label*/) {
-                    if (index >= std::size(kSetupPaletteSources)) {
-                      return;
-                    }
-                    const std::string source(kSetupPaletteSources[index].value);
-                    m_paletteSource = source == "wallpaper" ? PaletteSource::Wallpaper : PaletteSource::Builtin;
-                    m_config->setOverride({"theme", "source"}, source);
-                    configureThemeOptionSelect();
-                  },
-              .configure = [scale](Select& select) { select.setMinWidth(220.0f * scale); },
-          })
-      );
-      card->addChild(std::move(row));
-    }
-
-    // Theme option row
-    {
-      auto row = makeRow(scale);
-      auto label = makeLabel("", Style::fontSizeBody * scale, colorSpecFromRole(ColorRole::OnSurface));
-      label->setFlexGrow(1.0f);
-      m_themeOptionLabel = label.get();
-      row->addChild(std::move(label));
-
-      row->addChild(
-          ui::select({
-              .out = &m_themeOptionSelect,
-              .fontSize = Style::fontSizeBody * scale,
-              .controlHeight = Style::controlHeight * scale,
-              .horizontalPadding = Style::spaceMd * scale,
-              .configure = [scale](Select& select) { select.setMinWidth(220.0f * scale); },
-          })
-      );
-      card->addChild(std::move(row));
-      configureThemeOptionSelect();
-    }
-
     content->addChild(std::move(card));
   }
 
@@ -424,46 +297,6 @@ void SetupWizardPanel::doLayout(Renderer& renderer, float width, float height) {
     m_root->setSize(width, height);
     m_root->layout(renderer);
   }
-}
-
-void SetupWizardPanel::configureThemeOptionSelect() {
-  if (m_themeOptionLabel == nullptr || m_themeOptionSelect == nullptr || m_config == nullptr) {
-    return;
-  }
-
-  m_configuringThemeOptionSelect = true;
-  m_themeOptionSelect->setOnSelectionChanged(nullptr);
-
-  const auto& cfg = m_config->config();
-  if (m_paletteSource == PaletteSource::Wallpaper) {
-    m_themeOptionLabel->setText(i18n::tr("setup-wizard.wallpaper-scheme"));
-    m_themeOptionSelect->setOptions(labelsFromOptions(kWallpaperSchemes));
-    m_themeOptionSelect->setSelectedIndex(selectedOptionIndex(kWallpaperSchemes, cfg.theme.wallpaperScheme));
-    m_themeOptionSelect->setOnSelectionChanged([this](std::size_t index, std::string_view /*label*/) {
-      if (m_configuringThemeOptionSelect || index >= std::size(kWallpaperSchemes)) {
-        return;
-      }
-      m_config->setOverride({"theme", "source"}, std::string("wallpaper"));
-      m_config->setOverride({"theme", "wallpaper_scheme"}, std::string(kWallpaperSchemes[index].value));
-    });
-  } else {
-    m_themeOptionLabel->setText(i18n::tr("setup-wizard.builtin-palette"));
-    if (m_builtinPalette.empty()) {
-      m_builtinPalette = cfg.theme.builtinPalette;
-    }
-    m_themeOptionSelect->setOptions(builtinPaletteNames());
-    m_themeOptionSelect->setSelectedIndex(selectedBuiltinPaletteIndex(m_builtinPalette));
-    m_themeOptionSelect->setOnSelectionChanged([this](std::size_t /*index*/, std::string_view name) {
-      if (m_configuringThemeOptionSelect) {
-        return;
-      }
-      m_builtinPalette = std::string(name);
-      m_config->setOverride({"theme", "source"}, std::string("builtin"));
-      m_config->setOverride({"theme", "builtin"}, std::string(name));
-    });
-  }
-
-  m_configuringThemeOptionSelect = false;
 }
 
 void SetupWizardPanel::commit() {

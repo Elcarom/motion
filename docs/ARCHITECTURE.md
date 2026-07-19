@@ -18,7 +18,7 @@ services, compositor adapters, shell surfaces, reusable controls, plugins, confi
 | `src/shell` | Bars, panels, launcher, control center, dock, lock screen, notifications, OSDs, settings, widgets |
 | `src/ui` | Reusable controls, dialogs, palette roles, style and design tokens |
 | `src/config` | Typed schema, TOML parsing, validation, migrations, hot reload, overrides, persistent state |
-| `src/theme` | Fixed/dynamic palettes, Material schemes, templates, wallpaper color generation |
+| `src/theme` | Wallpaper-derived Material 3 Expressive palettes, templates, color generation |
 | `src/ipc` | Unix socket service/client, command parser, single-instance messaging |
 | `src/dbus` | Network, Bluetooth, power, tray, notifications, MPRIS, polkit, logind, accounts, UPower |
 | `src/pipewire` | Audio devices, playback, capture, volume, spectrum and privacy state |
@@ -83,9 +83,9 @@ Profile precedence:
 
 ## Theme flow
 
-Theme sources are built-in, wallpaper-derived, community, or user-defined. Wallpaper extraction selects a source color,
-generates light and dark token maps, applies the requested scheme, caches results, and resolves the compact runtime
-palette plus richer template tokens. `m3-expressive` is the Motion default.
+The active wallpaper is the sole theme-color source. Wallpaper extraction selects a source color, generates Material 3
+Expressive light and dark token maps, caches the result, and resolves the runtime palette plus richer template tokens.
+The bundled Motion wallpaper is the deterministic fallback when the configured wallpaper cannot be loaded.
 
 Built-in/user/community templates can render generated roles to external application configuration. Hooks are executed
 through the process helper; Motion and legacy hook environment aliases are injected temporarily and prior environment
@@ -123,7 +123,7 @@ Avoid hidden global mutable state. Existing global palette/style signals are nar
 - Reusable controls under `src/ui/controls`.
 - Compositor adapters under `src/compositors` behind capability interfaces.
 - Launcher providers and desktop/bar widgets through factories and plugin bindings.
-- Theme schemes and template tokens under `src/theme`.
+- Theme template tokens under `src/theme`.
 - D-Bus/system integrations as optional services with explicit lifecycle and fallback behavior.
 - IPC commands with typed validation and tests.
 

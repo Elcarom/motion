@@ -597,9 +597,7 @@
       "mpris-disabled": "MPRIS desactivat",
       "screen-time-reset": "Temps de pantalla",
       "screen-time-reset-success": "Historial d'ús esborrat.",
-      "session-bus-unavailable": "Bus de sessió no disponible",
-      "wallpaper-palette-export": "Paleta personalitzada",
-      "wallpaper-palette-export-success": "S'ha desat \"{name}\" i s'ha canviat l'origen de la paleta a personalitzada."
+      "session-bus-unavailable": "Bus de sessió no disponible"
     }
   },
   "osd": {
@@ -848,7 +846,6 @@
       },
       "batch-write": "No s'han pogut desar alguns paràmetres.",
       "export-config": "No s'ha pogut desar l'exportació de la configuració.",
-      "export-wallpaper-palette": "No s'ha pogut desar la paleta del fons de pantalla com a paleta personalitzada.",
       "monitor-override": {
         "create": "No s'ha pogut crear la sobrescriptura de monitor.",
         "delete": "No s'ha pogut eliminar la sobrescriptura de monitor.",
@@ -1101,12 +1098,6 @@
         "mode": {
           "dark": "Fosc",
           "light": "Clar"
-        },
-        "source": {
-          "built-in": "Integrat",
-          "community": "Comunitat",
-          "custom": "Personalitzat",
-          "wallpaper": "Fons de pantalla"
         }
       },
       "theme-role": {
@@ -1198,28 +1189,9 @@
           "description": "Recoloreja les icones d'aplicació a tot el shell perquè coincideixin amb la paleta activa",
           "label": "Acoloreix les icones d'aplicació"
         },
-        "builtin-palette": {
-          "description": "Tria una paleta del catàleg integrat",
-          "label": "Paleta integrada"
-        },
-        "community-palette": {
-          "description": "Tria una paleta del catàleg de la comunitat",
-          "label": "Paleta de la comunitat",
-          "search-placeholder": "Cerca paletes..."
-        },
         "corner-roundness": {
           "description": "Escala el radi de les cantonades en els contenidors i controls de la interfície del shell",
           "label": "Arrodoniment de cantonades"
-        },
-        "custom-palette": {
-          "description": "Tria una paleta de ~/.config/motion/palettes/",
-          "label": "Paleta personalitzada",
-          "search-placeholder": "Cerca paletes personalitzades..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Desa com a paleta personalitzada",
-          "description": "Desa la paleta actual generada pel fons de pantalla com un fitxer de paleta personalitzada reutilitzable",
-          "label": "Exporta la paleta del fons de pantalla"
         },
         "font-family": {
           "description": "Família de tipus de lletra per a la interfície del shell",
@@ -1235,10 +1207,6 @@
           "description": "Sobreescriu la detecció automàtica de la configuració regional",
           "label": "Idioma"
         },
-        "palette-source": {
-          "description": "D'on derivar la paleta de colors",
-          "label": "Origen de la paleta"
-        },
         "theme-mode": {
           "description": "Tria fosc, clar o automàtic segons l'hora del dia",
           "label": "Mode del tema"
@@ -1246,10 +1214,6 @@
         "ui-scale": {
           "description": "Escala tota la interfície cap amunt o cap avall",
           "label": "Escala de la interfície"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Tria com es converteixen els colors del fons de pantalla en una paleta",
-          "label": "Esquema de generació del fons de pantalla"
         }
       },
       "backdrop": {
@@ -2914,7 +2878,6 @@
   },
   "setup-wizard": {
     "browse": "Navega",
-    "builtin-palette": "Paleta integrada",
     "footer-note": "Pots canviar-ho més tard a la configuració.",
     "get-started": "Comença",
     "mode": "Mode",
@@ -2922,8 +2885,7 @@
     "select-wallpaper": "Selecciona un fons de pantalla",
     "subtitle": "Unes quantes opcions ràpides per començar.",
     "title": "Benvingut al Motion",
-    "wallpaper": "Fons de pantalla",
-    "wallpaper-scheme": "Esquema del fons de pantalla"
+    "wallpaper": "Fons de pantalla"
   },
   "system": {
     "hardware": {
@@ -2931,19 +2893,6 @@
       "unknown-cpu": "CPU desconeguda",
       "unknown-distro": "Distribució desconeguda",
       "unknown-gpu": "GPU desconeguda"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Disfuncional",
-      "faithful": "Fidel",
-      "m3-content": "M3 Contingut",
-      "m3-fruit-salad": "M3 Amanida de fruites",
-      "m3-monochrome": "M3 Monocrom",
-      "m3-rainbow": "M3 Arc de Sant Martí",
-      "m3-tonal-spot": "M3 Punt tonal",
-      "muted": "Atenuat",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

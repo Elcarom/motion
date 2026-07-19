@@ -203,6 +203,12 @@ namespace ui {
     if (props.placeholder.has_value()) {
       control->setPlaceholder(*props.placeholder);
     }
+    if (props.leadingGlyph.has_value()) {
+      control->setLeadingGlyph(*props.leadingGlyph);
+    }
+    if (props.leadingGlyphSize.has_value()) {
+      control->setLeadingGlyphSize(*props.leadingGlyphSize);
+    }
     if (props.fontSize.has_value()) {
       control->setFontSize(*props.fontSize);
     }

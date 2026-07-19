@@ -6,9 +6,7 @@
 
 namespace motion::theme {
 
-  // Minimal RGB colour (0-255 per channel) with hex/HSL/ARGB conversions. The
-  // custom schemes operate in HSL space via this type; the M3 schemes go
-  // through HCT instead and only use this for final ARGB → hex emission.
+  // Minimal RGB colour (0-255 per channel) with hex/HSL/ARGB conversions.
   struct Color {
     int r = 0;
     int g = 0;
@@ -30,15 +28,5 @@ namespace motion::theme {
           | static_cast<uint32_t>(b);
     }
   };
-
-  // Shortest circular hue distance in degrees (result in [0, 180]).
-  double hueDistance(double h1, double h2);
-
-  // Shift a colour's hue by `degrees`, preserving saturation and lightness.
-  Color shiftHue(const Color& c, double degrees);
-
-  // Build a surface colour from `base`: keep its hue, cap saturation at `sMax`,
-  // force lightness to `lTarget`.
-  Color adjustSurface(const Color& base, double sMax, double lTarget);
 
 } // namespace motion::theme

@@ -125,6 +125,8 @@ namespace ui {
     Input** out = nullptr;
     std::optional<std::string> value = std::nullopt;
     std::optional<std::string> placeholder = std::nullopt;
+    std::optional<std::string> leadingGlyph = std::nullopt;
+    std::optional<float> leadingGlyphSize = std::nullopt;
     std::optional<float> fontSize = std::nullopt;
     std::optional<float> controlHeight = std::nullopt;
     std::optional<float> horizontalPadding = std::nullopt;

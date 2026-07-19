@@ -26,7 +26,7 @@ ALLOWED_NOCTALIA_PATHS = {
     "src/calendar/google_oauth.cpp", "src/calendar/google_oauth.h", "src/calendar/calendar_service.h",
     "src/system/location_service.cpp", "src/shell/control_center/tabs/network_tab.cpp",
     "src/shell/settings/plugin_store_content.cpp", "src/theme/community_templates.cpp",
-    "src/theme/community_palettes.cpp", "src/config/config_types.cpp",
+    "src/config/config_types.cpp",
     "tests/legacy_migration_test.cpp", "tests/hook_manager_test.cpp", "tests/file_utils_paths_test.cpp",
     "tests/config_schema_roundtrip_test.cpp", "tests/config_validate/generated-config", "meson.build",
     "tools/branding_audit.py", "tools/validate_repository.py", ".github/workflows/ci.yml",

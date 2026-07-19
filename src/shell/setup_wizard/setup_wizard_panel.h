@@ -11,7 +11,6 @@ class Image;
 class Label;
 class Select;
 class WaylandConnection;
-enum class PaletteSource : std::uint8_t;
 
 class SetupWizardPanel : public Panel {
 public:
@@ -30,19 +29,12 @@ public:
 
 private:
   void doLayout(Renderer& renderer, float width, float height) override;
-  void configureThemeOptionSelect();
   void commit();
 
   ConfigService* m_config = nullptr;
   Flex* m_root = nullptr;
   Image* m_logo = nullptr;
   Select* m_modeSelect = nullptr;
-  Select* m_themeSourceSelect = nullptr;
-  Label* m_themeOptionLabel = nullptr;
-  Select* m_themeOptionSelect = nullptr;
   Label* m_wallpaperLabel = nullptr;
-  PaletteSource m_paletteSource{};
-  bool m_configuringThemeOptionSelect = false;
-  std::string m_builtinPalette;
   std::string m_wallpaperDir;
 };

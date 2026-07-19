@@ -715,9 +715,7 @@
       "polkit-no-session": "Der Polkit-Agent benötigt logind, elogind oder XDG_SESSION_ID. Bei reinen seatd-Setups kann er sich nicht für grafische Anfragen registrieren. Verwende für die Greeter-Synchronisierung pkexec im Terminal oder installiere elogind für die Authentifizierung innerhalb der Sitzung.",
       "screen-time-reset": "Bildschirmzeit",
       "screen-time-reset-success": "Nutzungsverlauf gelöscht",
-      "session-bus-unavailable": "Session-Bus nicht verfügbar",
-      "wallpaper-palette-export": "Benutzerdefinierte Palette",
-      "wallpaper-palette-export-success": "„{name}“ gespeichert und Palettenquelle auf benutzerdefiniert umgestellt."
+      "session-bus-unavailable": "Session-Bus nicht verfügbar"
     }
   },
   "osd": {
@@ -1023,7 +1021,6 @@
       "batch-write": "Einige Einstellungen konnten nicht gespeichert werden.",
       "custom-schedule-times": "Ein benutzerdefinierter Zeitplan benötigt sowohl eine Sonnenaufgangs- als auch eine Sonnenuntergangszeit im Format HH:MM.",
       "export-config": "Speichern des Konfigurationsexports fehlgeschlagen.",
-      "export-wallpaper-palette": "Die Hintergrundbild-Palette konnte nicht als benutzerdefinierte Palette gespeichert werden.",
       "monitor-override": {
         "create": "Monitor-Überschreibung konnte nicht erstellt werden.",
         "delete": "Monitor-Überschreibung konnte nicht gelöscht werden.",
@@ -1318,12 +1315,6 @@
         "mode": {
           "dark": "Dunkel",
           "light": "Hell"
-        },
-        "source": {
-          "built-in": "Integriert",
-          "community": "Community",
-          "custom": "Benutzerdefiniert",
-          "wallpaper": "Hintergrundbild"
         }
       },
       "theme-role": {
@@ -1462,32 +1453,13 @@
           "description": "Färbe Anwendung-Icons in der Shell neu ein, um sie an die aktive Palette anzupassen",
           "label": "App-Icons einfärben"
         },
-        "builtin-palette": {
-          "description": "Wähle eine Palette aus dem mitgelieferten Katalog",
-          "label": "Integrierte Palette"
-        },
         "button-borders": {
           "description": "Zeichne Umrisse um Buttons in der gesamten Shell",
           "label": "Button-Rahmen"
         },
-        "community-palette": {
-          "description": "Wähle ein Farbschema aus dem Community-Katalog",
-          "label": "Community-Palette",
-          "search-placeholder": "Paletten suchen…"
-        },
         "corner-roundness": {
           "description": "Skaliere den Eckenradius in Shell-UI-Containern und Steuerelementen",
           "label": "Eckenrundung"
-        },
-        "custom-palette": {
-          "description": "Wähle eine Palette aus ~/.config/motion/palettes/",
-          "label": "Benutzerdefinierte Palette",
-          "search-placeholder": "Benutzerdefinierte Paletten suchen…"
-        },
-        "export-wallpaper-palette": {
-          "button": "Als benutzerdefinierte Palette speichern",
-          "description": "Speichere die aktuelle, vom Hintergrundbild generierte Palette als wiederverwendbare benutzerdefinierte Palettendatei",
-          "label": "Hintergrundbild-Palette exportieren"
         },
         "font-family": {
           "description": "Schriftart für die Shell-Oberfläche",
@@ -1503,14 +1475,6 @@
           "description": "Überschreibe die automatische Spracherkennung",
           "label": "Sprache"
         },
-        "palette-source": {
-          "description": "Herkunft der Farbpalette",
-          "label": "Palettenquelle"
-        },
-        "pure-black-dark": {
-          "description": "Setze dunkle Oberflächen auf reines Schwarz, um Banding auf OLED-Panels zu verhindern (nur im dunklen Modus)",
-          "label": "Reines Schwarz"
-        },
         "theme-mode": {
           "description": "Dunkel oder hell, bzw. automatisch abhängig von der Tageszeit wählen..",
           "label": "Theme-Modus"
@@ -1518,10 +1482,6 @@
         "ui-scale": {
           "description": "Vergrößere oder verkleinere die gesamte Oberfläche",
           "label": "UI-Skalierung"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Festlegen wie aus den Hintergrundbildfarben eine Farbpalette erzeugt wird.",
-          "label": "Hintergrundbild-Generierungsschema"
         }
       },
       "backdrop": {
@@ -3500,7 +3460,6 @@
   },
   "setup-wizard": {
     "browse": "Durchsuchen",
-    "builtin-palette": "Integrierte Palette",
     "footer-note": "Du kannst diese Einstellungen später anpassen.",
     "get-started": "Los geht’s",
     "mode": "Modus",
@@ -3508,8 +3467,7 @@
     "select-wallpaper": "Hintergrundbild auswählen",
     "subtitle": "Ein paar schnelle Auswahlmöglichkeiten für den Einstieg.",
     "title": "Willkommen bei Motion",
-    "wallpaper": "Hintergrundbild",
-    "wallpaper-scheme": "Hintergrundbild-Farbschema"
+    "wallpaper": "Hintergrundbild"
   },
   "system": {
     "hardware": {
@@ -3517,20 +3475,6 @@
       "unknown-cpu": "Unbekannte CPU",
       "unknown-distro": "Unbekannte Distro",
       "unknown-gpu": "Unbekannte GPU"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Soft",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

@@ -144,6 +144,11 @@ Input::Input() {
   auto bg = std::make_unique<RectNode>();
   m_background = static_cast<RectNode*>(addChild(std::move(bg)));
 
+  auto leadingGlyph = std::make_unique<GlyphNode>();
+  leadingGlyph->setHitTestVisible(false);
+  leadingGlyph->setVisible(false);
+  m_leadingGlyph = static_cast<GlyphNode*>(addChild(std::move(leadingGlyph)));
+
   // 1: text viewport clip layer
   auto textViewport = std::make_unique<Node>();
   textViewport->setClipChildren(true);
@@ -222,7 +227,7 @@ Input::Input() {
     if (data.pressed) {
       resetUndoCoalescing();
       m_goalCaretX = -1.0f;
-      const float textStartX = m_horizontalPadding + kTextInnerInset;
+      const float textStartX = contentStartInset();
       const std::size_t offset = m_multiline
           ? pointToByteOffset(data.localX - textStartX, data.localY - kMultilinePadV + m_scrollOffsetY)
           : xToByteOffset(data.localX - textStartX + m_scrollOffset - m_contentLeadSlack);
@@ -257,7 +262,7 @@ Input::Input() {
     if (m_inputArea != nullptr && m_inputArea->pressed()) {
       resetUndoCoalescing();
       m_goalCaretX = -1.0f;
-      const float textStartX = m_horizontalPadding + kTextInnerInset;
+      const float textStartX = contentStartInset();
       if (m_multiline) {
         // Drag near the top/bottom edge pans the viewport a line per motion event.
         const float heightPx = height() > 0.0f ? height() : m_controlHeight;
@@ -389,6 +394,24 @@ void Input::setPlaceholder(std::string_view placeholder) {
     updateDisplayText();
     markLayoutDirty();
   }
+}
+
+void Input::setLeadingGlyph(std::string_view glyph) {
+  if (m_leadingGlyph == nullptr) {
+    return;
+  }
+  const char32_t codepoint = glyph.empty() ? 0 : GlyphRegistry::lookup(glyph);
+  m_leadingGlyphVisible = codepoint != 0;
+  if (m_leadingGlyphVisible) {
+    m_leadingGlyph->setCodepoint(codepoint);
+  }
+  m_leadingGlyph->setVisible(m_leadingGlyphVisible);
+  markLayoutDirty();
+}
+
+void Input::setLeadingGlyphSize(float size) {
+  m_leadingGlyphSize = std::max(1.0f, size);
+  markLayoutDirty();
 }
 
 void Input::setFontSize(float size) {
@@ -837,8 +860,8 @@ void Input::recomputeContentLeadSlack(Renderer& renderer, float width, bool show
     return;
   }
 
-  const float textInset = m_horizontalPadding + kTextInnerInset;
-  const float rightInset = showClearButton ? clearButtonTextReserveWidth() : textInset;
+  const float textInset = contentStartInset();
+  const float rightInset = showClearButton ? clearButtonTextReserveWidth() : m_horizontalPadding + kTextInnerInset;
   const float viewportWidth = std::max(0.0f, width - textInset - rightInset);
   float textExtent = 0.0f;
   const bool showPasswordGlyphs = m_passwordMode && !m_value.empty();
@@ -1006,9 +1029,18 @@ void Input::doLayout(Renderer& renderer) {
   m_background->setPosition(0.0f, 0.0f);
   m_background->setFrameSize(w, h);
 
+  if (m_leadingGlyph != nullptr && m_leadingGlyphVisible) {
+    m_leadingGlyph->setFontSize(m_leadingGlyphSize);
+    const auto metrics = renderer.measureGlyph(m_leadingGlyph->codepoint(), m_leadingGlyphSize);
+    const float glyphCenterX = (metrics.left + metrics.right) * 0.5f;
+    const float glyphCenterY = (metrics.top + metrics.bottom) * 0.5f;
+    const float slotCenterX = m_horizontalPadding + m_leadingGlyphSize * 0.5f;
+    m_leadingGlyph->setPosition(slotCenterX - glyphCenterX, h * 0.5f - glyphCenterY);
+  }
+
   if (m_textViewport != nullptr) {
-    const float textInset = m_horizontalPadding + kTextInnerInset;
-    const float rightInset = showClearButton ? clearButtonTextReserveWidth() : textInset;
+    const float textInset = contentStartInset();
+    const float rightInset = showClearButton ? clearButtonTextReserveWidth() : m_horizontalPadding + kTextInnerInset;
     const float viewportW = std::max(0.0f, w - textInset - rightInset);
     m_textViewport->setPosition(textInset, 0.0f);
     m_textViewport->setSize(viewportW, h);
@@ -1378,6 +1410,12 @@ void Input::applyVisualState() {
   const bool inputHovered = (m_inputArea != nullptr && m_inputArea->hovered()) || clearButtonHovered;
   const bool readOnly = isReadOnlyVisual();
   const float chromeScale = chromeScaleForControlHeight(m_controlHeight);
+
+  if (m_leadingGlyph != nullptr) {
+    m_leadingGlyph->setColor(
+        m_invalid ? resolved(ColorRole::Error) : resolved(focused ? ColorRole::Primary : ColorRole::OnSurfaceVariant)
+    );
+  }
 
   if (m_frameVisible) {
     m_background->setVisible(true);
@@ -1902,9 +1940,14 @@ void Input::syncPasswordGlyphNodes(std::size_t count) {
 
 float Input::textViewportWidth() const noexcept {
   const float w = width() > 0.0f ? width() : kMinWidth;
-  const float textInset = m_horizontalPadding + kTextInnerInset;
-  const float rightInset = clearButtonVisible() ? clearButtonTextReserveWidth() : textInset;
+  const float textInset = contentStartInset();
+  const float rightInset = clearButtonVisible() ? clearButtonTextReserveWidth() : m_horizontalPadding + kTextInnerInset;
   return std::max(0.0f, w - textInset - rightInset);
+}
+
+float Input::contentStartInset() const noexcept {
+  const float leadingReserve = m_leadingGlyphVisible ? m_leadingGlyphSize + Style::spaceSm : 0.0f;
+  return m_horizontalPadding + kTextInnerInset + leadingReserve;
 }
 
 bool Input::clearButtonVisible() const noexcept { return m_clearButtonEnabled && !m_value.empty() && !m_multiline; }

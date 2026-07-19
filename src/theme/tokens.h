@@ -6,10 +6,8 @@
 namespace motion::theme {
 
   // Canonical list of built-in color tokens emitted in every generated palette.
-  // The order is the iteration order used by json_output. Both the M3 schemes
-  // and the custom schemes populate the same key set so consumers can treat
-  // them interchangeably. `source_color` is the seed color used to generate
-  // the scheme and is exposed for template compatibility.
+  // The order is the iteration order used by json_output. `source_color` is
+  // the wallpaper seed color and is exposed for template compatibility.
   inline constexpr auto kTokens = std::to_array<std::string_view>({
       "source_color",
       "primary",

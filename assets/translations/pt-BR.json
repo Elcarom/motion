@@ -716,9 +716,7 @@
       "polkit-no-session": "Agente Polkit precisa de logind, elogind or XDG_SESSION_ID. Em configurações que utilizam apenas o seatd, ele não consegue se registrar para solicitações gráficas. Use o pkexec no terminal para sincronizar o greeter ou instale o elogind para autenticação durante a sessão.",
       "screen-time-reset": "Tempo de Tela",
       "screen-time-reset-success": "Histórico de uso limpo.",
-      "session-bus-unavailable": "Sessão bus indisponível",
-      "wallpaper-palette-export": "Paleta personalizada",
-      "wallpaper-palette-export-success": "Salvou \"{name}\" e mudou a origem da paleta para personalizada."
+      "session-bus-unavailable": "Sessão bus indisponível"
     }
   },
   "osd": {
@@ -1024,7 +1022,6 @@
       "batch-write": "Algumas configurações não foram salvas.",
       "custom-schedule-times": "Uma programação personalizada precisa tanto da hora do nascer do sol quanto da hora do pôr do sol no formato HH:MM.",
       "export-config": "Falha em salvar configuração exportada.",
-      "export-wallpaper-palette": "Não foi possível salvar a paleta de papéis de parede como uma paleta personalizada.",
       "monitor-override": {
         "create": "Não foi possível criar a sobreposição do monitor.",
         "delete": "Não foi possível deletar a sobreposição do monitor.",
@@ -1319,12 +1316,6 @@
         "mode": {
           "dark": "Escuro",
           "light": "Claro"
-        },
-        "source": {
-          "built-in": "Integradas",
-          "community": "Comunidade",
-          "custom": "Personalizada",
-          "wallpaper": "Papel de parede"
         }
       },
       "theme-role": {
@@ -1449,28 +1440,9 @@
           "description": "Recolorir os ícones dos aplicativos em toda a interface para combinar com a paleta ativa.",
           "label": "Colorir Icones dos Apps"
         },
-        "builtin-palette": {
-          "description": "Escolha uma paleta de cores do catálogo incluído.",
-          "label": "Paleta integrada"
-        },
-        "community-palette": {
-          "description": "Escolha uma paleta de cores do catálogo da comunidade",
-          "label": "Paleta da Comunidade",
-          "search-placeholder": "Procurar paletas..."
-        },
         "corner-roundness": {
           "description": "Dimensionar o raio dos cantos em contêineres e controles da interface do usuário do shell",
           "label": "Arredondamento de cantos"
-        },
-        "custom-palette": {
-          "description": "Escolha uma paleta em ~/.config/motion/palettes/",
-          "label": "Paleta Personalizada",
-          "search-placeholder": "Procurar paletas personalizadas..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Salvar Paleta Customizada",
-          "description": "Salve a paleta de cores atual gerada pelo papel de parede como um arquivo de paleta personalizada reutilizável",
-          "label": "Exportar Paleta do Papel de Parede"
         },
         "font-family": {
           "description": "Família da fonte para a interface do shell",
@@ -1486,10 +1458,6 @@
           "description": "Ignorar detecção automática de localização",
           "label": "Idioma"
         },
-        "palette-source": {
-          "description": "De onde derivar a paleta de cores",
-          "label": "Fonte da paleta"
-        },
         "theme-mode": {
           "description": "Escolha o modo escuro, claro ou automático com base na hora do dia.",
           "label": "Modo do Tema"
@@ -1497,10 +1465,6 @@
         "ui-scale": {
           "description": "Aumente ou diminua a escala de toda a interface.",
           "label": "Escala da Interface"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Escolha como as cores do papel de parede serão convertidas em uma paleta",
-          "label": "Esquema de Geração de Papel de Parede"
         }
       },
       "backdrop": {
@@ -3154,7 +3118,6 @@
   },
   "setup-wizard": {
     "browse": "Procurar",
-    "builtin-palette": "Paleta padrão",
     "footer-note": "Você pode alterar isso depois nas configurações",
     "get-started": "Vamos começar",
     "mode": "Modo",
@@ -3162,8 +3125,7 @@
     "select-wallpaper": "Selecione papel de parede",
     "subtitle": "Algumas escolhas rápidas para os primeiros passos",
     "title": "Seja Bem-Vindo ao Motion",
-    "wallpaper": "Papel de parede",
-    "wallpaper-scheme": "Esquema do papel de parede"
+    "wallpaper": "Papel de parede"
   },
   "system": {
     "hardware": {
@@ -3171,20 +3133,6 @@
       "unknown-cpu": "CPU Desconhecida",
       "unknown-distro": "Distro Desconhecida",
       "unknown-gpu": "GPU Desconhecida"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Leve",
-      "vibrant": "Vibrante"
     }
   },
   "time": {

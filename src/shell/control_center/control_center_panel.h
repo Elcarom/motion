@@ -89,7 +89,7 @@ public:
   [[nodiscard]] bool deferPointerRelayout() const override;
   [[nodiscard]] LayerShellLayer layer() const override { return LayerShellLayer::Overlay; }
   [[nodiscard]] float preferredWidth() const override;
-  [[nodiscard]] float preferredHeight() const override { return scaled(520.0f); }
+  [[nodiscard]] float preferredHeight() const override { return scaled(720.0f); }
   [[nodiscard]] PanelPlacement panelPlacement() const noexcept override;
 
 private:

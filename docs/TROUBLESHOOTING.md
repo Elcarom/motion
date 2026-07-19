@@ -72,11 +72,10 @@ show a graceful unavailable/empty state.
 
 ## Dynamic color does not update
 
-- Use `theme.source = "wallpaper"`.
 - Verify the wallpaper path is readable.
-- Confirm `wallpaper_scheme = "m3-expressive"` or another supported scheme.
 - Remove only the relevant generated cache under `~/.cache/motion` after stopping Motion.
 - Re-test with a local raster image; remote or unsupported formats can fail before extraction.
+- Check logs for fallback to the bundled wallpaper's M3 Expressive palette.
 
 ## High CPU or GPU use
 

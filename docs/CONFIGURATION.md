@@ -25,19 +25,17 @@ Override values are base directories; Motion appends `/motion`.
 
 ## Theme
 
-Typical dynamic wallpaper configuration:
+Motion derives its only shell palette from the active wallpaper using Material 3 Expressive. Theme configuration now
+controls only whether the generated light or dark token set is active:
 
 ```toml
 [theme]
 mode = "auto"
-source = "wallpaper"
-wallpaper_scheme = "m3-expressive"
-pure_black_dark = false
 ```
 
-Supported modes are `dark`, `light`, and `auto`. The default wallpaper scheme is `m3-expressive`. A deterministic
-fallback is used for invalid scheme names or unavailable extraction results. Built-in fixed palettes and community/user
-template flows remain available.
+Supported modes are `dark`, `light`, and `auto`. When the configured wallpaper cannot be decoded, Motion derives the
+same M3 Expressive token set from its bundled wallpaper. Built-in, community, custom, and alternate generator schemes
+are not accepted. Template exports still receive the resolved wallpaper palette.
 
 ## Accessibility
 

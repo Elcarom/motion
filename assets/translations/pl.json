@@ -531,9 +531,7 @@
       "lockscreen-widgets-editor-blocked-locked": "Odblokuj sesję przed edycją widżetów ekranu blokady.",
       "lockscreen-widgets-editor-enabled": "Edytor widżetów ekranu blokady jest włączony. Ułóż widżety na Overlay podglądu, a następnie zablokuj sesję, aby zweryfikować układ.",
       "mpris-disabled": "MPRIS wyłączone",
-      "session-bus-unavailable": "Magistrala sesji niedostępna",
-      "wallpaper-palette-export": "Paleta niestandardowa",
-      "wallpaper-palette-export-success": "Zapisano \"{name}\" i zmieniono źródło palety na niestandardowe."
+      "session-bus-unavailable": "Magistrala sesji niedostępna"
     }
   },
   "osd": {
@@ -773,7 +771,6 @@
       },
       "batch-write": "Niektórych ustawień nie udało się zapisać.",
       "export-config": "Nie udało się zapisać eksportu konfigu.",
-      "export-wallpaper-palette": "Nie udało się zapisać palety tapet jako palety niestandardowej.",
       "monitor-override": {
         "create": "Nie udało się utworzyć nadpisania monitora.",
         "delete": "Nie udało się usunąć nadpisania monitora.",
@@ -1004,12 +1001,6 @@
         "mode": {
           "dark": "Ciemny",
           "light": "Jasny"
-        },
-        "source": {
-          "built-in": "Wbudowany",
-          "community": "Społeczność",
-          "custom": "Niestandardowy",
-          "wallpaper": "Tapeta"
         }
       },
       "theme-role": {
@@ -1097,28 +1088,9 @@
           "description": "Zmień kolor ikon aplikacji w całym shelu, aby pasowały do aktywnej palety",
           "label": "Koloryzuj ikony aplikacji"
         },
-        "builtin-palette": {
-          "description": "Wybierz paletę z katalogów dołączonych",
-          "label": "Wbudowana paleta"
-        },
-        "community-palette": {
-          "description": "Wybierz paletę z katalogu społeczności",
-          "label": "Paleta społeczności",
-          "search-placeholder": "Szukaj palet…"
-        },
         "corner-roundness": {
           "description": "Skaluj promień narożników w całym interfejsie shela",
           "label": "Zaokrąglenie narożników"
-        },
-        "custom-palette": {
-          "description": "Wybierz paletę z ~/.config/motion/palettes/",
-          "label": "Niestandardowa paleta",
-          "search-placeholder": "Szukaj niestandardowych palet…"
-        },
-        "export-wallpaper-palette": {
-          "button": "Zapisz jako niestandardową paletę",
-          "description": "Zapisz aktualną paletę wygenerowaną z tapety jako plik niestandardowej palety, który można ponownie użyć",
-          "label": "Eksportuj paletę tapety"
         },
         "font-family": {
           "description": "Rodzina czcionki dla interfejsu shela",
@@ -1134,10 +1106,6 @@
           "description": "Przesłoń automatyczne wykrywanie ustawień regionalnych",
           "label": "Język"
         },
-        "palette-source": {
-          "description": "Źródło pochodzenia palety kolorów",
-          "label": "Źródło palety"
-        },
         "theme-mode": {
           "description": "Wybierz ciemny, jasny lub automatyczny na podstawie pory dnia",
           "label": "Tryb motywu"
@@ -1145,10 +1113,6 @@
         "ui-scale": {
           "description": "Skaluj cały interfejs w górę lub w dół",
           "label": "Skala interfejsu"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Wybierz, w jaki sposób kolory tapety są konwertowane na paletę",
-          "label": "Schemat generowania tapety"
         }
       },
       "backdrop": {
@@ -2701,7 +2665,6 @@
   },
   "setup-wizard": {
     "browse": "Przeglądaj",
-    "builtin-palette": "Wbudowana paleta",
     "footer-note": "Możesz zmienić to później w ustawieniach.",
     "get-started": "Rozpocznij",
     "mode": "Tryb",
@@ -2709,8 +2672,7 @@
     "select-wallpaper": "Wybierz tapetę",
     "subtitle": "Kilka szybkich wyborów, aby zacząć.",
     "title": "Witaj w Motion",
-    "wallpaper": "Tapeta",
-    "wallpaper-scheme": "Schemat tapety"
+    "wallpaper": "Tapeta"
   },
   "system": {
     "hardware": {
@@ -2718,19 +2680,6 @@
       "unknown-cpu": "Nieznany procesor",
       "unknown-distro": "Nieznana dystrybucja",
       "unknown-gpu": "Nieznana karta graficzna"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunkcjonalny",
-      "faithful": "Wierny",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Przytłumiony",
-      "vibrant": "Żywy"
     }
   },
   "time": {

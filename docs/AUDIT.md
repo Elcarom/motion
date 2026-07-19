@@ -51,6 +51,15 @@ The pass made the following repository changes:
   outline variants;
 - added `palette_roles_test` for generated role coverage, state layers, semantic foregrounds, and theme interpolation.
 
+A reference-driven composition follow-up then aligned the most visible shell surfaces with the same system:
+
+- enlarged the launcher into an auto-fitting application-card grid with a prominent pill search field and section title;
+- moved control-center quick settings into responsive horizontal tiles and made the default panel sidebar-free and
+  top-right floating;
+- increased major surface radii, padding, and tonal separation while keeping dense controls compact;
+- established wallpaper-derived lavender/teal palette roles and a full-width floating capsule bar as the default
+  visual frame.
+
 No compositor, IPC, service, persistence, plugin, migration, command, or feature contract was changed. Required
 Noctalia provenance, profile migration, legacy paths/environment variables, command alias, and inherited compatibility
 endpoints remain intact.

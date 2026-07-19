@@ -8,9 +8,6 @@
 #include "core/log.h"
 #include "scripting/plugin_id.h"
 #include "shell/settings/widget_settings_registry.h"
-#include "theme/builtin_palettes.h"
-#include "theme/custom_palettes.h"
-#include "theme/scheme.h"
 #include "util/file_utils.h"
 #include "util/string_utils.h"
 
@@ -885,65 +882,6 @@ void ConfigService::setThemeMode(ThemeMode mode) {
   // Rebuild Config and fan out reload callbacks so ThemeService transitions.
   loadAll();
   fireReloadCallbacks();
-}
-
-bool ConfigService::setThemeColorScheme(PaletteSource source, std::string_view valueRaw) {
-  if (m_overridesPath.empty()) {
-    return false;
-  }
-
-  const std::string value = StringUtils::trim(std::string(valueRaw));
-  if (value.empty()) {
-    return false;
-  }
-
-  switch (source) {
-  case PaletteSource::Builtin:
-    if (motion::theme::findBuiltinPalette(value) == nullptr) {
-      return false;
-    }
-    break;
-  case PaletteSource::Wallpaper:
-    if (!motion::theme::schemeFromString(value)) {
-      return false;
-    }
-    break;
-  case PaletteSource::Community:
-    break;
-  case PaletteSource::Custom:
-    if (!std::filesystem::exists(motion::theme::customPalettePath(value))) {
-      return false;
-    }
-    break;
-  }
-
-  auto* themeTbl = ensureTable(m_overridesTable, "theme");
-  themeTbl->insert_or_assign("source", std::string(enumToKey(kPaletteSources, source)));
-
-  switch (source) {
-  case PaletteSource::Builtin:
-    themeTbl->insert_or_assign("builtin", value);
-    break;
-  case PaletteSource::Wallpaper:
-    themeTbl->insert_or_assign("wallpaper_scheme", value);
-    break;
-  case PaletteSource::Community:
-    themeTbl->insert_or_assign("community_palette", value);
-    break;
-  case PaletteSource::Custom:
-    themeTbl->insert_or_assign("custom_palette", value);
-    break;
-  }
-
-  if (!writeOverridesToFile()) {
-    kLog.warn("failed to write {}", m_overridesPath);
-    return false;
-  }
-
-  m_ownOverridesWritePending = true;
-  loadAll();
-  fireReloadCallbacks();
-  return true;
 }
 
 void ConfigService::setDockEnabled(bool enabled) {
@@ -1857,7 +1795,12 @@ std::string ConfigService::getPaletteWallpaperPath() const {
   if (!m_lastWallpaperPath.empty()) {
     return m_lastWallpaperPath;
   }
-  return m_defaultWallpaperPath;
+  if (!m_defaultWallpaperPath.empty()) {
+    return m_defaultWallpaperPath;
+  }
+  const auto bundled = paths::assetPath("motion-wallpaper.png");
+  std::error_code ec;
+  return std::filesystem::exists(bundled, ec) && !ec ? bundled.string() : std::string{};
 }
 
 std::string ConfigService::getGreeterSyncWallpaperPath() const {
@@ -1990,23 +1933,6 @@ void ConfigService::extractWallpaperFromTable(const toml::table& table) {
           favorite.themeMode = *parsed;
         }
       }
-      if (auto sourceKey = (*favTbl)["palette_source"].value<std::string>()) {
-        if (auto parsed = enumFromKey(kPaletteSources, *sourceKey)) {
-          favorite.paletteSource = parsed;
-        }
-      }
-      if (auto v = (*favTbl)["builtin_palette"].value<std::string>()) {
-        favorite.builtinPalette = *v;
-      }
-      if (auto v = (*favTbl)["community_palette"].value<std::string>()) {
-        favorite.communityPalette = *v;
-      }
-      if (auto v = (*favTbl)["custom_palette"].value<std::string>()) {
-        favorite.customPalette = *v;
-      }
-      if (auto v = (*favTbl)["wallpaper_scheme"].value<std::string>()) {
-        favorite.wallpaperScheme = *v;
-      }
       m_wallpaperFavorites.push_back(std::move(favorite));
     }
   }
@@ -2025,31 +1951,6 @@ void ConfigService::syncWallpaperFavoritesToOverridesTable() {
     toml::table entry;
     entry.insert("path", favorite.path);
     entry.insert("theme_mode", std::string(enumToKey(kThemeModes, favorite.themeMode)));
-    if (favorite.paletteSource.has_value()) {
-      entry.insert("palette_source", std::string(enumToKey(kPaletteSources, *favorite.paletteSource)));
-      switch (*favorite.paletteSource) {
-      case PaletteSource::Builtin:
-        if (!favorite.builtinPalette.empty()) {
-          entry.insert("builtin_palette", favorite.builtinPalette);
-        }
-        break;
-      case PaletteSource::Wallpaper:
-        if (!favorite.wallpaperScheme.empty()) {
-          entry.insert("wallpaper_scheme", favorite.wallpaperScheme);
-        }
-        break;
-      case PaletteSource::Community:
-        if (!favorite.communityPalette.empty()) {
-          entry.insert("community_palette", favorite.communityPalette);
-        }
-        break;
-      case PaletteSource::Custom:
-        if (!favorite.customPalette.empty()) {
-          entry.insert("custom_palette", favorite.customPalette);
-        }
-        break;
-      }
-    }
     favoritesArray.push_back(std::move(entry));
   }
   wallpaperTbl->insert_or_assign("favorite", std::move(favoritesArray));
@@ -2151,115 +2052,6 @@ void ConfigService::setWallpaperFavoriteThemeMode(std::string_view path, ThemeMo
   m_ownOverridesWritePending = true;
 }
 
-void ConfigService::setWallpaperFavoritePaletteSource(std::string_view path, std::optional<PaletteSource> source) {
-  if (m_overridesPath.empty()) {
-    return;
-  }
-
-  const std::string normalized = FileUtils::normalizeWallpaperPath(path);
-  bool changed = false;
-  for (auto& favorite : m_wallpaperFavorites) {
-    if (favorite.path != normalized) {
-      continue;
-    }
-    if (favorite.paletteSource != source) {
-      favorite.paletteSource = source;
-      changed = true;
-    }
-    if (source.has_value()) {
-      switch (*source) {
-      case PaletteSource::Builtin:
-        if (favorite.builtinPalette.empty()) {
-          favorite.builtinPalette = m_config.theme.builtinPalette;
-          changed = true;
-        }
-        break;
-      case PaletteSource::Wallpaper:
-        if (favorite.wallpaperScheme.empty()) {
-          favorite.wallpaperScheme = m_config.theme.wallpaperScheme;
-          changed = true;
-        }
-        break;
-      case PaletteSource::Community:
-        if (favorite.communityPalette.empty()) {
-          favorite.communityPalette = m_config.theme.communityPalette;
-          changed = true;
-        }
-        break;
-      case PaletteSource::Custom:
-        if (favorite.customPalette.empty()) {
-          favorite.customPalette = m_config.theme.customPalette;
-          changed = true;
-        }
-        break;
-      }
-    }
-    break;
-  }
-  if (!changed) {
-    return;
-  }
-
-  syncWallpaperFavoritesToOverridesTable();
-  if (!writeOverridesToFile()) {
-    kLog.warn("failed to write {}", m_overridesPath);
-    return;
-  }
-  m_ownOverridesWritePending = true;
-}
-
-void ConfigService::setWallpaperFavoritePaletteSelection(std::string_view path, std::string_view value) {
-  if (m_overridesPath.empty()) {
-    return;
-  }
-
-  const std::string normalized = FileUtils::normalizeWallpaperPath(path);
-  const std::string selection(value);
-  bool changed = false;
-  for (auto& favorite : m_wallpaperFavorites) {
-    if (favorite.path != normalized || !favorite.paletteSource.has_value()) {
-      continue;
-    }
-    switch (*favorite.paletteSource) {
-    case PaletteSource::Builtin:
-      if (favorite.builtinPalette != selection) {
-        favorite.builtinPalette = selection;
-        changed = true;
-      }
-      break;
-    case PaletteSource::Wallpaper:
-      if (favorite.wallpaperScheme != selection) {
-        favorite.wallpaperScheme = selection;
-        changed = true;
-      }
-      break;
-    case PaletteSource::Community:
-      if (favorite.communityPalette != selection) {
-        favorite.communityPalette = selection;
-        changed = true;
-      }
-      break;
-    case PaletteSource::Custom:
-      if (favorite.customPalette != selection) {
-        favorite.customPalette = selection;
-        changed = true;
-      }
-      break;
-    }
-    break;
-  }
-  if (!changed) {
-    return;
-  }
-
-  syncWallpaperFavoritesToOverridesTable();
-  if (!writeOverridesToFile()) {
-    kLog.warn("failed to write {}", m_overridesPath);
-    return;
-  }
-  m_ownOverridesWritePending = true;
-}
-
 void ConfigService::applyWallpaperSelection(
     const std::optional<std::string>& connectorName, const std::string& path, const WallpaperFavorite* applyTheme,
     const std::vector<std::string>& allConnectors
@@ -2275,40 +2067,6 @@ void ConfigService::applyWallpaperSelection(
     if (m_config.theme.mode != applyTheme->themeMode) {
       themeTbl->insert_or_assign("mode", std::string(enumToKey(kThemeModes, applyTheme->themeMode)));
       changed = true;
-    }
-
-    if (applyTheme->paletteSource.has_value()) {
-      const PaletteSource source = *applyTheme->paletteSource;
-      if (m_config.theme.source != source) {
-        themeTbl->insert_or_assign("source", std::string(enumToKey(kPaletteSources, source)));
-        changed = true;
-      }
-      switch (source) {
-      case PaletteSource::Builtin:
-        if (!applyTheme->builtinPalette.empty() && m_config.theme.builtinPalette != applyTheme->builtinPalette) {
-          themeTbl->insert_or_assign("builtin", applyTheme->builtinPalette);
-          changed = true;
-        }
-        break;
-      case PaletteSource::Wallpaper:
-        if (!applyTheme->wallpaperScheme.empty() && m_config.theme.wallpaperScheme != applyTheme->wallpaperScheme) {
-          themeTbl->insert_or_assign("wallpaper_scheme", applyTheme->wallpaperScheme);
-          changed = true;
-        }
-        break;
-      case PaletteSource::Community:
-        if (!applyTheme->communityPalette.empty() && m_config.theme.communityPalette != applyTheme->communityPalette) {
-          themeTbl->insert_or_assign("community_palette", applyTheme->communityPalette);
-          changed = true;
-        }
-        break;
-      case PaletteSource::Custom:
-        if (!applyTheme->customPalette.empty() && m_config.theme.customPalette != applyTheme->customPalette) {
-          themeTbl->insert_or_assign("custom_palette", applyTheme->customPalette);
-          changed = true;
-        }
-        break;
-      }
     }
   }
 

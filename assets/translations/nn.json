@@ -714,9 +714,7 @@
       "polkit-no-session": "Polkit-agenten krev logind, elogind eller XDG_SESSION_ID. På oppsett med berre seatd kan han ikkje senda grafisk leietekst. Bruk pkexec i terminal for helsarsynkro, eller installer elogind for sanning i øykta.",
       "screen-time-reset": "Skjermtid",
       "screen-time-reset-success": "Brukshistorikk sletta.",
-      "session-bus-unavailable": "Øyktebus ikkje tilgjengeleg",
-      "wallpaper-palette-export": "Sjølvvald palett",
-      "wallpaper-palette-export-success": "Lagra \"{name}\" og sette palettbrunn til sjølvvald."
+      "session-bus-unavailable": "Øyktebus ikkje tilgjengeleg"
     }
   },
   "osd": {
@@ -1021,7 +1019,6 @@
       },
       "batch-write": "Kunne ikkje lagra sume innstillingar.",
       "export-config": "Utførsla av tilmåtinga gjekk gale.",
-      "export-wallpaper-palette": "Kunne ikkje lagra paletten frå bakgrunnabiletet som sjølvvald palett.",
       "monitor-override": {
         "create": "Kunne ikkje skapa skjermoverstyring.",
         "delete": "Kunne ikkje sletta skjermoverstyring.",
@@ -1308,12 +1305,6 @@
         "mode": {
           "dark": "Mørk",
           "light": "Ljos"
-        },
-        "source": {
-          "built-in": "Innebygd",
-          "community": "Samfunn",
-          "custom": "Sjølvvald",
-          "wallpaper": "Bakgrunnsbilete"
         }
       },
       "theme-role": {
@@ -1445,32 +1436,13 @@
           "description": "Leta applikasjonsmerke gjenom heile skalet for å samsvara paletten",
           "label": "Leta appmerke"
         },
-        "builtin-palette": {
-          "description": "Vel ein palett frå den innebygde katalogen",
-          "label": "Innebygd palett"
-        },
         "button-borders": {
           "description": "Teikna omrit kring knappar gjennom heile skalet",
           "label": "Knappeomrit"
         },
-        "community-palette": {
-          "description": "Vel ein palett frå samfunnskatalogen",
-          "label": "Samfunnspalett",
-          "search-placeholder": "Leita i palettar ..."
-        },
         "corner-roundness": {
           "description": "Høva inn hyrneradius gjennom alle ilåta og styringar i skalgrensesnittet",
           "label": "Rundingsgrad på hyrno"
-        },
-        "custom-palette": {
-          "description": "Vel ein palett frå ~/.config/motion/palettes/",
-          "label": "Sjølvvald palett",
-          "search-placeholder": "Leita i sjølvvalde palettar ..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Lagra som sjølvvald palett",
-          "description": "Lagra paletten som vart laga av bakgrunnsbiletet som ei sjølvvald palettfil ein kan bruka att",
-          "label": "Før ut bakgrunnspalett"
         },
         "font-family": {
           "description": "Skrifttype for skalgrensesnittet",
@@ -1486,14 +1458,6 @@
           "description": "Overstyr automatisk lokale",
           "label": "Mål"
         },
-        "palette-source": {
-          "description": "Kvar Motion tek letpaletten frå",
-          "label": "Palettbrunn"
-        },
-        "pure-black-dark": {
-          "description": "Gjer mørke flater heilsvart, som hindrar bandleggjing på OLED-fjøler (einast i mørkham)",
-          "label": "Heilsvart"
-        },
         "theme-mode": {
           "description": "Vel mørk, ljos eller automatisk alt etter tida",
           "label": "Hammodus"
@@ -1501,10 +1465,6 @@
         "ui-scale": {
           "description": "Gjera heile grensesnittet større eller mindre",
           "label": "Grensesnittskala"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Vel korleis letene i bakgrunnsbiletet utgjer ein palett",
-          "label": "Palettskipingsmåte"
         }
       },
       "backdrop": {
@@ -3427,7 +3387,6 @@
   },
   "setup-wizard": {
     "browse": "Leita",
-    "builtin-palette": "Innebygd palett",
     "footer-note": "Du kan brigda på desse seinare i innstillingane.",
     "get-started": "Tak til",
     "mode": "Modus",
@@ -3435,8 +3394,7 @@
     "select-wallpaper": "Vel eit bakgrunnsbilete",
     "subtitle": "Nokre snøggval for å hjelpa deg taka til.",
     "title": "Velkomen åt Motion!",
-    "wallpaper": "Bakgrunnsbilete",
-    "wallpaper-scheme": "Bakgrunnsbilete letmønster"
+    "wallpaper": "Bakgrunnsbilete"
   },
   "system": {
     "hardware": {
@@ -3444,20 +3402,6 @@
       "unknown-cpu": "Ukjend prosessor",
       "unknown-distro": "Ukjend linux-dåm",
       "unknown-gpu": "Ukjent skjermkort"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Uverksam",
-      "faithful": "Trufast",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Dempa",
-      "soft": "Mjuk",
-      "vibrant": "Livleg"
     }
   },
   "time": {

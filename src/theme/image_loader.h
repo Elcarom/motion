@@ -8,8 +8,6 @@
 
 namespace motion::theme {
 
-  enum class Scheme;
-
   // A 112×112 RGB pixel buffer ready for quantization/clustering. No alpha.
   // 112 * 112 * 3 = 37632 bytes.
   struct LoadedImage {
@@ -19,8 +17,7 @@ namespace motion::theme {
   };
 
   // Load `path`, decode via Wuffs, and resize to exactly 112×112 (aspect ratio
-  // squashed) with alpha stripped. The resize filter is scheme-dependent:
-  // triangle for M3 schemes, box for the custom schemes.
-  std::expected<LoadedImage, std::string> loadAndResize(std::string_view path, Scheme scheme);
+  // squashed) with triangle filtering and alpha stripped.
+  std::expected<LoadedImage, std::string> loadAndResize(std::string_view path);
 
 } // namespace motion::theme

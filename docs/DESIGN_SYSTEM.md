@@ -18,7 +18,7 @@ Token groups:
 | Group | Examples | Intent |
 |---|---|---|
 | Spacing | 2, 4, 8, 12, 16, 24, 32 | Compact desktop rhythm and grouping |
-| Shape | 4, 8, 12, 16, 24, full | Contrasting hierarchy, not one radius everywhere |
+| Shape | 4, 8, 12, 16, 20, 24, 28, 32, full | Contrasting hierarchy, not one radius everywhere |
 | Type | label 11–12, body 13–14, title 16–18, headline 22–28, display 36 | Readable at desktop density and scale |
 | Size | 32 compact, 40 standard, 48 prominent, 44 touch minimum | Pointer efficiency with touch-safe opt-in |
 | State layers | hover 8%, focus/pressed 12%, dragged 16% | Consistent interaction feedback |
@@ -34,9 +34,8 @@ size, algorithm threshold, or surface-specific constraint that cannot be express
 
 The runtime `Palette` exposes the complete UI-facing Material role set: primary/secondary/tertiary/error groups and
 their containers, background, surface dim/bright, all five surface-container levels, outline variant, inverse roles,
-surface tint, scrim, shadow, and paired on-colors. The generated palette maps directly into these roles; it is no longer
-collapsed into one generic surface variant before reaching controls. Fixed and community palettes are expanded through
-the same path, so live wallpaper changes, light/dark changes, and manual palettes update every role coherently.
+surface tint, scrim, shadow, and paired on-colors. The palette generated from the active wallpaper maps directly into
+these roles, so wallpaper and light/dark changes update every role coherently.
 
 `stateLayerColor(container, content, opacity)` is the canonical resolver for hover, focus, press, and drag overlays.
 This preserves the identity of a component's container rather than switching the whole UI to a global hover color.
@@ -46,21 +45,18 @@ taskbar custom fills.
 
 ### Dynamic color
 
-The default wallpaper scheme is `m3-expressive`. It is implemented through the vendored Material Color Utilities code
-and is available in:
+Wallpaper color is generated exclusively with Material 3 Expressive through the vendored Material Color Utilities
+code. It is used by:
 
-- configuration parsing and defaults;
 - wallpaper palette generation;
-- theme CLI parsing/help;
-- template expression generation;
-- custom-palette identifiers and tests.
-
-Supported schemes include `m3-expressive`, `m3-tonal-spot`, `m3-content`, `m3-fruit-salad`, `m3-rainbow`,
-`m3-monochrome`, and inherited custom modes. Unknown schemes fall back deterministically to `m3-expressive`.
+- theme CLI output;
+- template expression generation and exports;
+- palette-role regression tests.
 
 Palette extraction remains asynchronous in the existing theme pipeline, generated palettes are cached, and theme
-changes use palette interpolation rather than partially applying individual roles. Manual seed/fixed palette paths and
-light/dark modes remain available.
+changes use palette interpolation rather than partially applying individual roles. Dark, light, and automatic modes
+select between the two wallpaper-derived role maps; no fixed, community, custom, or alternate generator palettes are
+accepted.
 
 ## Typography
 
@@ -132,7 +128,8 @@ appropriate.
 
 - Buttons map the existing default, primary, secondary, destructive, outlined, ghost, and tab APIs to filled-tonal,
   filled, tertiary-tonal, error-container, outlined, text/icon, and selected-navigation treatments. Text buttons and
-  circular icon buttons select different semantic shapes automatically.
+  circular icon buttons select different semantic shapes automatically. Quick-setting tiles add inactive high-container
+  and active secondary-container variants without bypassing the shared button state model.
 - Inputs, selects, steppers, and keybind recorders use high surface containers, field geometry, primary hover outlines,
   persistent error roles, and distinct focus rings.
 - Sliders and range sliders use a primary active track/thumb against a highest-container inactive track. Switches,
@@ -140,7 +137,7 @@ appropriate.
 - Menus and picker popups use high-container chrome, outline-variant separation, menu geometry, and secondary-container
   keyboard/hover selection. File rows, launcher results, clipboard entries, and switcher tiles use the same selection
   grammar.
-- Cards use `surface_container`; panels use `surface_container_low`; dialogs, notifications, OSDs, and other floating
+- Cards use `surface_container_high`; panels use `surface_container_low`; dialogs, notifications, OSDs, and other floating
   content use higher container levels. This makes nesting visible without putting every group in another outlined card.
 - Scrollbars remain compact at rest, strengthen on hover, use primary during drag, and retain the existing pointer and
   wheel behavior. Progress tracks use secondary containers and primary fill.
@@ -154,6 +151,16 @@ appropriate.
 - Test compact laptop, portrait, ultrawide, mixed-resolution, and fractional-scale configurations.
 - Keep persistent bar and dock density compact; major panels may use larger expressive spacing.
 - Preserve RTL-aware order where the current control/layout supports it.
+
+### Shell composition defaults
+
+- The launcher opens as a large centered surface with a 56 px pill search field, section heading, and an auto-fitting
+  application-card grid that presents six columns at its preferred width.
+- The control center opens as a sidebar-free floating surface at the top-right, with quick settings in two horizontal
+  tile columns that collapse to one column at compact widths.
+- The system bar is a floating 48 px capsule with modest screen-edge insets and outline-variant separation.
+- These defaults are starting compositions, not fixed output assumptions; output clamping, scaling, keyboard behavior,
+  and user configuration remain authoritative.
 
 ## Accessibility rules
 

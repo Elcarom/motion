@@ -715,9 +715,7 @@
       "polkit-no-session": "El agente Polkit necesita logind, elogind o XDG_SESSION_ID. En configuraciones solo con seatd no puede registrarse para avisos gráficos. Usa pkexec en terminal para la sincronización de la pantalla de inicio, o instala elogind para la autenticación en sesión.",
       "screen-time-reset": "Tiempo de pantalla",
       "screen-time-reset-success": "Historial de uso borrado.",
-      "session-bus-unavailable": "Bus de sesión no disponible",
-      "wallpaper-palette-export": "Paleta Personalizada",
-      "wallpaper-palette-export-success": "Se guardó \"{name}\" y se cambió la fuente de la paleta a personalizada."
+      "session-bus-unavailable": "Bus de sesión no disponible"
     }
   },
   "osd": {
@@ -1005,7 +1003,6 @@
       },
       "batch-write": "Algunas configuraciones no se pudieron guardar.",
       "export-config": "No se pudo guardar la exportación de configuración.",
-      "export-wallpaper-palette": "No se pudo guardar la paleta del fondo de pantalla como paleta personalizada.",
       "monitor-override": {
         "create": "No se pudo crear la anulación de monitor.",
         "delete": "No se pudo eliminar la anulación de monitor.",
@@ -1293,12 +1290,6 @@
         "mode": {
           "dark": "Oscuro",
           "light": "Claro"
-        },
-        "source": {
-          "built-in": "Integrado",
-          "community": "Comunidad",
-          "custom": "Personalizado",
-          "wallpaper": "Fondo de Pantalla"
         }
       },
       "theme-role": {
@@ -1429,28 +1420,9 @@
           "description": "Recolorear los iconos de aplicaciones en todo el shell para que coincidan con la paleta activa",
           "label": "Colorear iconos de apps"
         },
-        "builtin-palette": {
-          "description": "Elige una paleta del catálogo incluido",
-          "label": "Paleta integrada"
-        },
-        "community-palette": {
-          "description": "Elige una paleta del catálogo de la comunidad",
-          "label": "Paleta de la comunidad",
-          "search-placeholder": "Buscar paletas..."
-        },
         "corner-roundness": {
           "description": "Escalar el radio de esquina en los contenedores y controles de la interfaz del shell",
           "label": "Radio de las esquinas"
-        },
-        "custom-palette": {
-          "description": "Elige una paleta de ~/.config/motion/palettes/",
-          "label": "Paleta personalizada",
-          "search-placeholder": "Buscar paletas personalizadas..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Guardar como paleta personalizada",
-          "description": "Guardar la paleta generada por el fondo de pantalla actual como un archivo de paleta personalizada reutilizable",
-          "label": "Exportar paleta del fondo de pantalla"
         },
         "font-family": {
           "description": "Familia tipográfica para la interfaz del shell",
@@ -1466,13 +1438,6 @@
           "description": "Anular la detección automática de configuración regional",
           "label": "Idioma"
         },
-        "palette-source": {
-          "description": "Dónde obtener la paleta de colores",
-          "label": "Fuente de la paleta"
-        },
-        "pure-black-dark": {
-          "label": "Negro puro"
-        },
         "theme-mode": {
           "description": "Elige oscuro, claro o automático según la hora del día",
           "label": "Modo de tema"
@@ -1480,10 +1445,6 @@
         "ui-scale": {
           "description": "Aumentar o disminuir la escala de la interfaz",
           "label": "Escala de la interfaz"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Elige cómo se convierten los colores del fondo de pantalla en una paleta",
-          "label": "Esquema de generación de fondo de pantalla"
         }
       },
       "backdrop": {
@@ -3393,7 +3354,6 @@
   },
   "setup-wizard": {
     "browse": "Explorar",
-    "builtin-palette": "Paleta integrada",
     "footer-note": "Puedes cambiar esto más tarde en la configuración.",
     "get-started": "Comenzar",
     "mode": "Modo",
@@ -3401,8 +3361,7 @@
     "select-wallpaper": "Seleccionar fondo de pantalla",
     "subtitle": "Algunas opciones rápidas para empezar.",
     "title": "Bienvenido a Motion",
-    "wallpaper": "Fondo de pantalla",
-    "wallpaper-scheme": "Esquema de fondo de pantalla"
+    "wallpaper": "Fondo de pantalla"
   },
   "system": {
     "hardware": {
@@ -3410,20 +3369,6 @@
       "unknown-cpu": "CPU desconocido",
       "unknown-distro": "Distribucion desconocida",
       "unknown-gpu": "GPU desconocida"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Disfuncional",
-      "faithful": "Fiel",
-      "m3-content": "M3 Contenido",
-      "m3-fruit-salad": "M3 Ensalada de frutas",
-      "m3-monochrome": "M3 Monocromo",
-      "m3-rainbow": "M3 Arcoíris",
-      "m3-tonal-spot": "M3 Punto tonal",
-      "muted": "Atenuado",
-      "soft": "Suave",
-      "vibrant": "Vibrante"
     }
   },
   "time": {

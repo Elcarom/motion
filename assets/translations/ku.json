@@ -832,12 +832,6 @@
         "mode": {
           "dark": "Tarî",
           "light": "Ronî"
-        },
-        "source": {
-          "built-in": "Xwecih",
-          "community": "Cîvat",
-          "custom": "Kesane",
-          "wallpaper": "Wêneyê dîwêr"
         }
       },
       "theme-role": {
@@ -896,9 +890,6 @@
         },
         "language": {
           "label": "Ziman"
-        },
-        "pure-black-dark": {
-          "label": "Reş"
         },
         "theme-mode": {
           "label": "Awaya rûkarê"
@@ -1076,20 +1067,6 @@
       "unknown-cpu": "YKNê nenas",
       "unknown-distro": "Belavkirinê nenas",
       "unknown-gpu": "YKGê nenas"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Soft",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

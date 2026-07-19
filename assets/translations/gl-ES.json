@@ -715,9 +715,7 @@
       "polkit-no-session": "O axente de polkit precisa logind, elogind ou XDG_SESSION_ID. En configuracións só con seatd non pode rexistrar solicitudes gráficas. Usa pkexec no terminal para sincronizar o Greeter ou instala elogind para a autenticación dentro da sesión.",
       "screen-time-reset": "Tempo de pantalla",
       "screen-time-reset-success": "Historial de uso borrado.",
-      "session-bus-unavailable": "Bus de sesión non dispoñible",
-      "wallpaper-palette-export": "Paleta personalizada",
-      "wallpaper-palette-export-success": "Gardouse \"{name}\" e cambiouse a orixe da paleta a personalizada."
+      "session-bus-unavailable": "Bus de sesión non dispoñible"
     }
   },
   "osd": {
@@ -1023,7 +1021,6 @@
       "batch-write": "Non se puideron gardar algúns axustes.",
       "custom-schedule-times": "Unha programación personalizada precisa tanto unha hora de amencer coma unha de solpor no formato HH:MM.",
       "export-config": "Non se puido gardar a exportación da configuración.",
-      "export-wallpaper-palette": "Non se puido gardar a paleta do fondo de pantalla como paleta personalizada.",
       "monitor-override": {
         "create": "Non se puido crear a substitución de monitor.",
         "delete": "Non se puido eliminar a substitución de monitor.",
@@ -1317,12 +1314,6 @@
         "mode": {
           "dark": "Escuro",
           "light": "Claro"
-        },
-        "source": {
-          "built-in": "Integrada",
-          "community": "Comunidade",
-          "custom": "Personalizada",
-          "wallpaper": "Fondo de pantalla"
         }
       },
       "theme-role": {
@@ -1454,32 +1445,13 @@
           "description": "Recolorea as iconas das aplicacións en toda a shell para coincidir coa paleta activa",
           "label": "Colorear iconas das aplicacións"
         },
-        "builtin-palette": {
-          "description": "Escolle unha paleta do catálogo incluído",
-          "label": "Paleta integrada"
-        },
         "button-borders": {
           "description": "Debuxa contornos arredor dos botóns en toda a shell",
           "label": "Bordos dos botóns"
         },
-        "community-palette": {
-          "description": "Escolle unha paleta do catálogo da comunidade",
-          "label": "Paleta da comunidade",
-          "search-placeholder": "Buscar paletas..."
-        },
         "corner-roundness": {
           "description": "Escala o radio dos cantos nos contedores e controis da interface da shell",
           "label": "Redondez dos cantos"
-        },
-        "custom-palette": {
-          "description": "Escolle unha paleta de ~/.config/motion/palettes/",
-          "label": "Paleta personalizada",
-          "search-placeholder": "Buscar paletas personalizadas..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Gardar como paleta personalizada",
-          "description": "Garda a paleta xerada a partir do fondo de pantalla actual como ficheiro de paleta personalizada reutilizable",
-          "label": "Exportar paleta do fondo de pantalla"
         },
         "font-family": {
           "description": "Familia tipográfica para a interface da shell",
@@ -1495,14 +1467,6 @@
           "description": "Substitúe a detección automática do idioma",
           "label": "Idioma"
         },
-        "palette-source": {
-          "description": "De onde obter a paleta de cores",
-          "label": "Orixe da paleta"
-        },
-        "pure-black-dark": {
-          "description": "Ancora as superficies escuras ao negro puro, evitando bandas nos paneis OLED (só no modo escuro)",
-          "label": "Negro puro"
-        },
         "theme-mode": {
           "description": "Escolle escuro, claro ou automático segundo a hora do día",
           "label": "Modo do tema"
@@ -1510,10 +1474,6 @@
         "ui-scale": {
           "description": "Escala toda a interface cara arriba ou cara abaixo",
           "label": "Escala da interface"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Escolle como se converten as cores do fondo de pantalla nunha paleta",
-          "label": "Esquema de xeración desde o fondo de pantalla"
         }
       },
       "backdrop": {
@@ -3440,7 +3400,6 @@
   },
   "setup-wizard": {
     "browse": "Explorar",
-    "builtin-palette": "Paleta integrada",
     "footer-note": "Podes cambiar isto máis tarde nos axustes.",
     "get-started": "Comezar",
     "mode": "Modo",
@@ -3448,8 +3407,7 @@
     "select-wallpaper": "Seleccionar fondo de pantalla",
     "subtitle": "Unhas poucas opcións rápidas para empezar.",
     "title": "Benvid@ a Motion",
-    "wallpaper": "Fondo de pantalla",
-    "wallpaper-scheme": "Esquema do fondo de pantalla"
+    "wallpaper": "Fondo de pantalla"
   },
   "system": {
     "hardware": {
@@ -3457,20 +3415,6 @@
       "unknown-cpu": "CPU descoñecida",
       "unknown-distro": "Distribución descoñecida",
       "unknown-gpu": "GPU descoñecida"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Disfuncional",
-      "faithful": "Fiel",
-      "m3-content": "M3 contido",
-      "m3-fruit-salad": "M3 macedonia",
-      "m3-monochrome": "M3 monocromo",
-      "m3-rainbow": "M3 arco da vella",
-      "m3-tonal-spot": "M3 punto tonal",
-      "muted": "Apagado",
-      "soft": "Suave",
-      "vibrant": "Vibrante"
     }
   },
   "time": {

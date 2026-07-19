@@ -88,9 +88,6 @@ public:
   void setSyncGreeterAppearance(std::function<void()> callback) { m_syncGreeterAppearance = std::move(callback); }
   void setResetLauncherUsage(std::function<void()> callback) { m_resetLauncherUsage = std::move(callback); }
   void setResetScreenTime(std::function<void()> callback) { m_resetScreenTime = std::move(callback); }
-  void setSaveWallpaperPaletteAsCustom(std::function<void()> callback) {
-    m_saveWallpaperPaletteAsCustom = std::move(callback);
-  }
   void setConnectCalendarAccount(std::function<void(std::string, std::string)> callback) {
     m_connectCalendarAccount = std::move(callback);
   }
@@ -290,6 +287,5 @@ private:
   std::function<void()> m_syncGreeterAppearance;
   std::function<void()> m_resetLauncherUsage;
   std::function<void()> m_resetScreenTime;
-  std::function<void()> m_saveWallpaperPaletteAsCustom;
   std::function<void(std::string, std::string)> m_connectCalendarAccount;
 };

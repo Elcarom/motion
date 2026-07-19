@@ -82,7 +82,7 @@ float ControlCenterPanel::preferredWidth() const {
 }
 
 PanelPlacement ControlCenterPanel::panelPlacement() const noexcept {
-  return m_config == nullptr ? PanelPlacement::Attached : m_config->config().shell.panel.controlCenterPlacement;
+  return m_config == nullptr ? PanelPlacement::Floating : m_config->config().shell.panel.controlCenterPlacement;
 }
 
 bool ControlCenterPanel::dismissTransientUi() {
@@ -105,7 +105,7 @@ void ControlCenterPanel::create() {
   auto rootLayout = ui::row({
       .out = &m_rootLayout,
       .align = FlexAlign::Stretch,
-      .gap = Style::panelPadding * scale,
+      .gap = Style::spaceLg * scale,
       .padding = 0.0f,
   });
 
@@ -241,9 +241,9 @@ void ControlCenterPanel::create() {
       ui::label({
           .out = &m_contentTitle,
           .text = i18n::tr("control-center.tabs.home"),
-          .fontSize = Style::fontSizeTitle * scale,
+          .fontSize = Style::fontSizeTitleLarge * scale,
           .fontWeight = FontWeight::Bold,
-          .color = colorSpecFromRole(ColorRole::Primary),
+          .color = colorSpecFromRole(ColorRole::OnSurface),
           .flexGrow = 1.0f,
       })
   );

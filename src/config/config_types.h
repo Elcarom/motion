@@ -126,16 +126,16 @@ struct BarConfig {
   std::int32_t thickness = Style::barThicknessDefault;
   float backgroundOpacity = 1.0f;
   // Inside outline for the bar background; attached panels inherit the resolved values.
-  ColorSpec border = colorSpecFromRole(ColorRole::Outline);
-  float borderWidth = 0.0f;
+  ColorSpec border = colorSpecFromRole(ColorRole::OutlineVariant);
+  float borderWidth = Style::borderWidth;
   std::int32_t radius = static_cast<std::int32_t>(Style::radiusXl);
   std::int32_t radiusTopLeft = static_cast<std::int32_t>(Style::radiusXl);
   std::int32_t radiusTopRight = static_cast<std::int32_t>(Style::radiusXl);
   std::int32_t radiusBottomLeft = static_cast<std::int32_t>(Style::radiusXl);
   std::int32_t radiusBottomRight = static_cast<std::int32_t>(Style::radiusXl);
   bool concaveEdgeCorners = true;
-  std::int32_t marginEnds = 100;       // inset from each end of the bar along its main axis
-  std::int32_t marginEdge = 0;         // distance from the nearest screen edge (floats the bar when > 0)
+  std::int32_t marginEnds = 12;        // inset from each end of the bar along its main axis
+  std::int32_t marginEdge = 8;         // distance from the nearest screen edge (floats the bar when > 0)
   std::int32_t marginOppositeEdge = 0; // extra reserved space on the inward side of the bar
   std::int32_t padding = 14;           // main-axis padding from bar edges to start/end sections
   std::int32_t widgetSpacing = 6;      // gap between widgets within a section
@@ -880,7 +880,7 @@ struct ShellConfig {
     bool shadow = true;  // cast the global [shell.shadow] from panel surfaces
     PanelPlacement launcherPlacement = PanelPlacement::Floating;
     PanelPlacement clipboardPlacement = PanelPlacement::Floating;
-    PanelPlacement controlCenterPlacement = PanelPlacement::Attached;
+    PanelPlacement controlCenterPlacement = PanelPlacement::Floating;
     PanelPlacement wallpaperPlacement = PanelPlacement::Attached;
     PanelPlacement sessionPlacement = PanelPlacement::Attached;
     PanelPlacement polkitPlacement = PanelPlacement::Floating;
@@ -888,7 +888,7 @@ struct ShellConfig {
     // Launcher/clipboard default to "center" (the historical centered placement).
     std::string launcherPosition = "center";
     std::string clipboardPosition = "center";
-    std::string controlCenterPosition = "auto";
+    std::string controlCenterPosition = "top_right";
     std::string wallpaperPosition = "auto";
     std::string sessionPosition = "auto";
     std::string polkitPosition = "center";
@@ -909,7 +909,7 @@ struct ShellConfig {
     bool categories = true;
     bool showIcons = true;
     bool compact = false;
-    bool appGrid = false;
+    bool appGrid = true;
     bool sortByUsage = true;
     std::string providerPrefix = "/";
 
@@ -1238,20 +1238,6 @@ struct HooksConfig {
 std::optional<HookKind> hookKindFromKey(std::string_view key);
 std::string_view hookKindKey(HookKind kind);
 
-enum class PaletteSource : std::uint8_t {
-  Builtin = 0,
-  Wallpaper = 1,
-  Community = 2,
-  Custom = 3,
-};
-
-constexpr EnumOption<PaletteSource> kPaletteSources[] = {
-    {PaletteSource::Builtin, "builtin", "settings.options.theme.source.built-in"},
-    {PaletteSource::Wallpaper, "wallpaper", "settings.options.theme.source.wallpaper"},
-    {PaletteSource::Community, "community", "settings.options.theme.source.community"},
-    {PaletteSource::Custom, "custom", "settings.options.theme.source.custom"},
-};
-
 enum class ThemeMode : std::uint8_t {
   Dark = 0,
   Light = 1,
@@ -1267,11 +1253,6 @@ constexpr EnumOption<ThemeMode> kThemeModes[] = {
 struct WallpaperFavorite {
   std::string path;
   ThemeMode themeMode = ThemeMode::Auto;
-  std::optional<PaletteSource> paletteSource;
-  std::string builtinPalette;
-  std::string communityPalette;
-  std::string customPalette;
-  std::string wallpaperScheme;
 
   bool operator==(const WallpaperFavorite&) const = default;
 };
@@ -1340,13 +1321,7 @@ struct ThemeConfig {
     bool operator==(const TemplatesConfig&) const = default;
   };
 
-  PaletteSource source = PaletteSource::Builtin;
-  std::string builtinPalette = "Motion";
-  std::string communityPalette = "Oxocarbon";
-  std::string customPalette;
-  std::string wallpaperScheme = "m3-expressive";
   ThemeMode mode = ThemeMode::Dark;
-  bool pureBlackDark = false;
   TemplatesConfig templates;
 
   bool operator==(const ThemeConfig&) const = default;
@@ -1362,7 +1337,7 @@ struct ControlCenterConfig {
 
   std::vector<ShortcutConfig> shortcuts;
   std::vector<std::string> hiddenTabs; // tab keys (see kTabs) the user has hidden; empty = all available shown
-  ControlCenterSidebarMode sidebarMode = ControlCenterSidebarMode::Compact;
+  ControlCenterSidebarMode sidebarMode = ControlCenterSidebarMode::None;
   ControlCenterSidebarMode sidebarSectionMode = ControlCenterSidebarMode::Compact;
   std::int32_t width = kDefaultWidth; // full-sidebar logical width; compact/none modes scale down from this
   CalendarTabConfig calendarTab;

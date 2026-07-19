@@ -715,9 +715,7 @@
       "polkit-no-session": "Polkit 代理需要 logind、elogind 或 XDG_SESSION_ID。在仅使用 seatd 的环境中无法注册图形化认证提示。请使用终端 pkexec 完成 greeter 同步，或安装 elogind 以支持会话内身份验证。",
       "screen-time-reset": "屏幕时间",
       "screen-time-reset-success": "使用记录已清除。",
-      "session-bus-unavailable": "会话总线不可用",
-      "wallpaper-palette-export": "自定义配色方案",
-      "wallpaper-palette-export-success": "已保存“{name}”并将配色方案来源更改为自定义。"
+      "session-bus-unavailable": "会话总线不可用"
     }
   },
   "osd": {
@@ -1023,7 +1021,6 @@
       "batch-write": "部分设置无法保存。",
       "custom-schedule-times": "自定义时间表必须同时设置日出和日落时间，且格式为 HH:MM。",
       "export-config": "配置导出保存失败。",
-      "export-wallpaper-palette": "无法将壁纸配色方案保存为自定义配色方案。",
       "monitor-override": {
         "create": "无法创建屏幕设置。",
         "delete": "无法删除屏幕设置。",
@@ -1318,12 +1315,6 @@
         "mode": {
           "dark": "深色",
           "light": "浅色"
-        },
-        "source": {
-          "built-in": "内置",
-          "community": "社区",
-          "custom": "自定义",
-          "wallpaper": "壁纸"
         }
       },
       "theme-role": {
@@ -1462,32 +1453,13 @@
           "description": "将 Shell 中的应用图标重新着色以匹配当前配色方案",
           "label": "应用图标着色"
         },
-        "builtin-palette": {
-          "description": "从内置目录中选择配色方案",
-          "label": "内置配色方案"
-        },
         "button-borders": {
           "description": "为 Shell 中的所有按钮绘制轮廓",
           "label": "按钮边框"
         },
-        "community-palette": {
-          "description": "从社区目录中选择配色方案",
-          "label": "社区配色方案",
-          "search-placeholder": "搜索配色方案…"
-        },
         "corner-roundness": {
           "description": "缩放 Shell UI 容器和控件的圆角半径",
           "label": "圆角缩放"
-        },
-        "custom-palette": {
-          "description": "从 ~/.config/motion/palettes/ 中选择配色方案",
-          "label": "自定义配色方案",
-          "search-placeholder": "搜索自定义配色方案…"
-        },
-        "export-wallpaper-palette": {
-          "button": "保存为自定义配色方案",
-          "description": "将当前壁纸配色保存为可复用的自定义配色方案文件",
-          "label": "导出壁纸配色方案"
         },
         "font-family": {
           "description": "Shell 界面的字体",
@@ -1503,14 +1475,6 @@
           "description": "覆盖自动检测的语言设置",
           "label": "语言"
         },
-        "palette-source": {
-          "description": "选择配色方案的来源",
-          "label": "配色方案来源"
-        },
-        "pure-black-dark": {
-          "description": "将深色界面固定为纯黑色，避免 OLED 屏幕出现色带（仅限深色模式）",
-          "label": "纯黑"
-        },
         "theme-mode": {
           "description": "选择深色、浅色，或根据时段自动切换",
           "label": "主题模式"
@@ -1518,10 +1482,6 @@
         "ui-scale": {
           "description": "整个界面的缩放比例",
           "label": "UI 缩放"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "选择壁纸颜色转换为配色方案的方式",
-          "label": "壁纸取色方案"
         }
       },
       "backdrop": {
@@ -3500,7 +3460,6 @@
   },
   "setup-wizard": {
     "browse": "浏览",
-    "builtin-palette": "内置配色方案",
     "footer-note": "稍后可以在设置中更改这些选项。",
     "get-started": "开始使用",
     "mode": "模式",
@@ -3508,8 +3467,7 @@
     "select-wallpaper": "选择壁纸",
     "subtitle": "简单几步，快速上手。",
     "title": "欢迎使用 Motion",
-    "wallpaper": "壁纸",
-    "wallpaper-scheme": "壁纸方案"
+    "wallpaper": "壁纸"
   },
   "system": {
     "hardware": {
@@ -3517,20 +3475,6 @@
       "unknown-cpu": "未知 CPU",
       "unknown-distro": "未知发行版",
       "unknown-gpu": "未知 GPU"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Dysfunctional",
-      "faithful": "Faithful",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Muted",
-      "soft": "Soft",
-      "vibrant": "Vibrant"
     }
   },
   "time": {

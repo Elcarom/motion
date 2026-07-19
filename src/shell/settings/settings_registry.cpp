@@ -13,7 +13,6 @@
 #include "shell/settings/font_weight_catalog.h"
 #include "shell/wallpaper/wallpaper_paths.h"
 #include "system/sysmon_threshold_profile.h"
-#include "theme/builtin_palettes.h"
 #include "theme/builtin_templates.h"
 #include "ui/app_icon_colorization.h"
 #include "util/string_utils.h"
@@ -183,57 +182,6 @@ namespace settings {
         };
       };
       return select;
-    }
-
-    ColorSwatchPreview palettePreviewFromPalette(const ::Palette& palette) {
-      return ColorSwatchPreview{
-          .surface = fixedColorSpec(palette.surface),
-          .swatches = {
-              fixedColorSpec(palette.primary),
-              fixedColorSpec(palette.secondary),
-              fixedColorSpec(palette.tertiary),
-              fixedColorSpec(palette.error),
-          },
-      };
-    }
-
-    ColorSwatchPreview builtinPalettePreview(const motion::theme::BuiltinPalette& palette, ThemeMode mode) {
-      return palettePreviewFromPalette(mode == ThemeMode::Light ? palette.light.palette : palette.dark.palette);
-    }
-
-    SelectSetting builtinPaletteSelect(std::string_view selected, ThemeMode mode) {
-      std::vector<SelectOption> opts;
-      opts.reserve(motion::theme::builtinPalettes().size());
-      for (const auto& palette : motion::theme::builtinPalettes()) {
-        opts.push_back(
-            SelectOption{
-                .value = std::string(palette.name),
-                .label = std::string(palette.name),
-                .description = {},
-                .preview = builtinPalettePreview(palette, mode),
-            }
-        );
-      }
-      return SelectSetting{
-          .options = std::move(opts), .selectedValue = std::string(selected), .preferredWidth = 240.0f
-      };
-    }
-
-    SelectSetting wallpaperSchemeSelect(std::string_view selected) {
-      return plainSelect(
-          {{"m3-expressive", "theme.scheme.m3-expressive"},
-           {"m3-content", "theme.scheme.m3-content"},
-           {"m3-tonal-spot", "theme.scheme.m3-tonal-spot"},
-           {"m3-fruit-salad", "theme.scheme.m3-fruit-salad"},
-           {"m3-rainbow", "theme.scheme.m3-rainbow"},
-           {"m3-monochrome", "theme.scheme.m3-monochrome"},
-           {"vibrant", "theme.scheme.vibrant"},
-           {"faithful", "theme.scheme.faithful"},
-           {"soft", "theme.scheme.soft"},
-           {"dysfunctional", "theme.scheme.dysfunctional"},
-           {"muted", "theme.scheme.muted"}},
-          selected
-      );
     }
 
     std::vector<SelectOption> controlCenterShortcutOptions(const Config& cfg) {
@@ -434,63 +382,6 @@ namespace settings {
         SettingsSection::Appearance, "theme", tr("settings.schema.appearance.theme-mode.label"),
         tr("settings.schema.appearance.theme-mode.description"), {"theme", "mode"},
         asSegmented(enumSelect(kThemeModes, cfg.theme.mode)), "dark light auto colors"
-    ));
-    entries.push_back(makeEntry(
-        SettingsSection::Appearance, "theme", tr("settings.schema.appearance.palette-source.label"),
-        tr("settings.schema.appearance.palette-source.description"), {"theme", "source"},
-        asSegmented(enumSelect(kPaletteSources, cfg.theme.source)), "palette colors"
-    ));
-    if (cfg.theme.source == PaletteSource::Builtin) {
-      entries.push_back(makeEntry(
-          SettingsSection::Appearance, "theme", tr("settings.schema.appearance.builtin-palette.label"),
-          tr("settings.schema.appearance.builtin-palette.description"), {"theme", "builtin"},
-          builtinPaletteSelect(cfg.theme.builtinPalette, cfg.theme.mode), "builtin palette colors"
-      ));
-    } else if (cfg.theme.source == PaletteSource::Wallpaper) {
-      entries.push_back(makeEntry(
-          SettingsSection::Appearance, "theme", tr("settings.schema.appearance.wallpaper-generation-scheme.label"),
-          tr("settings.schema.appearance.wallpaper-generation-scheme.description"), {"theme", "wallpaper_scheme"},
-          wallpaperSchemeSelect(cfg.theme.wallpaperScheme), "wallpaper palette generator scheme material you m3 colors"
-      ));
-    } else if (cfg.theme.source == PaletteSource::Community) {
-      SettingControl communityPaletteControl =
-          TextSetting{.value = cfg.theme.communityPalette, .placeholder = "Oxocarbon", .browseFileExtensions = {}};
-      if (!env.communityPalettes.empty()) {
-        communityPaletteControl = SearchPickerSetting{
-            .options = env.communityPalettes,
-            .selectedValue = cfg.theme.communityPalette,
-            .placeholder = tr("settings.schema.appearance.community-palette.search-placeholder"),
-            .emptyText = tr("ui.controls.search-picker.empty"),
-            .preferredHeight = 240.0f,
-        };
-      }
-      entries.push_back(makeEntry(
-          SettingsSection::Appearance, "theme", tr("settings.schema.appearance.community-palette.label"),
-          tr("settings.schema.appearance.community-palette.description"), {"theme", "community_palette"},
-          std::move(communityPaletteControl), "community palette colors"
-      ));
-    } else if (cfg.theme.source == PaletteSource::Custom) {
-      SettingControl customPaletteControl =
-          TextSetting{.value = cfg.theme.customPalette, .placeholder = "", .browseFileExtensions = {}};
-      if (!env.customPalettes.empty()) {
-        customPaletteControl = SearchPickerSetting{
-            .options = env.customPalettes,
-            .selectedValue = cfg.theme.customPalette,
-            .placeholder = tr("settings.schema.appearance.custom-palette.search-placeholder"),
-            .emptyText = tr("ui.controls.search-picker.empty"),
-            .preferredHeight = 240.0f,
-        };
-      }
-      entries.push_back(makeEntry(
-          SettingsSection::Appearance, "theme", tr("settings.schema.appearance.custom-palette.label"),
-          tr("settings.schema.appearance.custom-palette.description"), {"theme", "custom_palette"},
-          std::move(customPaletteControl), "custom palette colors"
-      ));
-    }
-    entries.push_back(makeEntry(
-        SettingsSection::Appearance, "theme", tr("settings.schema.appearance.pure-black-dark.label"),
-        tr("settings.schema.appearance.pure-black-dark.description"), {"theme", "pure_black_dark"},
-        ToggleSetting{cfg.theme.pureBlackDark}, "oled amoled true black background contrast"
     ));
     entries.push_back(makeEntry(
         SettingsSection::Appearance, "interface", tr("settings.schema.appearance.corner-roundness.label"),

@@ -70,11 +70,11 @@ compositor and protocol versions.
 ### Themes and accessibility
 
 - [ ] dark, light, auto;
-- [ ] `m3-expressive` wallpaper palette and manual/fixed palette;
+- [ ] Material 3 Expressive wallpaper palette and bundled-wallpaper fallback;
 - [ ] wallpaper change while panels are open;
 - [ ] verify all five surface-container levels update together while launcher, control center, menus, and notifications
       are visible;
-- [ ] high contrast and pure black;
+- [ ] high contrast in light, dark, and automatic modes;
 - [ ] UI scale 1.0/1.25/1.5/2.0;
 - [ ] reduced motion;
 - [ ] keyboard-only operation and focus restoration;

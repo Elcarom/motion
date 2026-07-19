@@ -34,6 +34,8 @@ public:
 
   void setValue(std::string_view value);
   void setPlaceholder(std::string_view placeholder);
+  void setLeadingGlyph(std::string_view glyph);
+  void setLeadingGlyphSize(float size);
   void setFontSize(float size);
   void setControlHeight(float height);
   void setHorizontalPadding(float padding);
@@ -153,6 +155,7 @@ private:
   [[nodiscard]] std::size_t byteForVerticalMove(std::size_t from, int lineDelta);
   [[nodiscard]] float contentTextHeight() const noexcept;
   [[nodiscard]] float textViewportHeight() const noexcept;
+  [[nodiscard]] float contentStartInset() const noexcept;
   [[nodiscard]] float currentLineHeight() const noexcept;
   void ensureCursorVisibleY();
   void clampScrollOffsetY();
@@ -173,6 +176,7 @@ private:
   static std::string utf32ToUtf8(std::uint32_t codepoint);
 
   RectNode* m_background = nullptr;
+  GlyphNode* m_leadingGlyph = nullptr;
   Node* m_textViewport = nullptr;
   RectNode* m_selectionRect = nullptr;
   Label* m_label = nullptr;
@@ -220,6 +224,8 @@ private:
   float m_fontSize = Style::fontSizeBody;
   float m_controlHeight = Style::controlHeight;
   float m_horizontalPadding = Style::spaceMd;
+  float m_leadingGlyphSize = Style::fontSizeBody;
+  bool m_leadingGlyphVisible = false;
   bool m_clearButtonEnabled = false;
   bool m_passwordMode = false;
   bool m_multiline = false;

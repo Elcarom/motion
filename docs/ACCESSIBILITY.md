@@ -31,7 +31,7 @@ surface is preferred.
 - Use semantic on-colors rather than assuming black or white foregrounds.
 - Preserve non-color indicators for selection, errors, muted state, recording, privacy, and disabled state.
 - Do not suppress focus outlines for aesthetic reasons.
-- Test light, dark, `high_contrast`, and `pure_black_dark` combinations.
+- Test light, dark, automatic, and `high_contrast` combinations.
 - Text should reflow or truncate deliberately under `accessibility.ui_scale`, fractional output scale, and long
   translations.
 - Avoid fixed-height text containers that clip ascenders, descenders, or multi-line content.
@@ -66,7 +66,7 @@ switch. Time-limited surfaces should pause or provide a persistent history where
 - [ ] Activate controls with Enter and Space; dismiss with Escape.
 - [ ] Verify arrow navigation in menus, lists, tabs, and segmented controls.
 - [ ] Test UI scale at 1.0, 1.25, 1.5, and 2.0.
-- [ ] Test light, dark, high contrast, and pure black.
+- [ ] Test light, dark, automatic, and high contrast.
 - [ ] Test reduced motion and zero-duration transitions.
 - [ ] Test long translated strings and RTL where supported.
 - [ ] Inspect foreground/background contrast on translucent surfaces.

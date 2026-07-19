@@ -32,7 +32,7 @@ namespace motion::theme {
 
   } // namespace
 
-  std::string toJson(const GeneratedPalette& palette, Scheme /*scheme*/, Variant variant) {
+  std::string toJson(const GeneratedPalette& palette, Variant variant) {
     if (variant == Variant::Dark)
       return tokenMap(palette.dark).dump(2);
     if (variant == Variant::Light)

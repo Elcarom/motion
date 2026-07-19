@@ -36,9 +36,8 @@ namespace {
   constexpr std::size_t kRowOverscan = 3;
   // Minimum trimmed query length before prefixed opt-in providers join the global search.
   constexpr std::size_t kGlobalOptInMinChars = 2;
-  constexpr float kIconSizeDefault = 40.0f;
-  constexpr float kIconSizeCompact = 28.0f;
-  constexpr std::size_t kAppGridColumns = 5;
+  constexpr float kIconSizeDefault = 48.0f;
+  constexpr float kIconSizeCompact = 32.0f;
   constexpr std::string_view kApplicationsProviderId = "Applications";
   constexpr double kUsageScorePerCount = 0.1;
   constexpr double kTypedUsageScoreCap = 0.5;
@@ -149,30 +148,32 @@ namespace {
     return std::ceil(std::max(launcherIconSize(style), textHeight) + paddingY * 2.0f);
   }
 
-  [[nodiscard]] float launcherAppGridLabelHeight(Renderer& renderer, const LauncherListStyle& style, float wrapWidth) {
-    const float fontSize = Style::fontSizeCaption * style.scale;
-    const TextMetrics metrics =
-        renderer.measureText("Ag\nyg", fontSize, FontWeight::Normal, wrapWidth, 2, TextAlign::Center);
-    const float actualHeight = metrics.bottom - metrics.top;
-    const float inkSpan = std::max(0.0f, metrics.inkBottom - metrics.inkTop);
-    const float rowExtent = renderer.fontRowExtent(fontSize, FontWeight::Normal);
-    return std::ceil(std::max({actualHeight, inkSpan, rowExtent * 2.0f}));
+  [[nodiscard]] float launcherAppGridLabelHeight(Renderer& renderer, const LauncherListStyle& style) {
+    const float titleHeight = renderer.fontRowExtent(Style::fontSizeBody * style.scale, FontWeight::SemiBold);
+    if (style.compact) {
+      return std::ceil(titleHeight);
+    }
+    const float subtitleHeight = renderer.fontRowExtent(Style::fontSizeCaption * style.scale, FontWeight::Normal);
+    return std::ceil(titleHeight + Style::spaceXs * style.scale + subtitleHeight);
   }
 
-  [[nodiscard]] float launcherAppGridCellHeight(Renderer& renderer, const LauncherListStyle& style, float wrapWidth) {
-    const float paddingY = Style::spaceSm * style.scale;
-    const float gap = Style::spaceXs * style.scale;
+  [[nodiscard]] float launcherAppGridCellHeight(Renderer& renderer, const LauncherListStyle& style) {
+    const float paddingY = Style::spaceLg * style.scale;
+    const float gap = Style::spaceSm * style.scale;
     const float iconSize = launcherIconSize(style);
-    const float labelHeight = launcherAppGridLabelHeight(renderer, style, wrapWidth);
-    return std::ceil(paddingY * 2.0f + iconSize + gap + labelHeight);
+    const float labelHeight = launcherAppGridLabelHeight(renderer, style);
+    const float measured = std::ceil(paddingY * 2.0f + iconSize + gap + labelHeight);
+    return std::max(measured, Style::launcherTileHeight * style.scale);
   }
 
   [[nodiscard]] float launcherAppGridCellHeightEstimate(const LauncherListStyle& style) {
-    const float paddingY = Style::spaceSm * style.scale;
-    const float gap = Style::spaceXs * style.scale;
+    const float paddingY = Style::spaceLg * style.scale;
+    const float gap = Style::spaceSm * style.scale;
     const float iconSize = launcherIconSize(style);
-    const float labelHeight = Style::fontSizeCaption * style.scale * 2.4f;
-    return std::ceil(paddingY * 2.0f + iconSize + gap + labelHeight);
+    const float labelHeight =
+        (Style::fontSizeBody + (style.compact ? 0.0f : Style::fontSizeCaption + Style::spaceXs)) * style.scale;
+    const float measured = std::ceil(paddingY * 2.0f + iconSize + gap + labelHeight);
+    return std::max(measured, Style::launcherTileHeight * style.scale);
   }
 
   [[nodiscard]] LauncherListStyle launcherListStyleFrom(const ConfigService* config, float scale) {
@@ -412,34 +413,41 @@ namespace {
   public:
     LauncherAppGridTile(LauncherListStyle style, AsyncTextureCache* asyncTextures)
         : m_style(style), m_asyncTextures(asyncTextures) {
-      const float gap = Style::spaceXs * m_style.scale;
-      const float padding = Style::spaceSm * m_style.scale;
+      const float gap = Style::spaceSm * m_style.scale;
+      const float padding = Style::spaceLg * m_style.scale;
       auto col = ui::column({
           .out = &m_col,
           .align = FlexAlign::Center,
           .gap = gap,
           .paddingV = padding,
           .paddingH = padding,
-          .radius = Style::scaledRadiusMd(m_style.scale),
+          .radius = Style::scaledSemanticRadius(Style::radiusCard, m_style.scale),
           .fillWidth = true,
           .fillHeight = true,
       });
       addChild(std::move(col));
 
+      const float iconContainerSize = launcherIconSize(m_style) + Style::spaceLg * m_style.scale;
       m_col->addChild(
-          ui::image({
-              .out = &m_image,
-              .visible = false,
-          })
-      );
-
-      m_col->addChild(
-          ui::glyph({
-              .out = &m_glyph,
-              .glyphSize = launcherIconSize(m_style),
-              .color = colorSpecFromRole(ColorRole::OnSurface),
-              .visible = false,
-          })
+          ui::row(
+              {.out = &m_iconContainer,
+               .align = FlexAlign::Center,
+               .justify = FlexJustify::Center,
+               .fill = colorSpecFromRole(ColorRole::PrimaryContainer),
+               .radius = iconContainerSize * 0.5f,
+               .width = iconContainerSize,
+               .height = iconContainerSize},
+              ui::image({
+                  .out = &m_image,
+                  .visible = false,
+              }),
+              ui::glyph({
+                  .out = &m_glyph,
+                  .glyphSize = launcherIconSize(m_style),
+                  .color = colorSpecFromRole(ColorRole::OnPrimaryContainer),
+                  .visible = false,
+              })
+          )
       );
 
       m_image->setAsyncReadyCallback([this]() {
@@ -457,10 +465,20 @@ namespace {
       m_col->addChild(
           ui::label({
               .out = &m_title,
-              .fontSize = Style::fontSizeCaption * m_style.scale,
-              .fontWeight = FontWeight::Normal,
+              .fontSize = Style::fontSizeBody * m_style.scale,
+              .fontWeight = FontWeight::SemiBold,
               .color = colorSpecFromRole(ColorRole::OnSurface),
-              .maxLines = 2,
+              .maxLines = 1,
+              .configure = [](Label& label) { label.setTextAlign(TextAlign::Center); },
+          })
+      );
+
+      m_col->addChild(
+          ui::label({
+              .out = &m_subtitle,
+              .fontSize = Style::fontSizeCaption * m_style.scale,
+              .color = colorSpecFromRole(ColorRole::OnSurfaceVariant),
+              .maxLines = 1,
               .configure = [](Label& label) { label.setTextAlign(TextAlign::Center); },
           })
       );
@@ -476,6 +494,11 @@ namespace {
       m_fallbackGlyph = result.glyphName.empty() ? "app-window" : result.glyphName;
       const float iconSize = launcherIconSize(m_style);
       m_iconTargetSize = static_cast<int>(std::round(iconSize));
+      const float iconContainerSize = iconSize + Style::spaceLg * m_style.scale;
+      m_iconContainer->setSize(iconContainerSize, iconContainerSize);
+      m_iconContainer->setRadius(iconContainerSize * 0.5f);
+      m_iconContainer->setVisible(m_style.showIcons);
+      m_iconContainer->setParticipatesInLayout(m_style.showIcons);
 
       setSize(width, height);
       m_col->setSize(width, height);
@@ -504,10 +527,15 @@ namespace {
         m_image->clear(renderer);
       }
 
-      const float horizontalPad = Style::spaceSm * m_style.scale * 2.0f;
+      const float horizontalPad = Style::spaceLg * m_style.scale * 2.0f;
       const float textWidth = std::max(0.0f, width - horizontalPad);
       m_title->setText(singleLinePreview(result.title));
       m_title->setMaxWidth(textWidth);
+      const bool showSubtitle = !m_style.compact && !result.subtitle.empty();
+      m_subtitle->setText(showSubtitle ? singleLinePreview(result.subtitle) : std::string{});
+      m_subtitle->setMaxWidth(textWidth);
+      m_subtitle->setVisible(showSubtitle);
+      m_subtitle->setParticipatesInLayout(showSubtitle);
 
       applyVisualState();
     }
@@ -549,26 +577,35 @@ namespace {
     void applyVisualState() {
       if (m_selected) {
         m_col->setFill(colorSpecFromRole(ColorRole::SecondaryContainer));
+        m_col->setBorder(colorSpecFromRole(ColorRole::Primary), Style::focusRingWidth * m_style.scale);
       } else if (m_hovered) {
         m_col->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHighest));
+        m_col->clearBorder();
       } else {
-        m_col->setFill(rgba(0, 0, 0, 0));
+        m_col->setFill(colorSpecFromRole(ColorRole::SurfaceContainerHigh));
+        m_col->clearBorder();
       }
 
       const auto activeRole = m_selected ? ColorRole::OnSecondaryContainer : ColorRole::OnSurface;
       const bool active = m_selected || m_hovered;
       const ColorSpec foreground = colorSpecFromRole(active ? activeRole : ColorRole::OnSurface);
-      m_glyph->setColor(foreground);
+      m_glyph->setColor(colorSpecFromRole(ColorRole::OnPrimaryContainer));
       m_title->setColor(foreground);
+      m_subtitle->setColor(
+          m_selected ? colorSpecFromRole(ColorRole::OnSecondaryContainer, 0.72f)
+                     : colorSpecFromRole(ColorRole::OnSurfaceVariant)
+      );
     }
 
     LauncherListStyle m_style{};
     bool m_selected = false;
     bool m_hovered = false;
     Flex* m_col = nullptr;
+    Flex* m_iconContainer = nullptr;
     Image* m_image = nullptr;
     Glyph* m_glyph = nullptr;
     Label* m_title = nullptr;
+    Label* m_subtitle = nullptr;
     AsyncTextureCache* m_asyncTextures = nullptr;
     std::string m_iconPath;
     std::string m_fallbackGlyph;
@@ -750,16 +787,18 @@ void LauncherPanel::create() {
   auto container = ui::column({
       .out = &m_container,
       .align = FlexAlign::Stretch,
-      .gap = Style::spaceSm * scale,
+      .gap = Style::spaceLg * scale,
   });
 
   container->addChild(
       ui::input({
           .out = &m_input,
           .placeholder = m_scopedPlaceholder.empty() ? i18n::tr("launcher.search-placeholder") : m_scopedPlaceholder,
-          .fontSize = Style::fontSizeBody * scale,
-          .controlHeight = Style::controlHeight * scale,
-          .horizontalPadding = Style::spaceMd * scale,
+          .leadingGlyph = "search",
+          .leadingGlyphSize = Style::fontSizeTitle * scale,
+          .fontSize = Style::fontSizeBodyLarge * scale,
+          .controlHeight = Style::searchHeroHeight * scale,
+          .horizontalPadding = Style::spaceLg * scale,
           .clearButtonEnabled = true,
           .surfaceOpacity = panelCardOpacity(),
           .onChange =
@@ -775,6 +814,7 @@ void LauncherPanel::create() {
               },
           .onSubmit = [this](const std::string& /*text*/) { activateSelected(); },
           .onKeyEvent = [this](std::uint32_t sym, std::uint32_t modifiers) { return handleKeyEvent(sym, modifiers); },
+          .configure = [scale](Input& input) { input.setFrameRadius(Style::searchHeroHeight * scale * 0.5f); },
       })
   );
 
@@ -794,9 +834,26 @@ void LauncherPanel::create() {
   auto body = ui::column({
       .out = &m_body,
       .align = FlexAlign::Stretch,
+      .gap = Style::spaceMd * scale,
       .fillWidth = true,
       .flexGrow = 1.0f,
   });
+
+  body->addChild(
+      ui::row(
+          {.out = &m_gridHeader,
+           .align = FlexAlign::Center,
+           .justify = FlexJustify::SpaceBetween,
+           .visible = false,
+           .participatesInLayout = false},
+          ui::label({
+              .text = i18n::tr("launcher.providers.applications.title"),
+              .fontSize = Style::fontSizeTitleLarge * scale,
+              .fontWeight = FontWeight::Bold,
+              .color = colorSpecFromRole(ColorRole::OnSurface),
+          })
+      )
+  );
 
   const LauncherListStyle initialStyle = launcherListStyleFrom(m_config, scale);
   m_listAdapter = std::make_unique<LauncherResultAdapter>(initialStyle, m_asyncTextures);
@@ -931,12 +988,19 @@ void LauncherPanel::syncLauncherViewLayout(Renderer* renderer) {
 
   const bool modeChanged = useGrid != m_usingAppGrid;
   m_usingAppGrid = useGrid;
+  if (m_gridHeader != nullptr) {
+    m_gridHeader->setVisible(useGrid);
+    m_gridHeader->setParticipatesInLayout(useGrid);
+  }
   if (modeChanged) {
     m_launcherRowHeight = 0.0f;
   }
 
   if (useGrid) {
-    m_grid->setColumns(kAppGridColumns);
+    // Auto-fit preserves the six-column composition at the preferred panel
+    // width while gracefully reducing the count on smaller outputs.
+    m_grid->setColumns(0);
+    m_grid->setMinCellWidth(Style::launcherTileMinWidth * scale);
     m_grid->setSquareCells(false);
     m_grid->setColumnGap(Style::spaceSm * scale);
     m_grid->setRowGap(Style::spaceSm * scale);
@@ -995,15 +1059,7 @@ void LauncherPanel::updateLauncherGridMetrics(Renderer& renderer) {
   const LauncherListStyle style = launcherListStyleFrom(m_config, contentScale());
   float cellHeight = launcherRowHeight(renderer, style);
   if (m_usingAppGrid) {
-    float wrapWidth = 0.0f;
-    const std::size_t columns = std::max<std::size_t>(1, m_grid->layoutColumnCount());
-    const float viewportW = m_grid->scrollView().contentViewportWidth();
-    const float gap = Style::spaceSm * contentScale();
-    const float cellW =
-        columns > 0 ? (viewportW - static_cast<float>(columns - 1) * gap) / static_cast<float>(columns) : viewportW;
-    const float paddingH = Style::spaceSm * contentScale() * 2.0f;
-    wrapWidth = std::max(0.0f, cellW - paddingH);
-    cellHeight = launcherAppGridCellHeight(renderer, style, wrapWidth);
+    cellHeight = launcherAppGridCellHeight(renderer, style);
   }
   if (std::abs(cellHeight - m_launcherRowHeight) < 0.5f) {
     return;

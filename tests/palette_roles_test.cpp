@@ -1,9 +1,12 @@
-#include "theme/builtin_palettes.h"
-#include "theme/fixed_palette.h"
+#include "theme/palette_generator.h"
+#include "theme/palette_mapping.h"
 #include "ui/palette.h"
 
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <string_view>
+#include <vector>
 
 namespace {
 
@@ -19,18 +22,41 @@ namespace {
 } // namespace
 
 int main() {
-  using motion::theme::expandBuiltinPalette;
-  using motion::theme::findBuiltinPalette;
+  using motion::theme::generate;
   using motion::theme::mapGeneratedPaletteMode;
 
   bool ok = true;
-  const auto* builtin = findBuiltinPalette("Motion");
-  ok = expect(builtin != nullptr, "Motion built-in palette exists") && ok;
-  if (builtin == nullptr) {
-    return 1;
+  std::vector<std::uint8_t> wallpaperRgb(112u * 112u * 3u);
+  for (std::size_t i = 0; i < wallpaperRgb.size(); i += 3) {
+    const auto pixel = static_cast<std::uint8_t>((i / 3u) % 256u);
+    wallpaperRgb[i] = pixel;
+    wallpaperRgb[i + 1] = static_cast<std::uint8_t>(255u - pixel);
+    wallpaperRgb[i + 2] = static_cast<std::uint8_t>((pixel * 3u) % 256u);
   }
 
-  const auto generated = expandBuiltinPalette(*builtin);
+  const auto generatedResult = generate(wallpaperRgb);
+  ok = expect(generatedResult.has_value(), "wallpaper produces an M3 Expressive palette") && ok;
+  if (!generatedResult.has_value()) {
+    return 1;
+  }
+  const auto& generated = *generatedResult;
+
+  std::vector<std::uint8_t> secondWallpaperRgb(112u * 112u * 3u, 0u);
+  for (std::size_t i = 0; i < secondWallpaperRgb.size(); i += 3) {
+    secondWallpaperRgb[i] = 234u;
+    secondWallpaperRgb[i + 1] = 88u;
+    secondWallpaperRgb[i + 2] = 12u;
+  }
+  const auto secondGenerated = generate(secondWallpaperRgb);
+  ok = expect(secondGenerated.has_value(), "second wallpaper produces an M3 Expressive palette") && ok;
+  if (secondGenerated.has_value()) {
+    ok = expect(
+             generated.dark.at("source_color") != secondGenerated->dark.at("source_color"),
+             "wallpaper pixels determine the generated palette"
+         )
+        && ok;
+  }
+
   Palette mapped = mapGeneratedPaletteMode(generated.dark);
   setPalette(mapped);
 

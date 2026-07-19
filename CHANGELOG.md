@@ -14,6 +14,13 @@ All notable Motion changes are documented here.
   workspace/taskbar, dock, panels, tooltips, dialogs, and tray menus through the shared visual primitives.
 - Replaced fixed colors in Qt and Helix exports and strengthened GTK export surface hierarchy.
 - Added runtime palette-role regression coverage and retained old color names only for profile compatibility.
+- Re-composed the launcher as a large responsive application-card grid with a hero search field and section heading.
+- Re-composed the default control center as a sidebar-free top-right floating surface with responsive horizontal
+  quick-setting tiles.
+- Updated Motion's wallpaper-derived palette roles, surface hierarchy, expressive radii, panel spacing, and floating
+  capsule bar defaults around the lavender/teal reference direction.
+- Removed built-in, community, custom, pure-black, and alternate generator palette paths. Runtime colors now come only
+  from the active wallpaper through Material 3 Expressive, with the bundled wallpaper as a deterministic fallback.
 
 ## [0.1.1] - 2026-07-18
 

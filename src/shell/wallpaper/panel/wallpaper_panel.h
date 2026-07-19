@@ -82,9 +82,6 @@ private:
   void applyThemeFromControls();
   void toggleFavoriteForPath(const std::string& path);
   void syncThemeControls();
-  void rebuildFavoritePaletteDetailSelect(const WallpaperFavorite* favorite);
-  [[nodiscard]] std::optional<PaletteSource> paletteSourceForSegment(std::size_t index) const;
-  [[nodiscard]] std::size_t segmentForPaletteSource(PaletteSource source) const;
   [[nodiscard]] std::string selectedWallpaperPath() const;
   void appendFilteredFavoriteEntries(
       std::vector<WallpaperEntry>& out, std::unordered_set<std::string>& favoritePaths,
@@ -124,8 +121,6 @@ private:
   Label* m_title = nullptr;
   Button* m_backButton = nullptr;
   Segmented* m_favoriteThemeSegmented = nullptr;
-  Segmented* m_favoritePaletteSourceSegmented = nullptr;
-  Select* m_favoritePaletteDetailSelect = nullptr;
   Select* m_monitorSelect = nullptr;
   Input* m_filterInput = nullptr;
   Toggle* m_flattenToggle = nullptr;
@@ -161,8 +156,6 @@ private:
   bool m_syncingFavoriteControls = false;
   bool m_syncingGridSelectionVisual = false;
   bool m_gridKeyboardActive = false;
-  std::vector<std::string> m_favoritePaletteDetailValues;
-  std::vector<PaletteSource> m_paletteSourceOrder;
   static constexpr std::size_t kNoVisibleSelection = std::numeric_limits<std::size_t>::max();
   std::size_t m_selectedVisibleIndex = kNoVisibleSelection;
   float m_lastWidth = 0.0f;

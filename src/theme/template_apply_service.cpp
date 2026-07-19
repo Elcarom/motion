@@ -23,12 +23,6 @@ namespace motion::theme {
 
     std::filesystem::path builtinTemplateConfigPath() { return paths::assetPath("templates/builtin.toml"); }
 
-    std::string schemeTypeFromConfig(const ThemeConfig& theme) {
-      if (theme.wallpaperScheme.starts_with("m3-"))
-        return theme.wallpaperScheme.substr(3);
-      return theme.wallpaperScheme;
-    }
-
     std::filesystem::path userTemplateConfigPath() {
       const std::string configDir = FileUtils::configDir();
       if (configDir.empty()) {
@@ -202,8 +196,7 @@ namespace motion::theme {
     return a.palette == b.palette
         && a.templates == b.templates
         && a.defaultMode == b.defaultMode
-        && a.imagePath == b.imagePath
-        && a.schemeType == b.schemeType;
+        && a.imagePath == b.imagePath;
   }
 
   void TemplateApplyService::registerIpc(IpcService& ipc) {
@@ -230,7 +223,6 @@ namespace motion::theme {
         .templates = theme.templates,
         .defaultMode = std::string(defaultMode),
         .imagePath = m_config.getPaletteWallpaperPath(),
-        .schemeType = schemeTypeFromConfig(theme),
     };
   }
 
@@ -238,7 +230,6 @@ namespace motion::theme {
     TemplateEngine::Options options;
     options.defaultMode = request.defaultMode;
     options.imagePath = request.imagePath;
-    options.schemeType = request.schemeType;
     options.verbose = true;
     options.cancelRequested = [this, generation = request.generation]() { return requestSuperseded(generation); };
 

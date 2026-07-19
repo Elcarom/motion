@@ -715,9 +715,7 @@
       "polkit-no-session": "L'agente Polkit necessita di logind, elogind o XDG_SESSION_ID. Nelle configurazioni seatd-only non è possibile registrarsi per i prompt grafici. Utilizza il terminale pkexec per la sincronizzazione del greeter o installa elogind per l'autenticazione in sessione.",
       "screen-time-reset": "Tempo schermo",
       "screen-time-reset-success": "Cronologia utilizzo cancellata.",
-      "session-bus-unavailable": "Bus di sessione non disponibile",
-      "wallpaper-palette-export": "Palette personalizzata",
-      "wallpaper-palette-export-success": "\"{name}\" salvata e sorgente palette cambiata in personalizzata."
+      "session-bus-unavailable": "Bus di sessione non disponibile"
     }
   },
   "osd": {
@@ -1023,7 +1021,6 @@
       "batch-write": "Alcune impostazioni non sono state salvate.",
       "custom-schedule-times": "Una pianificazione personalizzata richiede sia l'ora dell'alba che quella del tramonto nel formato HH:MM.",
       "export-config": "Salvataggio esportazione configurazione non riuscito.",
-      "export-wallpaper-palette": "Impossibile salvare la palette dello sfondo come palette personalizzata.",
       "monitor-override": {
         "create": "Impossibile creare l'override del monitor.",
         "delete": "Impossibile eliminare l'override del monitor.",
@@ -1318,12 +1315,6 @@
         "mode": {
           "dark": "Scuro",
           "light": "Chiaro"
-        },
-        "source": {
-          "built-in": "Integrata",
-          "community": "Community",
-          "custom": "Personalizzata",
-          "wallpaper": "Sfondo"
         }
       },
       "theme-role": {
@@ -1462,32 +1453,13 @@
           "description": "Ricolora le icone delle applicazioni nella shell per abbinarle alla palette attiva",
           "label": "Colora icone app"
         },
-        "builtin-palette": {
-          "description": "Scegli una palette dal catalogo incluso",
-          "label": "Palette integrata"
-        },
         "button-borders": {
           "description": "Disegna i contorni attorno ai pulsanti in tutta la shell",
           "label": "Bordi dei pulsanti"
         },
-        "community-palette": {
-          "description": "Scegli una palette dal catalogo community",
-          "label": "Palette community",
-          "search-placeholder": "Cerca palette..."
-        },
         "corner-roundness": {
           "description": "Scala il raggio degli angoli nei contenitori e della shell UI",
           "label": "Arrotondamento angoli"
-        },
-        "custom-palette": {
-          "description": "Scegli una palette da ~/.config/motion/palettes/",
-          "label": "Palette personalizzata",
-          "search-placeholder": "Cerca palette personalizzate..."
-        },
-        "export-wallpaper-palette": {
-          "button": "Salva come palette personalizzata",
-          "description": "Salva la palette generata dallo sfondo corrente come file palette personalizzata riutilizzabile",
-          "label": "Esporta palette sfondo"
         },
         "font-family": {
           "description": "Famiglia di caratteri per l'interfaccia shell",
@@ -1503,14 +1475,6 @@
           "description": "Sovrascrivi il rilevamento automatico della lingua",
           "label": "Lingua"
         },
-        "palette-source": {
-          "description": "Da dove ricavare la palette colori",
-          "label": "Sorgente palette"
-        },
-        "pure-black-dark": {
-          "description": "Ancora le superfici scure al nero assoluto, prevenendo il banding sui pannelli OLED (solo modalità scura)",
-          "label": "Nero puro"
-        },
         "theme-mode": {
           "description": "Scegli scuro, chiaro o automatico in base all'ora del giorno",
           "label": "Modalità tema"
@@ -1518,10 +1482,6 @@
         "ui-scale": {
           "description": "Scala l'intera interfaccia in alto o in basso",
           "label": "Scala UI"
-        },
-        "wallpaper-generation-scheme": {
-          "description": "Scegli come convertire i colori dello sfondo in una palette",
-          "label": "Schema generazione sfondo"
         }
       },
       "backdrop": {
@@ -3500,7 +3460,6 @@
   },
   "setup-wizard": {
     "browse": "Sfoglia",
-    "builtin-palette": "Palette integrata",
     "footer-note": "Puoi cambiare queste opzioni più tardi nelle impostazioni.",
     "get-started": "Inizia",
     "mode": "Modalità",
@@ -3508,8 +3467,7 @@
     "select-wallpaper": "Seleziona sfondo",
     "subtitle": "Alcune scelte rapide per iniziare.",
     "title": "Benvenuto in Motion",
-    "wallpaper": "Sfondo",
-    "wallpaper-scheme": "Schema sfondo"
+    "wallpaper": "Sfondo"
   },
   "system": {
     "hardware": {
@@ -3517,20 +3475,6 @@
       "unknown-cpu": "CPU sconosciuta",
       "unknown-distro": "Distro sconosciuta",
       "unknown-gpu": "GPU sconosciuta"
-    }
-  },
-  "theme": {
-    "scheme": {
-      "dysfunctional": "Disfunzionale",
-      "faithful": "Fedele",
-      "m3-content": "M3 Content",
-      "m3-fruit-salad": "M3 Fruit Salad",
-      "m3-monochrome": "M3 Monochrome",
-      "m3-rainbow": "M3 Rainbow",
-      "m3-tonal-spot": "M3 Tonal Spot",
-      "muted": "Tenue",
-      "soft": "Soft",
-      "vibrant": "Vivace"
     }
   },
   "time": {
