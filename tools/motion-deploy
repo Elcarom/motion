@@ -1,0 +1,290 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SERVICE="motion.service"
+SOURCE="${MOTION_SOURCE:-$HOME/src/motion}"
+WORKTREES="${MOTION_WORKTREES:-$HOME/src/motion-worktrees}"
+ROOT="${MOTION_DEPLOY_ROOT:-/opt/motion}"
+BUILDS="$ROOT/builds"
+CURRENT="$ROOT/current"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/motion-deploy"
+PREVIOUS_FILE="$STATE_DIR/previous"
+SERVICE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/$SERVICE"
+
+log() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33mwarning:\033[0m %s\n' "$*" >&2; }
+die() { printf '\033[1;31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+
+need() {
+  command -v "$1" >/dev/null 2>&1 || die "Missing required command: $1"
+}
+
+atomic_link() {
+  local target=$1
+  local temp="$ROOT/.current-$$"
+  sudo rm -f "$temp"
+  sudo ln -s "$target" "$temp"
+  sudo mv -Tf "$temp" "$CURRENT"
+}
+
+service_restart_or_rollback() {
+  local previous=$1
+
+  systemctl --user daemon-reload
+  systemctl --user restart "$SERVICE"
+  sleep 2
+
+  if systemctl --user is-active --quiet "$SERVICE"; then
+    log "Motion is active"
+    return 0
+  fi
+
+  warn "Motion failed to start; restoring previous deployment"
+  journalctl --user -u "$SERVICE" -n 40 --no-pager || true
+
+  if [[ -n "$previous" && -x "$previous/bin/motion" ]]; then
+    atomic_link "$previous"
+    systemctl --user restart "$SERVICE" || true
+  fi
+
+  return 1
+}
+
+init_deploy() {
+  need sudo
+  need systemctl
+
+  log "Creating deployment directories"
+  sudo mkdir -p "$BUILDS"
+  mkdir -p "$STATE_DIR" "$(dirname "$SERVICE_FILE")"
+
+  if [[ ! -L "$CURRENT" ]]; then
+    if [[ -x /usr/local/bin/motion ]]; then
+      log "Using the existing /usr/local installation as the initial deployment"
+      atomic_link /usr/local
+    else
+      warn "$CURRENT does not exist yet; deploy a commit before starting the service"
+    fi
+  fi
+
+  log "Writing $SERVICE_FILE"
+  cat > "$SERVICE_FILE" <<'UNIT'
+[Unit]
+Description=Motion desktop shell
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+
+[Service]
+Type=simple
+ExecStart=/opt/motion/current/bin/motion
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
+UNIT
+
+  systemctl --user daemon-reload
+  systemctl --user enable "$SERVICE"
+
+  if [[ -x "$CURRENT/bin/motion" ]]; then
+    systemctl --user restart "$SERVICE"
+  fi
+
+  log "Deployment setup is ready"
+}
+
+deploy() {
+  local ref=${1:-origin/main}
+  local force=${2:-}
+
+  need git
+  need just
+  need meson
+  need ninja
+  need sudo
+  need systemctl
+
+  [[ -d "$SOURCE/.git" ]] || die "Repository not found at $SOURCE"
+  [[ -f "$SERVICE_FILE" ]] || die "Run 'motion-deploy init' first"
+
+  log "Fetching GitHub updates"
+  git -C "$SOURCE" fetch --prune origin
+
+  local sha short worktree prefix previous
+  sha=$(git -C "$SOURCE" rev-parse "$ref^{commit}") || die "Cannot resolve commit: $ref"
+  short=$(git -C "$SOURCE" rev-parse --short=12 "$sha")
+  worktree="$WORKTREES/$short"
+  prefix="$BUILDS/$short"
+  previous=$(readlink -f "$CURRENT" 2>/dev/null || true)
+
+  log "Deploying $short"
+
+  if [[ "$force" == "--force" ]]; then
+    sudo rm -rf "$prefix"
+    if [[ -e "$worktree" ]]; then
+      git -C "$SOURCE" worktree remove --force "$worktree" 2>/dev/null || rm -rf "$worktree"
+    fi
+  fi
+
+  if [[ ! -x "$prefix/bin/motion" ]]; then
+    mkdir -p "$WORKTREES"
+
+    if [[ ! -d "$worktree" ]]; then
+      git -C "$SOURCE" worktree add --detach "$worktree" "$sha"
+    fi
+
+    (
+      cd "$worktree"
+      log "Configuring release build"
+      just configure release "$prefix"
+      log "Building"
+      just build release
+      log "Running tests"
+      just test release --print-errorlogs
+      log "Installing into $prefix"
+      sudo just install release
+    )
+
+    [[ -x "$prefix/bin/motion" ]] || die "Installed executable is missing: $prefix/bin/motion"
+
+    git -C "$SOURCE" worktree remove --force "$worktree" || true
+  else
+    log "Build already exists; reusing $prefix"
+  fi
+
+  mkdir -p "$STATE_DIR"
+  if [[ -n "$previous" && -x "$previous/bin/motion" && "$previous" != "$prefix" ]]; then
+    printf '%s\n' "$previous" > "$PREVIOUS_FILE"
+  fi
+
+  log "Activating $short"
+  atomic_link "$prefix"
+
+  if ! service_restart_or_rollback "$previous"; then
+    die "Deployment failed and was rolled back"
+  fi
+
+  log "Deployment complete"
+  printf 'Commit:   %s\n' "$sha"
+  printf 'Current:  %s\n' "$(readlink -f "$CURRENT")"
+  printf 'Logs:     journalctl --user -u %s -f\n' "$SERVICE"
+}
+
+rollback() {
+  need sudo
+  need systemctl
+
+  [[ -f "$PREVIOUS_FILE" ]] || die "No previous deployment is recorded"
+
+  local previous current_now
+  previous=$(cat "$PREVIOUS_FILE")
+  current_now=$(readlink -f "$CURRENT" 2>/dev/null || true)
+
+  [[ -x "$previous/bin/motion" ]] || die "Previous deployment is unavailable: $previous"
+
+  log "Rolling back to $previous"
+  atomic_link "$previous"
+
+  if ! service_restart_or_rollback "$current_now"; then
+    die "Rollback target failed to start"
+  fi
+
+  if [[ -n "$current_now" && -x "$current_now/bin/motion" ]]; then
+    printf '%s\n' "$current_now" > "$PREVIOUS_FILE"
+  fi
+
+  log "Rollback complete"
+}
+
+status() {
+  printf 'Current:  %s\n' "$(readlink -f "$CURRENT" 2>/dev/null || echo 'not configured')"
+  printf 'Previous: %s\n' "$(cat "$PREVIOUS_FILE" 2>/dev/null || echo 'not recorded')"
+  printf '\n'
+  systemctl --user status "$SERVICE" --no-pager || true
+}
+
+list_builds() {
+  local current previous path marker
+  current=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  previous=$(cat "$PREVIOUS_FILE" 2>/dev/null || true)
+
+  [[ -d "$BUILDS" ]] || exit 0
+
+  for path in "$BUILDS"/*; do
+    [[ -d "$path" ]] || continue
+    marker=""
+    [[ "$path" == "$current" ]] && marker=" [current]"
+    [[ "$path" == "$previous" ]] && marker+=" [previous]"
+    printf '%s%s\n' "$(basename "$path")" "$marker"
+  done
+}
+
+prune_builds() {
+  need sudo
+
+  local current previous path
+  current=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  previous=$(cat "$PREVIOUS_FILE" 2>/dev/null || true)
+
+  [[ -d "$BUILDS" ]] || exit 0
+
+  for path in "$BUILDS"/*; do
+    [[ -d "$path" ]] || continue
+    if [[ "$path" != "$current" && "$path" != "$previous" ]]; then
+      log "Removing $(basename "$path")"
+      sudo rm -rf "$path"
+    fi
+  done
+}
+
+usage() {
+  cat <<'HELP'
+Usage:
+  motion-deploy init
+  motion-deploy deploy [commit-or-ref] [--force]
+  motion-deploy rollback
+  motion-deploy status
+  motion-deploy list
+  motion-deploy prune
+
+Examples:
+  motion-deploy deploy origin/main
+  motion-deploy deploy 0123456789abcdef
+  motion-deploy rollback
+
+Environment overrides:
+  MOTION_SOURCE        Source repository (default: ~/src/motion)
+  MOTION_WORKTREES     Temporary worktrees (default: ~/src/motion-worktrees)
+  MOTION_DEPLOY_ROOT   Deployment root (default: /opt/motion)
+HELP
+}
+
+case "${1:-}" in
+  init)
+    init_deploy
+    ;;
+  deploy)
+    shift
+    deploy "${1:-origin/main}" "${2:-}"
+    ;;
+  rollback)
+    rollback
+    ;;
+  status)
+    status
+    ;;
+  list)
+    list_builds
+    ;;
+  prune)
+    prune_builds
+    ;;
+  -h|--help|help|"")
+    usage
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac
